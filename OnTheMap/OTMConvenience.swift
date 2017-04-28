@@ -18,14 +18,17 @@ extension OTMClient {
             
             /* 3. Send the desired value(s) to completion handler */
             if let error = error {
+                // TODO: Delete debug statement
                 print(error)
-                completionHandler(false, "Login Failed (Invalid Username or Password).")
+                completionHandler(false, "Login Failed (Invalid Username or Password)")
             } else {
                 if let response = results as? [String:AnyObject], let session = response[OTMClient.UdacityResponseKeys.Session] as? [String:AnyObject], let sessionID = session[OTMClient.UdacityResponseKeys.SessionID] {
-                    completionHandler(true, "Success! Session ID = \(sessionID)")
+                    // TODO: Delete session ID Debug statenent
+                    print("Login success: Session ID = \(sessionID)")
+                    completionHandler(true, nil)
                 } else {
                     print("Could not find \(OTMClient.UdacityResponseKeys.Session) or \(OTMClient.UdacityResponseKeys.SessionID) in \(String(describing: results))")
-                    completionHandler(false, "Login Failed (Unable to create session).")
+                    completionHandler(false, "Login Failed (Error creating session)")
                 }
             }
         }

@@ -44,9 +44,9 @@ class LoginViewController: UIViewController {
     // MARK: Login
     
     private func completeLogin() {
-        debugTextLabel.text = "Login success!"
-        //let controller = storyboard!.instantiateViewController(withIdentifier: "ManagerNavigationController") as! UINavigationController
-        //present(controller, animated: true, completion: nil)
+        debugTextLabel.text = ""
+        let controller = storyboard!.instantiateViewController(withIdentifier: "OnTheMapNavigationController") as! UINavigationController
+        present(controller, animated: true, completion: nil)
     }
     
     private func displayError(_ errorString: String?) {
