@@ -35,5 +35,8 @@ extension OTMClient {
         // MARK: Udacity API JSON Response Keys
         static let Session = "session"
         static let SessionID = "id"
+        static let User = "user"
+        static let LastName = "last_name"
+        static let FirstName = "first_name"
     }
 }

@@ -12,8 +12,12 @@ class OTMClient : NSObject {
     
     // MARK: Properties
     
-    // shared session
+    // Shared session
     var session = URLSession.shared
+    
+    // First + Last name of logged in user -- obtained from Udacity and used in Parse
+    var userFirstName:String? = nil
+    var userLastName:String? = nil
     
     // MARK: Methods
     
