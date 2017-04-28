@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		A58674DE1EB2E1230024FC7B /* BorderedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58674DD1EB2E1230024FC7B /* BorderedButton.swift */; };
+		A58674E11EB2EB900024FC7B /* OTMClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58674E01EB2EB900024FC7B /* OTMClient.swift */; };
+		A58674E31EB2EBD10024FC7B /* OTMConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58674E21EB2EBD10024FC7B /* OTMConstants.swift */; };
 		A5DC8DAB1EB2ADBF000DD0DA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DC8DAA1EB2ADBF000DD0DA /* AppDelegate.swift */; };
 		A5DC8DAD1EB2ADBF000DD0DA /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DC8DAC1EB2ADBF000DD0DA /* LoginViewController.swift */; };
 		A5DC8DB01EB2ADBF000DD0DA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A5DC8DAE1EB2ADBF000DD0DA /* Main.storyboard */; };
@@ -17,6 +19,8 @@
 
 /* Begin PBXFileReference section */
 		A58674DD1EB2E1230024FC7B /* BorderedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorderedButton.swift; sourceTree = "<group>"; };
+		A58674E01EB2EB900024FC7B /* OTMClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTMClient.swift; sourceTree = "<group>"; };
+		A58674E21EB2EBD10024FC7B /* OTMConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTMConstants.swift; sourceTree = "<group>"; };
 		A5DC8DA71EB2ADBF000DD0DA /* OnTheMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnTheMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5DC8DAA1EB2ADBF000DD0DA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A5DC8DAC1EB2ADBF000DD0DA /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -45,6 +49,15 @@
 			name = View;
 			sourceTree = "<group>";
 		};
+		A58674DF1EB2EB440024FC7B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A58674E01EB2EB900024FC7B /* OTMClient.swift */,
+				A58674E21EB2EBD10024FC7B /* OTMConstants.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		A5DC8D9E1EB2ADBF000DD0DA = {
 			isa = PBXGroup;
 			children = (
@@ -64,6 +77,7 @@
 		A5DC8DA91EB2ADBF000DD0DA /* OnTheMap */ = {
 			isa = PBXGroup;
 			children = (
+				A58674DF1EB2EB440024FC7B /* Model */,
 				A58674DC1EB2E0BB0024FC7B /* View */,
 				A5DC8DBC1EB2DD4A000DD0DA /* Controller */,
 				A5DC8DAA1EB2ADBF000DD0DA /* AppDelegate.swift */,
@@ -157,7 +171,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				A5DC8DAD1EB2ADBF000DD0DA /* LoginViewController.swift in Sources */,
+				A58674E11EB2EB900024FC7B /* OTMClient.swift in Sources */,
 				A5DC8DAB1EB2ADBF000DD0DA /* AppDelegate.swift in Sources */,
+				A58674E31EB2EBD10024FC7B /* OTMConstants.swift in Sources */,
 				A58674DE1EB2E1230024FC7B /* BorderedButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
