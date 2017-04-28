@@ -11,11 +11,29 @@ extension OTMClient {
     // MARK: Constants
     struct Constants {
         
-        // MARK: Parse App ID and Key
+        // MARK: HTTP Constants
+        static let ApiScheme = "https"
+        static let HttpGet = "GET"
+        static let HttpPost = "POST"
+        
+        // MARK: Parse API Information
         static let ParseAppID = "QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr"
         static let ParseApiKey = "QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY"
+        static let ParseApiHost = "parse.udacity.com"
         
-        // MARK: URLs
-        static let ApiScheme = "https"
+        // MARK: Udacity API Information
+        static let UdacityApiHost = "www.udacity.com"
+    }
+    
+    struct Methods {
+        // MARK: Udacity API Methods
+        static let UdacitySession = "/api/session"
+        static let UdacityUserData = "/api/users/"
+    }
+    
+    struct UdacityResponseKeys {
+        // MARK: Udacity API JSON Response Keys
+        static let Session = "session"
+        static let SessionID = "id"
     }
 }

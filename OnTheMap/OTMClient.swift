@@ -19,7 +19,7 @@ class OTMClient : NSObject {
     
     // Shared HTTP Method for all HTTP requests
     
-    func taskForHTTPMethod(_ httpMethod:String, _ apiHost: String, _ apiMethod: String, apiParameters: [String:AnyObject], valuesForHTTPHeader: [String:String]?, httpBody: String?, completionHandlerForGET: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
+    func taskForHTTPMethod(_ httpMethod:String, _ apiHost: String, _ apiMethod: String, apiParameters: [String:AnyObject]?, valuesForHTTPHeader: [String:String]?, httpBody: String?, completionHandler: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
  
         /* 1. Build the URL */
         let request = NSMutableURLRequest(url: urlFromParameters(apiHost, apiMethod, apiParameters))
@@ -46,7 +46,7 @@ class OTMClient : NSObject {
             func sendError(_ error: String) {
                 print(error)
                 let userInfo = [NSLocalizedDescriptionKey : error]
-                completionHandlerForGET(nil, NSError(domain: "taskForGETMethod", code: 1, userInfo: userInfo))
+                completionHandler(nil, NSError(domain: "taskForGETMethod", code: 1, userInfo: userInfo))
             }
             
             /* GUARD: Was there an error? */
@@ -68,7 +68,7 @@ class OTMClient : NSObject {
             }
             
             /* 4/5. Parse the data and use the data (happens in completion handler) */
-            self.convertDataWithCompletionHandler(data, completionHandlerForConvertData: completionHandlerForGET)
+            self.convertDataWithCompletionHandler(data, completionHandlerForConvertData: completionHandler)
         }
         
         /* 6. Start the request */
@@ -79,7 +79,7 @@ class OTMClient : NSObject {
 
     // Creates a URL from parameters
     
-    private func urlFromParameters(_ host:String, _ method:String, _ parameters: [String:AnyObject]) -> URL {
+    private func urlFromParameters(_ host:String, _ method:String, _ parameters: [String:AnyObject]?) -> URL {
         
         var components = URLComponents()
         components.scheme = OTMClient.Constants.ApiScheme
@@ -87,9 +87,11 @@ class OTMClient : NSObject {
         components.path = method
         components.queryItems = [URLQueryItem]()
         
-        for (key, value) in parameters {
-            let queryItem = URLQueryItem(name: key, value: "\(value)")
-            components.queryItems!.append(queryItem)
+        if let parameters = parameters {
+            for (key, value) in parameters {
+                let queryItem = URLQueryItem(name: key, value: "\(value)")
+                components.queryItems!.append(queryItem)
+            }
         }
         
         return components.url!
