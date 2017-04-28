@@ -15,15 +15,18 @@ class OTMClient : NSObject {
     // shared session
     var session = URLSession.shared
     
-    // MARK: GET
+    // MARK: Methods
     
-    func taskForGETMethod(_ host: String, _ method: String, parameters: [String:AnyObject], valuesForHTTPHeader: [String:String]?, httpBody: String?, completionHandlerForGET: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
-        
-        /* 1. Set the parameters */
-        var parameters = parameters
+    // Shared HTTP Method for all HTTP requests
+    
+    func taskForHTTPMethod(_ httpMethod:String, _ apiHost: String, _ apiMethod: String, apiParameters: [String:AnyObject], valuesForHTTPHeader: [String:String]?, httpBody: String?, completionHandlerForGET: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
  
-        /* 2/3. Build the URL, Configure the request */
-        let request = NSMutableURLRequest(url: urlFromParameters(host, method, parameters))
+        /* 1. Build the URL */
+        let request = NSMutableURLRequest(url: urlFromParameters(apiHost, apiMethod, apiParameters))
+        
+        /* 2. Configure the request */
+        
+        request.httpMethod = httpMethod
         
         // Add values for HTTP Header field, if any
         if let valuesForHTTPHeader = valuesForHTTPHeader {
@@ -37,7 +40,7 @@ class OTMClient : NSObject {
             request.httpBody = httpBody.data(using: String.Encoding.utf8)
         }
         
-        /* 4. Make the request */
+        /* 3. Make the request */
         let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
             
             func sendError(_ error: String) {
@@ -64,17 +67,18 @@ class OTMClient : NSObject {
                 return
             }
             
-            /* 5/6. Parse the data and use the data (happens in completion handler) */
+            /* 4/5. Parse the data and use the data (happens in completion handler) */
             self.convertDataWithCompletionHandler(data, completionHandlerForConvertData: completionHandlerForGET)
         }
         
-        /* 7. Start the request */
+        /* 6. Start the request */
         task.resume()
         
         return task
     }
 
-    // create a URL from parameters
+    // Creates a URL from parameters
+    
     private func urlFromParameters(_ host:String, _ method:String, _ parameters: [String:AnyObject]) -> URL {
         
         var components = URLComponents()
@@ -91,7 +95,7 @@ class OTMClient : NSObject {
         return components.url!
     }
     
-    // given raw JSON, return a usable Foundation object
+    // Converts raw JSON into a usable Foundation object and sends it to a completion handler
     private func convertDataWithCompletionHandler(_ data: Data, completionHandlerForConvertData: (_ result: AnyObject?, _ error: NSError?) -> Void) {
         
         var parsedResult: AnyObject! = nil
