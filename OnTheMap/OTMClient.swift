@@ -19,7 +19,7 @@ class OTMClient : NSObject {
     
     // Shared HTTP Method for all HTTP requests
     
-    func taskForHTTPMethod(_ httpMethod:String, _ apiHost: String, _ apiMethod: String, apiParameters: [String:AnyObject]?, valuesForHTTPHeader: [String:String]?, httpBody: String?, completionHandler: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
+    func taskForHTTPMethod(_ httpMethod:String, _ apiHost: String, _ apiMethod: String, apiParameters: [String:AnyObject]?, valuesForHTTPHeader: [(String, String)]?, httpBody: String?, completionHandler: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
  
         /* 1. Build the URL */
         let request = NSMutableURLRequest(url: urlFromParameters(apiHost, apiMethod, apiParameters))
@@ -55,16 +55,28 @@ class OTMClient : NSObject {
                 return
             }
             
+            /* GUARD: Did we get a status code from the response? */
+            guard let statusCode = (response as? HTTPURLResponse)?.statusCode else {
+                sendError("Your request did not return a valid response (no status code).")
+                return
+            }
+            
             /* GUARD: Did we get a successful 2XX response? */
-            guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
-                sendError("Your request returned a status code other than 2xx!")
+            guard statusCode >= 200 && statusCode <= 299  else {
+                sendError("Your request returned a status code other than 2xx. Status code returned: \(statusCode)")
                 return
             }
             
             /* GUARD: Was there any data returned? */
-            guard let data = data else {
+            guard var data = data else {
                 sendError("No data was returned by the request!")
                 return
+            }
+            
+            // Extract the data if it's from Udacity
+            if apiHost == OTMClient.Constants.UdacityApiHost {
+                let range = Range(5..<data.count)
+                data = data.subdata(in: range)
             }
             
             /* 4/5. Parse the data and use the data (happens in completion handler) */
@@ -85,15 +97,17 @@ class OTMClient : NSObject {
         components.scheme = OTMClient.Constants.ApiScheme
         components.host = host
         components.path = method
-        components.queryItems = [URLQueryItem]()
         
         if let parameters = parameters {
+            components.queryItems = [URLQueryItem]()
             for (key, value) in parameters {
                 let queryItem = URLQueryItem(name: key, value: "\(value)")
                 components.queryItems!.append(queryItem)
             }
         }
         
+        // TODO: Remove debug print statement
+        print ("The URL is\(components.url!.absoluteString)")
         return components.url!
     }
     
@@ -109,5 +123,14 @@ class OTMClient : NSObject {
         }
         
         completionHandlerForConvertData(parsedResult, nil)
+    }
+    
+    // MARK: Shared Instance
+    
+    class func sharedInstance() -> OTMClient {
+        struct Singleton {
+            static var sharedInstance = OTMClient()
+        }
+        return Singleton.sharedInstance
     }
 }

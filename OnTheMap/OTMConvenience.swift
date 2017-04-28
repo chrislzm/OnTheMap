@@ -12,8 +12,9 @@ extension OTMClient {
     func loginWith(username:String, password:String, completionHandler: @escaping (_ success: Bool, _ errorString: String?) -> Void) {
         
         let httpBody = "{\"udacity\": {\"username\": \"\(username)\", \"password\": \"\(password)\"}}"
-        
-        let _ = taskForHTTPMethod(OTMClient.Constants.HttpPost, OTMClient.Constants.UdacityApiHost, OTMClient.Methods.UdacitySession, apiParameters: nil, valuesForHTTPHeader: nil, httpBody: httpBody) { (results, error) in
+        let httpHeaderValues = [("application/json","Accept"),
+                                ("application/json","Content-Type")]
+        let _ = taskForHTTPMethod(OTMClient.Constants.HttpPost, OTMClient.Constants.UdacityApiHost, OTMClient.Methods.UdacitySession, apiParameters: nil, valuesForHTTPHeader: httpHeaderValues, httpBody: httpBody) { (results, error) in
             
             /* 3. Send the desired value(s) to completion handler */
             if let error = error {
