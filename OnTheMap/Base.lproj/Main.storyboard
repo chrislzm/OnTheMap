@@ -102,7 +102,7 @@
         <!--On the Map-->
         <scene sceneID="RSr-ad-asP">
             <objects>
-                <viewController id="kQs-nQ-DPR" sceneMemberID="viewController">
+                <viewController id="kQs-nQ-DPR" customClass="TableViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="9wi-pl-3qi"/>
                         <viewControllerLayoutGuide type="bottom" id="cMK-LG-ENi"/>
@@ -120,8 +120,52 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Dcy-BE-bta">
+                                <rect key="frame" x="0.0" y="64" width="375" height="554"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TableViewCell" textLabel="XEv-Wr-8zH" detailTextLabel="zg0-ae-N8M" imageView="u3y-nR-IL2" style="IBUITableViewCellStyleSubtitle" id="TCG-0J-it4">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="TCG-0J-it4" id="nhs-ob-CNJ">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="XEv-Wr-8zH">
+                                                    <rect key="frame" x="54" y="4" width="34" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zg0-ae-N8M">
+                                                    <rect key="frame" x="54" y="25" width="33" height="15"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="icon_pin" id="u3y-nR-IL2">
+                                                    <rect key="frame" x="15" y="9" width="24" height="24"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                </imageView>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="kQs-nQ-DPR" id="4bh-hp-7YM"/>
+                                    <outlet property="delegate" destination="kQs-nQ-DPR" id="K7C-VH-WRu"/>
+                                </connections>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Dcy-BE-bta" firstAttribute="leading" secondItem="Nhb-hW-5dR" secondAttribute="leading" id="MYF-TV-qGJ"/>
+                            <constraint firstAttribute="trailing" secondItem="Dcy-BE-bta" secondAttribute="trailing" id="Tuh-tQ-UIy"/>
+                            <constraint firstItem="Dcy-BE-bta" firstAttribute="top" secondItem="9wi-pl-3qi" secondAttribute="bottom" id="cFp-3i-j7a"/>
+                            <constraint firstItem="cMK-LG-ENi" firstAttribute="top" secondItem="Dcy-BE-bta" secondAttribute="bottom" id="djI-Xa-LAy"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="" image="icon_listview-deselected" selectedImage="icon_listview-deselected" id="FO3-Rw-izS">
                         <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="0.0"/>
@@ -133,7 +177,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SrP-tZ-VpO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2598" y="445"/>
+            <point key="canvasLocation" x="2597.5999999999999" y="444.82758620689657"/>
         </scene>
         <!--Item-->
         <scene sceneID="koC-QD-PYH">
@@ -259,6 +303,7 @@
         <image name="icon_listview-deselected" width="75" height="50"/>
         <image name="icon_mapview-deselected" width="75" height="50"/>
         <image name="icon_mapview-selected" width="75" height="50"/>
+        <image name="icon_pin" width="24" height="24"/>
         <image name="icon_refresh" width="24" height="24"/>
         <image name="icon_world" width="52" height="67"/>
     </resources>

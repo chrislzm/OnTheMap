@@ -19,6 +19,7 @@
 		A5DC8DB01EB2ADBF000DD0DA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A5DC8DAE1EB2ADBF000DD0DA /* Main.storyboard */; };
 		A5DC8DB21EB2ADBF000DD0DA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A5DC8DB11EB2ADBF000DD0DA /* Assets.xcassets */; };
 		A5DC8DB51EB2ADBF000DD0DA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A5DC8DB31EB2ADBF000DD0DA /* LaunchScreen.storyboard */; };
+		A5F74E161EB4630F002AF032 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F74E151EB4630F002AF032 /* TableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		A5DC8DB11EB2ADBF000DD0DA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A5DC8DB41EB2ADBF000DD0DA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A5DC8DB61EB2ADBF000DD0DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A5F74E151EB4630F002AF032 /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +106,7 @@
 			children = (
 				A5DC8DAC1EB2ADBF000DD0DA /* LoginViewController.swift */,
 				A5DA964C1EB405730050E8B3 /* MapViewController.swift */,
+				A5F74E151EB4630F002AF032 /* TableViewController.swift */,
 				A5DA96501EB455640050E8B3 /* Extensions.swift */,
 			);
 			name = Controller;
@@ -185,6 +188,7 @@
 				A5DA964F1EB41EC40050E8B3 /* StudentInformation.swift in Sources */,
 				A5DA96511EB455640050E8B3 /* Extensions.swift in Sources */,
 				A5DC8DAD1EB2ADBF000DD0DA /* LoginViewController.swift in Sources */,
+				A5F74E161EB4630F002AF032 /* TableViewController.swift in Sources */,
 				A58674E11EB2EB900024FC7B /* OTMClient.swift in Sources */,
 				A5DC8DAB1EB2ADBF000DD0DA /* AppDelegate.swift in Sources */,
 				A58674E31EB2EBD10024FC7B /* OTMConstants.swift in Sources */,

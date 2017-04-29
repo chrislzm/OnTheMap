@@ -150,7 +150,7 @@ extension OTMClient {
         if errorString.contains("timed out") {
             completionHandler(false, "Couldn't connect to server")
         } else if errorString.contains("Status code returned: 403"){
-            completionHandler(false, "Wrong email or password")
+            completionHandler(false, "Email or password incorrect")
         } else {
             completionHandler(false, "Please try again")
         }
