@@ -32,12 +32,21 @@ extension OTMClient {
         static let UdacityUserData = "/api/users/"
     }
     
+    // MARK: Udacity API JSON Response Keys
     struct UdacityResponseKeys {
-        // MARK: Udacity API JSON Response Keys
         static let Session = "session"
         static let SessionID = "id"
         static let User = "user"
         static let LastName = "last_name"
         static let FirstName = "first_name"
+    }
+    
+    // MARK: Parse API JSON Response Keys
+    struct ParseResponseKeys {
+        static let FirstName = "firstName"
+        static let LastName = "lastName"
+        static let Latitude = "latitude"
+        static let Longitude = "longitude"
+        static let MediaURL = "mediaURL"
     }
 }

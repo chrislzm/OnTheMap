@@ -12,7 +12,6 @@ import Foundation
 
 extension OTMClient {
     
-    
     // Handles Udacity auth flow, verifies we are logged in with a session ID, and retrieves the user's first name and last name
     func loginWith(username:String, password:String, completionHandler: @escaping (_ success: Bool, _ errorString: String?) -> Void) {
         
