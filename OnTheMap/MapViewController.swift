@@ -26,7 +26,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
     
     @IBAction func refreshButtonPressed(_ sender: Any) {
-        refreshStudentLocations()
+        updateStudentLocations()
     }
     
     // MARK: Properties
@@ -37,7 +37,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        refreshStudentLocations()
+        updateStudentLocations()
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -70,7 +70,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     // MARK: Load student locations and refresh mapView
     
-    private func refreshStudentLocations() {
+    private func updateStudentLocations() {
         
         // Start animation while loading student locations
         activityView.startAnimating()
@@ -112,10 +112,9 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         self.dismiss(animated: true, completion: nil)
     }
     
-    
     private func displayError(_ error: NSError) {
         let errorString = error.userInfo[NSLocalizedDescriptionKey].debugDescription
-        let alert = UIAlertController(title: "Login Failed", message: errorString, preferredStyle: UIAlertControllerStyle.alert)
+        let alert = UIAlertController(title: "Error Loading Data", message: errorString, preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
