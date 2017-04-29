@@ -30,7 +30,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         
         // Test annotation
         let annotation = MKPointAnnotation()
-        let coordinate = CLLocationCoordinate2D(latitude: 37.7749, longitude: 122.4194)
+        let coordinate = CLLocationCoordinate2D(latitude: 37.7749, longitude: -122.4194)
         annotation.coordinate = coordinate
         annotation.title = "Chris Leung"
         annotation.subtitle = "http://chrisleung.com"
@@ -63,7 +63,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         if control == view.rightCalloutAccessoryView {
             let app = UIApplication.shared
             if let toOpen = view.annotation?.subtitle! {
-                app.open(URL(string: toOpen)!)
+                app.open(URL(string: toOpen)!,options: [:],completionHandler: nil)
             }
         }
     }
