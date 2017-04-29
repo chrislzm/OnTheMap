@@ -163,8 +163,17 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="4ZZ-nk-EBA">
+                                <rect key="frame" x="0.0" y="64" width="375" height="554"/>
+                            </mapView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="4ZZ-nk-EBA" firstAttribute="leading" secondItem="gZ7-dq-eK6" secondAttribute="leading" id="jG9-kg-tfz"/>
+                            <constraint firstItem="4ZZ-nk-EBA" firstAttribute="top" secondItem="t8n-MT-k7r" secondAttribute="bottom" id="pRA-BZ-zU3"/>
+                            <constraint firstAttribute="trailing" secondItem="4ZZ-nk-EBA" secondAttribute="trailing" id="wIj-8m-PCh"/>
+                            <constraint firstItem="bBF-bw-e4h" firstAttribute="top" secondItem="4ZZ-nk-EBA" secondAttribute="bottom" id="xVO-ds-AUY"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="" image="icon_mapview-deselected" selectedImage="icon_mapview-selected" id="R2N-47-69N"/>
                     <navigationItem key="navigationItem" title="On the Map" id="9QN-5h-5qa">
@@ -174,10 +183,13 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="mapView" destination="4ZZ-nk-EBA" id="FgQ-qT-TDN"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VOU-8d-Akv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2599" y="-342"/>
+            <point key="canvasLocation" x="2597.5999999999999" y="-342.27886056971516"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="5gq-9x-0OJ">
