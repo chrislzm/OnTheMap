@@ -26,12 +26,13 @@ extension OTMClient {
                 // TODO: Delete debug statement
                 print(error)
                 completionHandler(false, "Login Failed (Invalid username or password)")
+                return
             }
             
             /* 3. Verify we have obtained a Session ID from Udacity and are logged in */
-            guard let response = results as? [String:AnyObject], let session = response[OTMClient.UdacityResponseKeys.Session] as? [String:AnyObject], let sessionID = session[OTMClient.UdacityResponseKeys.SessionID] as? String else {
+            guard let response = results as? [String:AnyObject], let session = response[OTMClient.JSONResponseKeys.UdacitySession] as? [String:AnyObject], let sessionID = session[OTMClient.JSONResponseKeys.UdacitySessionID] as? String else {
                 // TODO: Delete debug statement
-                print("Could not find \(OTMClient.UdacityResponseKeys.Session) or \(OTMClient.UdacityResponseKeys.SessionID) in \(String(describing: results))")
+                print("Could not find \(OTMClient.JSONResponseKeys.UdacitySession) or \(OTMClient.JSONResponseKeys.UdacitySessionID) in \(String(describing: results))")
                 completionHandler(false, "Login Failed (Error creating session)")
                 return
             }
@@ -50,12 +51,13 @@ extension OTMClient {
                     // TODO: Delete debug statement
                     print(error)
                     completionHandler(false, "Login Failed (Error retrieving user data)")
+                    return
                 }
                 
                 /* 7. Verify we have obtained a the first name and last name */
-                guard let response = results as? [String:AnyObject], let user = response[OTMClient.UdacityResponseKeys.User] as? [String:AnyObject], let firstName = user[OTMClient.UdacityResponseKeys.FirstName] as? String, let lastName = user[OTMClient.UdacityResponseKeys.LastName] as? String else {
+                guard let response = results as? [String:AnyObject], let user = response[OTMClient.JSONResponseKeys.UdacityUser] as? [String:AnyObject], let firstName = user[OTMClient.JSONResponseKeys.UdacityFirstName] as? String, let lastName = user[OTMClient.JSONResponseKeys.UdacityLastName] as? String else {
                     // TODO: Delete debug statement
-                    print("Could not find \(OTMClient.UdacityResponseKeys.User), \(OTMClient.UdacityResponseKeys.FirstName), or \(OTMClient.UdacityResponseKeys.LastName) in \(String(describing: results))")
+                    print("Could not find one or more of keys \(OTMClient.JSONResponseKeys.UdacityUser), \(OTMClient.JSONResponseKeys.UdacityFirstName), \(OTMClient.JSONResponseKeys.UdacityLastName) in \(String(describing: results))")
                     completionHandler(false, "Login Failed (Error retrieving user data)")
                     return
                 }
@@ -93,12 +95,13 @@ extension OTMClient {
             if let error = error {
                 // TODO: Delete debug statement
                 print(error)
+                return
             }
             
             /* 3. Verify we have obtained a valid logout response */
-            guard let response = results as? [String:AnyObject], let session = response[OTMClient.UdacityResponseKeys.Session] as? [String:AnyObject], let sessionId = session[OTMClient.UdacityResponseKeys.SessionID] as? String else {
+            guard let response = results as? [String:AnyObject], let session = response[OTMClient.JSONResponseKeys.UdacitySession] as? [String:AnyObject], let sessionId = session[OTMClient.JSONResponseKeys.UdacitySessionID] as? String else {
                 // TODO: Delete debug statement
-                print("Could not find \(OTMClient.UdacityResponseKeys.Session) or \(OTMClient.UdacityResponseKeys.SessionID) in \(String(describing: results))")
+                print("Could not find \(OTMClient.JSONResponseKeys.UdacitySession) or \(OTMClient.JSONResponseKeys.UdacitySessionID) in \(String(describing: results))")
                 return
             }
             
@@ -106,6 +109,34 @@ extension OTMClient {
             print("Logged out successfully. Old Session ID: \(self.userSessionId!), Session ID received: \(sessionId)")
             self.userSessionId = ""
         }
+    }
+    
+    
+    // Gets recent locations posted by students
+    func getRecentStudentLocations(_ completionHandler: @escaping (_ result: [StudentInformation]?, _ error: NSError?) -> Void) {
+        
+        /* 1. Create and run HTTP request to retrieve recent student locations from Parse */
+        let parameters:[String:String] = [OTMClient.ParameterKeys.Limit:OTMClient.ParameterKeys.Limit,
+                                             OTMClient.ParameterKeys.Order:OTMClient.ParameterKeys.Order]
+        let _ = taskForHTTPMethod(OTMClient.Constants.HttpGet, OTMClient.Constants.ParseApiHost, OTMClient.Methods.ParseStudentLocation, apiParameters: parameters, valuesForHTTPHeader: nil, httpBody: nil) { (results, error) in
+            
+            /* 2. Check for error response from Parse */
+            if let error = error {
+                // TODO: Delete debug statement
+                print(error)
+                completionHandler(nil, error)
+                return
+            }
+            
+            /* 3. Extract results */
+            guard let results = results?[OTMClient.JSONResponseKeys.ParseResults] as? [[String:AnyObject]] else {
+                completionHandler(nil, NSError(domain: "getRecentStudentLocations parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse student locations"]))
+                return
+            }
 
+            /* 4. Parse results and return the data to the completion handler*/
+            let students = StudentInformation.studentsFromResults(results)
+            completionHandler(students, nil)
+        }
     }
 }

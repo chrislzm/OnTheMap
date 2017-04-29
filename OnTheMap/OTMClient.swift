@@ -24,7 +24,7 @@ class OTMClient : NSObject {
     
     // Shared HTTP Method for all HTTP requests
     
-    func taskForHTTPMethod(_ httpMethod:String, _ apiHost: String, _ apiMethod: String, apiParameters: [String:AnyObject]?, valuesForHTTPHeader: [(String, String)]?, httpBody: String?, completionHandler: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
+    func taskForHTTPMethod(_ httpMethod:String, _ apiHost: String, _ apiMethod: String, apiParameters: [String:String]?, valuesForHTTPHeader: [(String, String)]?, httpBody: String?, completionHandler: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
  
         /* 1. Build the URL */
         let request = NSMutableURLRequest(url: urlFromParameters(apiHost, apiMethod, apiParameters))
@@ -96,7 +96,7 @@ class OTMClient : NSObject {
 
     // Creates a URL from parameters
     
-    private func urlFromParameters(_ host:String, _ method:String, _ parameters: [String:AnyObject]?) -> URL {
+    private func urlFromParameters(_ host:String, _ method:String, _ parameters: [String:String]?) -> URL {
         
         var components = URLComponents()
         components.scheme = OTMClient.Constants.ApiScheme

@@ -21,6 +21,7 @@ extension OTMClient {
         static let ParseAppID = "QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr"
         static let ParseApiKey = "QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY"
         static let ParseApiHost = "parse.udacity.com"
+        static let ParseStudentLocationLimit = "100"
         
         // MARK: Udacity API Information
         static let UdacityApiHost = "www.udacity.com"
@@ -30,23 +31,37 @@ extension OTMClient {
         // MARK: Udacity API Methods
         static let UdacitySession = "/api/session"
         static let UdacityUserData = "/api/users/"
+        
+        // MARK: Parse API Methods
+        static let ParseStudentLocation = "/parse/classes/StudentLocation"
     }
     
-    // MARK: Udacity API JSON Response Keys
-    struct UdacityResponseKeys {
-        static let Session = "session"
-        static let SessionID = "id"
-        static let User = "user"
-        static let LastName = "last_name"
-        static let FirstName = "first_name"
+    struct ParameterKeys {
+        // MARK: Parse Parameter Keys
+        static let Limit = "limit"
+        static let Order = "order"
     }
-    
-    // MARK: Parse API JSON Response Keys
-    struct ParseResponseKeys {
-        static let FirstName = "firstName"
-        static let LastName = "lastName"
-        static let Latitude = "latitude"
-        static let Longitude = "longitude"
-        static let MediaURL = "mediaURL"
+
+    struct ParameterValues {
+        // MARK: Parse Parameter Values
+        static let NumStudents = OTMClient.Constants.ParseStudentLocationLimit
+        static let UpdatedAt = "updatedAt"
+    }
+
+    struct JSONResponseKeys {
+        // MARK: Udacity API JSON Response Keys
+        static let UdacitySession = "session"
+        static let UdacitySessionID = "id"
+        static let UdacityUser = "user"
+        static let UdacityLastName = "last_name"
+        static let UdacityFirstName = "first_name"
+        
+        // MARK: Parse API JSON Response Keys
+        static let ParseFirstName = "firstName"
+        static let ParseLastName = "lastName"
+        static let ParseLatitude = "latitude"
+        static let ParseLongitude = "longitude"
+        static let ParseMediaURL = "mediaURL"
+        static let ParseResults = "results"
     }
 }

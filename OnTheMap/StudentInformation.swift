@@ -19,11 +19,11 @@ struct StudentInformation {
     
     // construct a StudentInformation from a dictionary
     init(dictionary: [String:AnyObject]) {
-        firstName = dictionary[OTMClient.ParseResponseKeys.FirstName] as! String
-        lastName = dictionary[OTMClient.ParseResponseKeys.LastName] as! String
-        latitude = dictionary[OTMClient.ParseResponseKeys.Latitude] as! String
-        longitude = dictionary[OTMClient.ParseResponseKeys.Longitude] as! String
-        mediaURL = dictionary[OTMClient.ParseResponseKeys.MediaURL] as! String
+        firstName = dictionary[OTMClient.JSONResponseKeys.ParseFirstName] as! String
+        lastName = dictionary[OTMClient.JSONResponseKeys.ParseLastName] as! String
+        latitude = dictionary[OTMClient.JSONResponseKeys.ParseLatitude] as! String
+        longitude = dictionary[OTMClient.JSONResponseKeys.ParseLongitude] as! String
+        mediaURL = dictionary[OTMClient.JSONResponseKeys.ParseMediaURL] as! String
     }
     
     static func studentsFromResults(_ results: [[String:AnyObject]]) -> [StudentInformation] {
