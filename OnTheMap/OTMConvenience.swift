@@ -116,8 +116,8 @@ extension OTMClient {
     func getRecentStudentLocations(_ completionHandler: @escaping (_ result: [StudentInformation]?, _ error: NSError?) -> Void) {
         
         /* 1. Create and run HTTP request to retrieve recent student locations from Parse */
-        let parameters:[String:String] = [OTMClient.ParameterKeys.Limit:OTMClient.ParameterKeys.Limit,
-                                             OTMClient.ParameterKeys.Order:OTMClient.ParameterKeys.Order]
+        let parameters:[String:String] = [OTMClient.ParameterKeys.ParseLimit:OTMClient.ParameterValues.ParseNumStudents,
+                                             OTMClient.ParameterKeys.ParseOrder:OTMClient.ParameterValues.ParseUpdatedAt]
         let _ = taskForHTTPMethod(OTMClient.Constants.HttpGet, OTMClient.Constants.ParseApiHost, OTMClient.Methods.ParseStudentLocation, apiParameters: parameters, valuesForHTTPHeader: nil, httpBody: nil) { (results, error) in
             
             /* 2. Check for error response from Parse */

@@ -27,6 +27,12 @@ extension OTMClient {
         static let UdacityApiHost = "www.udacity.com"
     }
     
+    struct HttpHeaderField {
+        // MARK: Parse HTTP Header Fields
+        static let ParseAppID = "X-Parse-Application-Id"
+        static let ParseApiKey = "X-Parse-REST-API-Key"
+    }
+    
     struct Methods {
         // MARK: Udacity API Methods
         static let UdacitySession = "/api/session"
@@ -38,14 +44,14 @@ extension OTMClient {
     
     struct ParameterKeys {
         // MARK: Parse Parameter Keys
-        static let Limit = "limit"
-        static let Order = "order"
+        static let ParseLimit = "limit"
+        static let ParseOrder = "order"
     }
 
     struct ParameterValues {
         // MARK: Parse Parameter Values
-        static let NumStudents = OTMClient.Constants.ParseStudentLocationLimit
-        static let UpdatedAt = "updatedAt"
+        static let ParseNumStudents = OTMClient.Constants.ParseStudentLocationLimit
+        static let ParseUpdatedAt = "updatedAt"
     }
 
     struct JSONResponseKeys {

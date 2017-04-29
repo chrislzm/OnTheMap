@@ -33,7 +33,13 @@ class OTMClient : NSObject {
         
         request.httpMethod = httpMethod
         
-        // Add values for HTTP Header field, if any
+        // If we are calling the Parse API, then add the Parse App ID and API Key
+        if apiHost == OTMClient.Constants.ParseApiHost {
+            request.addValue(OTMClient.Constants.ParseAppID, forHTTPHeaderField: OTMClient.HttpHeaderField.ParseAppID)
+            request.addValue(OTMClient.Constants.ParseApiKey, forHTTPHeaderField: OTMClient.HttpHeaderField.ParseApiKey)
+        }
+        
+        // Add other HTTP Header fields and values, if any
         if let valuesForHTTPHeader = valuesForHTTPHeader {
             for (value,headerField) in valuesForHTTPHeader {
                 request.addValue(value, forHTTPHeaderField: headerField)
