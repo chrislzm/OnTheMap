@@ -128,6 +128,7 @@
                     </tabBarItem>
                     <navigationItem key="navigationItem" title="On the Map" id="AJg-W4-all">
                         <barButtonItem key="leftBarButtonItem" title="LOGOUT" id="K1P-ka-mbn"/>
+                        <barButtonItem key="rightBarButtonItem" image="icon_refresh" id="8dZ-TR-TOs"/>
                     </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SrP-tZ-VpO" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -202,6 +203,11 @@
                                 <action selector="logoutButtonPressed:" destination="nbh-Kv-hM1" id="CWK-Qn-NLq"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" image="icon_refresh" id="h8j-rN-HIY">
+                            <connections>
+                                <action selector="refreshButtonPressed:" destination="nbh-Kv-hM1" id="Yhw-Qs-tcm"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="activityView" destination="lcV-Bl-HLY" id="v0v-6u-5kN"/>
@@ -253,6 +259,7 @@
         <image name="icon_listview-deselected" width="75" height="50"/>
         <image name="icon_mapview-deselected" width="75" height="50"/>
         <image name="icon_mapview-selected" width="75" height="50"/>
+        <image name="icon_refresh" width="24" height="24"/>
         <image name="icon_world" width="52" height="67"/>
     </resources>
 </document>

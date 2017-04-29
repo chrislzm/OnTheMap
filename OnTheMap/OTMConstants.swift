@@ -51,7 +51,7 @@ extension OTMClient {
     struct ParameterValues {
         // MARK: Parse Parameter Values
         static let ParseNumStudents = OTMClient.Constants.ParseStudentLocationLimit
-        static let ParseUpdatedAt = "updatedAt"
+        static let ParseUpdatedAt = "-updatedAt"
     }
 
     struct JSONResponseKeys {

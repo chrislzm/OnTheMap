@@ -12,13 +12,21 @@ import MapKit
 class MapViewController: UIViewController, MKMapViewDelegate {
 
     // MARK: Outlets
+    
     @IBOutlet weak var activityView: UIActivityIndicatorView!
     @IBOutlet weak var mapView: MKMapView!
     
+    @IBOutlet weak var refreshButton: UIBarButtonItem!
+    
     // MARK: Actions
+    
     @IBAction func logoutButtonPressed(_ sender: Any) {
         OTMClient.sharedInstance().logout()
         completeLogout()
+    }
+    
+    @IBAction func refreshButtonPressed(_ sender: Any) {
+        refreshStudentLocations()
     }
     
     // MARK: Properties
@@ -67,9 +75,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         // Start animation while loading student locations
         activityView.startAnimating()
         
-        // Remove any existing annotations
-        self.mapView.removeAnnotations(mapViewAnnotations)
-        
         // Update recent student locations
         OTMClient.sharedInstance().updateRecentStudentLocations() { error in
             if let error = error {
@@ -78,7 +83,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                 }
             }
             
-            self.mapViewAnnotations = [MKPointAnnotation]()
+            var updatedMapViewAnnotations = [MKPointAnnotation]()
             
             for studentInformation in self.getStudents() {
                 let annotation = MKPointAnnotation()
@@ -87,13 +92,15 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                 annotation.title = "\(studentInformation.firstName) \(studentInformation.lastName)"
                 annotation.subtitle = studentInformation.mediaURL
                 
-                self.mapViewAnnotations.append(annotation)
+                updatedMapViewAnnotations.append(annotation)
             }
             
             DispatchQueue.main.async {
-
-                self.mapView.addAnnotations(self.mapViewAnnotations)
+                self.mapView.removeAnnotations(self.mapViewAnnotations)
+                self.mapView.addAnnotations(updatedMapViewAnnotations)
                 self.activityView.stopAnimating()
+                
+                self.mapViewAnnotations = updatedMapViewAnnotations
             }
             
         }
