@@ -11,6 +11,7 @@ import UIKit
 class LoginViewController: UIViewController {
 
     // MARK: Outlets
+    @IBOutlet weak var activityView: UIActivityIndicatorView!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var debugTextLabel: UILabel!
@@ -26,6 +27,10 @@ class LoginViewController: UIViewController {
     }
 
     @IBAction func loginButtonPressed(_ sender: Any) {
+
+        // Start animation
+        activityView.startAnimating()
+
         if emailTextField.text!.isEmpty || passwordTextField.text!.isEmpty {
             debugTextLabel.text = "Username or Password Empty"
         } else {
@@ -36,6 +41,9 @@ class LoginViewController: UIViewController {
                     } else {
                         self.displayError(errorString)
                     }
+                    
+                    // Stop Animation
+                    self.activityView.stopAnimating()
                 }
             }
         }

@@ -70,17 +70,26 @@
                                     </label>
                                 </subviews>
                             </stackView>
+                            <activityIndicatorView opaque="NO" alpha="0.29999999999999999" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="4d0-3a-Bff">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="0.35070900710000003" green="0.79530321839999996" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <gestureRecognizers/>
                         <constraints>
+                            <constraint firstItem="4d0-3a-Bff" firstAttribute="top" secondItem="5MU-pb-1Mc" secondAttribute="top" id="3fU-9d-gPR"/>
+                            <constraint firstAttribute="trailing" secondItem="4d0-3a-Bff" secondAttribute="trailing" id="FSk-CU-MiC"/>
                             <constraint firstAttribute="bottomMargin" secondItem="KIe-BZ-3Jg" secondAttribute="bottom" constant="18" id="OIT-CQ-cK9"/>
+                            <constraint firstItem="4d0-3a-Bff" firstAttribute="leading" secondItem="5MU-pb-1Mc" secondAttribute="leading" id="Uwm-ip-Qbf"/>
                             <constraint firstItem="KIe-BZ-3Jg" firstAttribute="top" secondItem="5MU-pb-1Mc" secondAttribute="topMargin" constant="65" id="XPL-B8-R1c"/>
+                            <constraint firstAttribute="bottom" secondItem="4d0-3a-Bff" secondAttribute="bottom" id="Y8Q-AL-wA3"/>
                             <constraint firstAttribute="trailingMargin" secondItem="KIe-BZ-3Jg" secondAttribute="trailing" constant="30" id="amD-vp-VR3"/>
                             <constraint firstItem="KIe-BZ-3Jg" firstAttribute="leading" secondItem="5MU-pb-1Mc" secondAttribute="leadingMargin" constant="30" id="kzA-pn-dlM"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activityView" destination="4d0-3a-Bff" id="fkL-qI-bwD"/>
                         <outlet property="debugTextLabel" destination="6vn-ev-9zc" id="Zvy-AK-ToQ"/>
                         <outlet property="emailTextField" destination="iDW-VD-e18" id="UVX-zO-6jL"/>
                         <outlet property="passwordTextField" destination="Eba-w7-TDn" id="35g-iN-Sil"/>
