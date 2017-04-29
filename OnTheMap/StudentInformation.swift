@@ -11,8 +11,8 @@
 struct StudentInformation {
     let firstName: String
     let lastName: String
-    let latitude: String
-    let longitude: String
+    let latitude: Double
+    let longitude: Double
     let mediaURL: String
     
     // MARK: Initializers
@@ -21,8 +21,8 @@ struct StudentInformation {
     init(dictionary: [String:AnyObject]) {
         firstName = dictionary[OTMClient.JSONResponseKeys.ParseFirstName] as! String
         lastName = dictionary[OTMClient.JSONResponseKeys.ParseLastName] as! String
-        latitude = dictionary[OTMClient.JSONResponseKeys.ParseLatitude] as! String
-        longitude = dictionary[OTMClient.JSONResponseKeys.ParseLongitude] as! String
+        latitude = dictionary[OTMClient.JSONResponseKeys.ParseLatitude] as! Double
+        longitude = dictionary[OTMClient.JSONResponseKeys.ParseLongitude] as! Double
         mediaURL = dictionary[OTMClient.JSONResponseKeys.ParseMediaURL] as! String
     }
     

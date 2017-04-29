@@ -25,19 +25,30 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Point annotations will be stored in this array
-        var annotations = [MKPointAnnotation]()
-        
-        // Test annotation
-        let annotation = MKPointAnnotation()
-        let coordinate = CLLocationCoordinate2D(latitude: 37.7749, longitude: -122.4194)
-        annotation.coordinate = coordinate
-        annotation.title = "Chris Leung"
-        annotation.subtitle = "http://chrisleung.com"
-        
-        annotations.append(annotation)
-        
-        mapView.addAnnotations(annotations)
+        // Load student locations
+        OTMClient.sharedInstance().getRecentStudentLocations() { (studentInformations, error) in
+            // Point annotations will be stored in this array
+            var annotations = [MKPointAnnotation]()
+            
+            if let studentInformations = studentInformations {
+                for studentInformation in studentInformations {
+                    let annotation = MKPointAnnotation()
+                    let coordinate = CLLocationCoordinate2D(latitude: studentInformation.latitude, longitude: studentInformation.longitude)
+                    annotation.coordinate = coordinate
+                    annotation.title = "\(studentInformation.firstName) \(studentInformation.lastName)"
+                    annotation.subtitle = studentInformation.mediaURL
+                    
+                    annotations.append(annotation)
+                }
+                
+                DispatchQueue.main.async {
+                    self.mapView.addAnnotations(annotations)
+                }
+            } else {
+                // TODO: Do something else here
+                print(error!)
+            }
+        }
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
