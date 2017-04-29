@@ -15,6 +15,7 @@ extension OTMClient {
         static let ApiScheme = "https"
         static let HttpGet = "GET"
         static let HttpPost = "POST"
+        static let HttpDelete = "DELETE"
         
         // MARK: Parse API Information
         static let ParseAppID = "QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr"

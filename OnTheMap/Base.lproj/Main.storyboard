@@ -145,7 +145,7 @@
         <!--On the Map-->
         <scene sceneID="Gee-b0-agx">
             <objects>
-                <viewController id="nbh-Kv-hM1" sceneMemberID="viewController">
+                <viewController id="nbh-Kv-hM1" customClass="MapViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="t8n-MT-k7r"/>
                         <viewControllerLayoutGuide type="bottom" id="bBF-bw-e4h"/>
@@ -168,7 +168,11 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="" image="icon_mapview-deselected" selectedImage="icon_mapview-selected" id="R2N-47-69N"/>
                     <navigationItem key="navigationItem" title="On the Map" id="9QN-5h-5qa">
-                        <barButtonItem key="leftBarButtonItem" title="LOGOUT" id="TCZ-85-Sa3"/>
+                        <barButtonItem key="leftBarButtonItem" title="LOGOUT" id="TCZ-85-Sa3">
+                            <connections>
+                                <action selector="logoutButtonPressed:" destination="nbh-Kv-hM1" id="CWK-Qn-NLq"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VOU-8d-Akv" userLabel="First Responder" sceneMemberID="firstResponder"/>

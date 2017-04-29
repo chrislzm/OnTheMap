@@ -15,7 +15,8 @@ class OTMClient : NSObject {
     // Shared session
     var session = URLSession.shared
     
-    // First + Last name of logged in user -- obtained from Udacity and used in Parse
+    // Session data: Session ID, First Name, Last Name of logged in user
+    var userSessionId:String? = nil
     var userFirstName:String? = nil
     var userLastName:String? = nil
     
@@ -111,7 +112,7 @@ class OTMClient : NSObject {
         }
         
         // TODO: Remove debug print statement
-        print ("The URL is\(components.url!.absoluteString)")
+        print ("Making HTTP Request with URL \(components.url!.absoluteString)")
         return components.url!
     }
     
