@@ -12,6 +12,7 @@ import MapKit
 class MapViewController: UIViewController, MKMapViewDelegate {
 
     // MARK: Outlets
+    @IBOutlet weak var activityView: UIActivityIndicatorView!
     @IBOutlet weak var mapView: MKMapView!
     
     // MARK: Actions
@@ -25,6 +26,9 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Start animation while loading student locations
+        activityView.startAnimating()
+
         // Load student locations
         OTMClient.sharedInstance().getRecentStudentLocations() { (studentInformations, error) in
             // Point annotations will be stored in this array
@@ -47,6 +51,10 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             } else {
                 // TODO: Do something else here
                 print(error!)
+            }
+            
+            DispatchQueue.main.async {
+                self.activityView.stopAnimating()
             }
         }
     }
