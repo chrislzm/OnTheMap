@@ -16,14 +16,18 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var debugTextLabel: UILabel!
     
+    // MARK: Properties
+    
+    // MARK: Lifecycle
+    
     @IBAction func loginButtonPressed(_ sender: Any) {
 
-        // Start animation
-        activityView.startAnimating()
-
         if emailTextField.text!.isEmpty || passwordTextField.text!.isEmpty {
-            debugTextLabel.text = "Username or Password Empty"
+            displayError("Email or password empty")
         } else {
+            // Start animation
+            activityView.startAnimating()
+            
             OTMClient.sharedInstance().loginWith(username: emailTextField.text!, password: passwordTextField.text!) { (success, errorString) in
                 DispatchQueue.main.async {
                     if success {
@@ -48,9 +52,9 @@ class LoginViewController: UIViewController {
     }
     
     private func displayError(_ errorString: String?) {
-        if let errorString = errorString {
-            debugTextLabel.text = errorString
-        }
+        let alert = UIAlertController(title: "Login Failed", message: errorString, preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
 }
 

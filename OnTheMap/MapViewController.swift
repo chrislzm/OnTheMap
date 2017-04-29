@@ -21,42 +21,15 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         completeLogout()
     }
     
+    // MARK: Properties
+    var mapViewAnnotations = [MKPointAnnotation]()
+    
     // MARK: Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Start animation while loading student locations
-        activityView.startAnimating()
 
-        // Load student locations
-        OTMClient.sharedInstance().getRecentStudentLocations() { (studentInformations, error) in
-            // Point annotations will be stored in this array
-            var annotations = [MKPointAnnotation]()
-            
-            if let studentInformations = studentInformations {
-                for studentInformation in studentInformations {
-                    let annotation = MKPointAnnotation()
-                    let coordinate = CLLocationCoordinate2D(latitude: studentInformation.latitude, longitude: studentInformation.longitude)
-                    annotation.coordinate = coordinate
-                    annotation.title = "\(studentInformation.firstName) \(studentInformation.lastName)"
-                    annotation.subtitle = studentInformation.mediaURL
-                    
-                    annotations.append(annotation)
-                }
-                
-                DispatchQueue.main.async {
-                    self.mapView.addAnnotations(annotations)
-                }
-            } else {
-                // TODO: Do something else here
-                print(error!)
-            }
-            
-            DispatchQueue.main.async {
-                self.activityView.stopAnimating()
-            }
-        }
+        refreshStudentLocations()
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -87,9 +60,56 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         }
     }
     
+    // MARK: Load student locations and refresh mapView
+    
+    private func refreshStudentLocations() {
+        
+        // Start animation while loading student locations
+        activityView.startAnimating()
+        
+        // Remove any existing annotations
+        self.mapView.removeAnnotations(mapViewAnnotations)
+        
+        // Update recent student locations
+        OTMClient.sharedInstance().updateRecentStudentLocations() { error in
+            if let error = error {
+                DispatchQueue.main.async {
+                    self.displayError(error)
+                }
+            }
+            
+            self.mapViewAnnotations = [MKPointAnnotation]()
+            
+            for studentInformation in self.getStudents() {
+                let annotation = MKPointAnnotation()
+                let coordinate = CLLocationCoordinate2D(latitude: studentInformation.latitude, longitude: studentInformation.longitude)
+                annotation.coordinate = coordinate
+                annotation.title = "\(studentInformation.firstName) \(studentInformation.lastName)"
+                annotation.subtitle = studentInformation.mediaURL
+                
+                self.mapViewAnnotations.append(annotation)
+            }
+            
+            DispatchQueue.main.async {
+
+                self.mapView.addAnnotations(self.mapViewAnnotations)
+                self.activityView.stopAnimating()
+            }
+            
+        }
+    }
+    
     // MARK: Logout
     
     private func completeLogout() {
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    
+    private func displayError(_ error: NSError) {
+        let errorString = error.userInfo[NSLocalizedDescriptionKey].debugDescription
+        let alert = UIAlertController(title: "Login Failed", message: errorString, preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
 }

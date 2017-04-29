@@ -9,6 +9,7 @@
 // MARK: - OTMClient (Convenient Resource Methods)
 
 import Foundation
+import UIKit
 
 extension OTMClient {
     
@@ -23,9 +24,7 @@ extension OTMClient {
             
             /* 2. Check for error response from Udacity */
             if let error = error {
-                // TODO: Delete debug statement
-                print(error)
-                completionHandler(false, "Login Failed (Invalid username or password)")
+                self.handleHttpNSError(error,completionHandler)
                 return
             }
             
@@ -33,7 +32,7 @@ extension OTMClient {
             guard let response = results as? [String:AnyObject], let session = response[OTMClient.JSONResponseKeys.UdacitySession] as? [String:AnyObject], let sessionID = session[OTMClient.JSONResponseKeys.UdacitySessionID] as? String else {
                 // TODO: Delete debug statement
                 print("Could not find \(OTMClient.JSONResponseKeys.UdacitySession) or \(OTMClient.JSONResponseKeys.UdacitySessionID) in \(String(describing: results))")
-                completionHandler(false, "Login Failed (Error creating session)")
+                completionHandler(false, "Error creating session")
                 return
             }
             
@@ -48,9 +47,7 @@ extension OTMClient {
                 
                 /* 6. Check for error response from Udacity */
                 if let error = error {
-                    // TODO: Delete debug statement
-                    print(error)
-                    completionHandler(false, "Login Failed (Error retrieving user data)")
+                    self.handleHttpNSError(error,completionHandler)
                     return
                 }
                 
@@ -58,7 +55,7 @@ extension OTMClient {
                 guard let response = results as? [String:AnyObject], let user = response[OTMClient.JSONResponseKeys.UdacityUser] as? [String:AnyObject], let firstName = user[OTMClient.JSONResponseKeys.UdacityFirstName] as? String, let lastName = user[OTMClient.JSONResponseKeys.UdacityLastName] as? String else {
                     // TODO: Delete debug statement
                     print("Could not find one or more of keys \(OTMClient.JSONResponseKeys.UdacityUser), \(OTMClient.JSONResponseKeys.UdacityFirstName), \(OTMClient.JSONResponseKeys.UdacityLastName) in \(String(describing: results))")
-                    completionHandler(false, "Login Failed (Error retrieving user data)")
+                    completionHandler(false, "Error retrieving user data")
                     return
                 }
                 
@@ -113,7 +110,7 @@ extension OTMClient {
     
     
     // Gets recent locations posted by students
-    func getRecentStudentLocations(_ completionHandler: @escaping (_ result: [StudentInformation]?, _ error: NSError?) -> Void) {
+    func updateRecentStudentLocations(_ completionHandler: @escaping (_ error: NSError?) -> Void) {
         
         /* 1. Create and run HTTP request to retrieve recent student locations from Parse */
         let parameters:[String:String] = [OTMClient.ParameterKeys.ParseLimit:OTMClient.ParameterValues.ParseNumStudents,
@@ -124,19 +121,38 @@ extension OTMClient {
             if let error = error {
                 // TODO: Delete debug statement
                 print(error)
-                completionHandler(nil, error)
+                completionHandler(error)
                 return
             }
             
             /* 3. Extract results */
             guard let results = results?[OTMClient.JSONResponseKeys.ParseResults] as? [[String:AnyObject]] else {
-                completionHandler(nil, NSError(domain: "getRecentStudentLocations parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse student locations"]))
+                completionHandler(NSError(domain: "getRecentStudentLocations parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse student locations"]))
                 return
             }
 
-            /* 4. Parse results and return the data to the completion handler*/
-            let students = StudentInformation.studentsFromResults(results)
-            completionHandler(students, nil)
+            /* 4. Parse results and save the data to the model */
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            appDelegate.students = StudentInformation.studentsFromResults(results)
+            
+            /* 5. Call the completion handler */
+            completionHandler(nil)
+        }
+    }
+    
+    private func handleHttpNSError(_ error:NSError,_ completionHandler: @escaping (_ success: Bool, _ errorString: String?) -> Void) {
+
+        let errorString = error.userInfo[NSLocalizedDescriptionKey].debugDescription
+
+        // TODO: Remove debug statement
+        print("handleHTTPError: " + errorString)
+
+        if errorString.contains("timed out") {
+            completionHandler(false, "Couldn't connect to server")
+        } else if errorString.contains("Status code returned: 403"){
+            completionHandler(false, "Wrong email or password")
+        } else {
+            completionHandler(false, "Please try again")
         }
     }
 }
