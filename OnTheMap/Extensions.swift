@@ -52,7 +52,6 @@ extension UIViewController {
 
     }
 
-
     func stopActivityIndicator() {
         
         //Here we find the `UIActivityIndicatorView` and remove it from the view
@@ -62,5 +61,11 @@ extension UIViewController {
             activityIndicator.stopAnimating()
             activityIndicator.removeFromSuperview()
         }
+    }
+    
+    func displayAlertWithOKButton(_ errorTitle: String, _ errorMessage: String) {
+        let alert = UIAlertController(title: errorTitle, message: errorMessage, preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
 }

@@ -24,7 +24,7 @@ class LoginViewController: UIViewController {
     @IBAction func loginButtonPressed(_ sender: Any) {
 
         if emailTextField.text!.isEmpty || passwordTextField.text!.isEmpty {
-            displayErrorAlert("Email or password empty")
+            displayAlertWithOKButton("Login Failed","Email or password empty")
         } else {
             // Start animation
             startActivityIndicator()
@@ -34,7 +34,7 @@ class LoginViewController: UIViewController {
                     if success {
                         self.completeLogin()
                     } else {
-                        self.displayErrorAlert(errorString)
+                        self.displayAlertWithOKButton("Login Failed",errorString!)
                     }
                     
                     // Stop Animation
@@ -47,15 +47,8 @@ class LoginViewController: UIViewController {
     // MARK: Login
     
     private func completeLogin() {
-        debugTextLabel.text = ""
         let controller = storyboard!.instantiateViewController(withIdentifier: "OnTheMapTabController") as! UITabBarController
         present(controller, animated: true, completion: nil)
-    }
-    
-    private func displayErrorAlert(_ errorString: String?) {
-        let alert = UIAlertController(title: "Login Failed", message: errorString, preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
     }
 }
 
