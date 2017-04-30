@@ -10,12 +10,11 @@ import UIKit
 import MapKit
 
 class MapViewController: UIViewController, MKMapViewDelegate {
-
+    
     // MARK: Outlets
     
     @IBOutlet weak var activityView: UIActivityIndicatorView!
     @IBOutlet weak var mapView: MKMapView!
-    
     @IBOutlet weak var refreshButton: UIBarButtonItem!
     
     // MARK: Actions
@@ -31,14 +30,23 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     // MARK: Properties
     var mapViewAnnotations = [MKPointAnnotation]()
+    var tableViewController:TableViewController?
     
     // MARK: Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Now that the view hierarchy is loaded, initialize reference to tableViewController
+        tableViewController = self.parent!.parent!.childViewControllers[1].childViewControllers[0] as? TableViewController
+        
+        // Make it load
+        tableViewController!.loadViewIfNeeded()
 
+        // So that we can animate the activity view indicator there
         refreshStudentLocations()
     }
+    
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         let reuseId = "pin"
@@ -76,10 +84,10 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         startAllActivityViewAnimations()
         
         // Update recent student locations
-        OTMClient.sharedInstance().updateRecentStudentLocations() { error in
-            if let error = error {
+        OTMClient.sharedInstance().updateRecentStudentLocations() { (success, errorString) in
+            if (!success) {
                 DispatchQueue.main.async {
-                    self.displayError(error)
+                    self.displayErrorAlert(errorString!)
                 }
             }
             
@@ -113,8 +121,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         self.dismiss(animated: true, completion: nil)
     }
     
-    private func displayError(_ error: NSError) {
-        let errorString = error.userInfo[NSLocalizedDescriptionKey].debugDescription
+    private func displayErrorAlert(_ errorString: String) {
         let alert = UIAlertController(title: "Error Loading Data", message: errorString, preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
@@ -131,15 +138,12 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
     
     private func animateTableViewControllerActivityView(_ animate:Bool) -> Void {
-        let tableViewController = self.parent!.parent!.childViewControllers[1].childViewControllers[0] as! TableViewController
-        if let tableViewActivityView = tableViewController.activityView {
+        if let tableViewActivityView = tableViewController!.activityView {
             if(animate) {
                 tableViewActivityView.startAnimating()
             } else {
                 tableViewActivityView.stopAnimating()
             }
         }
-
     }
-    
 }

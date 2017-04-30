@@ -23,7 +23,7 @@ class LoginViewController: UIViewController {
     @IBAction func loginButtonPressed(_ sender: Any) {
 
         if emailTextField.text!.isEmpty || passwordTextField.text!.isEmpty {
-            displayError("Email or password empty")
+            displayErrorAlert("Email or password empty")
         } else {
             // Start animation
             activityView.startAnimating()
@@ -33,7 +33,7 @@ class LoginViewController: UIViewController {
                     if success {
                         self.completeLogin()
                     } else {
-                        self.displayError(errorString)
+                        self.displayErrorAlert(errorString)
                     }
                     
                     // Stop Animation
@@ -51,7 +51,7 @@ class LoginViewController: UIViewController {
         present(controller, animated: true, completion: nil)
     }
     
-    private func displayError(_ errorString: String?) {
+    private func displayErrorAlert(_ errorString: String?) {
         let alert = UIAlertController(title: "Login Failed", message: errorString, preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
         self.present(alert, animated: true, completion: nil)

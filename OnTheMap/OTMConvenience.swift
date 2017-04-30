@@ -110,7 +110,7 @@ extension OTMClient {
     
     
     // Gets recent locations posted by students
-    func updateRecentStudentLocations(_ completionHandler: @escaping (_ error: NSError?) -> Void) {
+    func updateRecentStudentLocations(_ completionHandler: @escaping (_ success: Bool, _ errorString: String?) -> Void) {
         
         /* 1. Create and run HTTP request to retrieve recent student locations from Parse */
         let parameters:[String:String] = [OTMClient.ParameterKeys.ParseLimit:OTMClient.ParameterValues.ParseNumStudents,
@@ -121,13 +121,14 @@ extension OTMClient {
             if let error = error {
                 // TODO: Delete debug statement
                 print(error)
-                completionHandler(error)
+                self.handleHttpNSError(error,completionHandler)
                 return
             }
             
             /* 3. Extract results */
             guard let results = results?[OTMClient.JSONResponseKeys.ParseResults] as? [[String:AnyObject]] else {
-                completionHandler(NSError(domain: "getRecentStudentLocations parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse student locations"]))
+                let error = NSError(domain: "getRecentStudentLocations parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse student locations"])
+                self.handleHttpNSError(error,completionHandler)
                 return
             }
 
@@ -136,7 +137,7 @@ extension OTMClient {
             appDelegate.students = StudentInformation.studentsFromResults(results)
             
             /* 5. Call the completion handler */
-            completionHandler(nil)
+            completionHandler(true, nil)
         }
     }
     
@@ -148,9 +149,11 @@ extension OTMClient {
         print("handleHTTPError: " + errorString)
 
         if errorString.contains("timed out") {
-            completionHandler(false, "Couldn't connect to server")
+            completionHandler(false, "Couldn't reach server (timed out)")
         } else if errorString.contains("Status code returned: 403"){
             completionHandler(false, "Email or password incorrect")
+        } else if errorString.contains("Could not parse student locations") {
+            completionHandler(false, "Error processing student data")
         } else {
             completionHandler(false, "Please try again")
         }
