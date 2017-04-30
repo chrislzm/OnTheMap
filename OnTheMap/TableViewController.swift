@@ -20,7 +20,8 @@ class TableViewController: UIViewController {
 
     // MARK: Actions
     @IBAction func refreshButtonPressed(_ sender: Any) {
-        
+        let mapViewController = self.parent!.parent!.childViewControllers[0].childViewControllers[0] as! MapViewController
+        mapViewController.refreshStudentLocations()
     }
     
     // MARK: Lifecycle

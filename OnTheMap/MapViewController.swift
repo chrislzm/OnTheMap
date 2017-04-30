@@ -26,7 +26,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
     
     @IBAction func refreshButtonPressed(_ sender: Any) {
-        updateStudentLocations()
+        refreshStudentLocations()
     }
     
     // MARK: Properties
@@ -37,7 +37,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        updateStudentLocations()
+        refreshStudentLocations()
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -70,7 +70,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     // MARK: Load student locations and refresh mapView
     
-    func updateStudentLocations() {
+    func refreshStudentLocations() {
         
         // Start animations while loading student locations
         startAllActivityViewAnimations()
