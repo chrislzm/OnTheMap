@@ -31,10 +31,10 @@ class TableViewController: UIViewController {
     // MARK: Lifecycle
     
     override func viewDidLoad() {
-        NotificationCenter.default.addObserver(self, selector: #selector(TableViewController.willNetworkRequest(_:)), name: Notification.Name("studentDataWillLoad"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(TableViewController.didNetworkRequest(_:)), name: Notification.Name("studentDataDidLoad"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(TableViewController.willNetworkRequest(_:)), name: Notification.Name("willConfirmLocationOverwrite"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(TableViewController.didNetworkRequest(_:)), name: Notification.Name("didConfirmLocationOverwrite"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(TableViewController.willMakeNetworkRequest(_:)), name: Notification.Name("studentDataWillLoad"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(TableViewController.didMakeNetworkRequest(_:)), name: Notification.Name("studentDataDidLoad"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(TableViewController.willMakeNetworkRequest(_:)), name: Notification.Name("willConfirmLocationOverwrite"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(TableViewController.didMakeNetworkRequest(_:)), name: Notification.Name("didConfirmLocationOverwrite"), object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -42,11 +42,11 @@ class TableViewController: UIViewController {
         students = getStudents()
     }
     
-    func willNetworkRequest(_ notification:Notification) {
+    func willMakeNetworkRequest(_ notification:Notification) {
         startActivityIndicator()
     }
     
-    func didNetworkRequest(_ notification:Notification) {
+    func didMakeNetworkRequest(_ notification:Notification) {
         stopActivityIndicator()
         refreshTableView()
     }
@@ -87,9 +87,5 @@ extension TableViewController: UITableViewDelegate, UITableViewDataSource {
         if let url = URL(string: student.mediaURL) {
             app.open(url,options: [:],completionHandler: nil)
         }
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
     }
 }
