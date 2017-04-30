@@ -18,14 +18,22 @@ class TableViewController: UIViewController {
     
     // MARK: Properties
     var students = [StudentInformation]()
-
+    var mapViewController:MapViewController?
+    
     // MARK: Actions
     @IBAction func refreshButtonPressed(_ sender: Any) {
-        let mapViewController = self.parent!.parent!.childViewControllers[0].childViewControllers[0] as! MapViewController
-        mapViewController.refreshStudentLocations()
+        mapViewController!.refreshStudentLocations()
+    }
+    
+    @IBAction func postInformationButtonPressed(_ sender: Any) {
+        mapViewController!.postStudentLocation()
     }
     
     // MARK: Lifecycle
+    
+    override func viewDidLoad() {
+        mapViewController = self.parent!.parent!.childViewControllers[0].childViewControllers[0] as? MapViewController
+    }
     override func viewWillAppear(_ animated: Bool) {
         // Get the update list of students
         students = getStudents()

@@ -28,6 +28,10 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         refreshStudentLocations()
     }
     
+    @IBAction func postInformationButtonPressed(_ sender: Any) {
+        postStudentLocation()
+    }
+    
     // MARK: Properties
     var mapViewAnnotations = [MKPointAnnotation]()
     var tableViewController:TableViewController?
@@ -99,6 +103,24 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         }
     }
     
+    func postStudentLocation() {
+        startAllActivityViewAnimations()
+        
+        OTMClient.sharedInstance().doesStudentLocationAlreadyExist() { (exists,error) in
+            DispatchQueue.main.async {
+                if let error = error {
+                    self.displayErrorAlert(error)
+                } else if exists {
+                    self.displayConfirmOverwriteAlert()
+                } else {
+                    self.displayErrorAlert("User doesn't exist!")
+                }
+                
+                self.stopAllActivityViewAnimations()
+            }
+        }
+    }
+    
     func refreshMapView() {
         var updatedMapViewAnnotations = [MKPointAnnotation]()
         
@@ -126,6 +148,13 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     private func displayErrorAlert(_ errorString: String) {
         let alert = UIAlertController(title: "Error Loading Data", message: errorString, preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    private func displayConfirmOverwriteAlert() {
+        let alert = UIAlertController(title: "Overwrite location?", message: "You already saved a location. Would you like to overwrite it?", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
     

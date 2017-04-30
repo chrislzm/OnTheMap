@@ -7,6 +7,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -120,33 +121,33 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Dcy-BE-bta">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="30" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Dcy-BE-bta">
                                 <rect key="frame" x="0.0" y="64" width="375" height="554"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TableViewCell" textLabel="XEv-Wr-8zH" detailTextLabel="zg0-ae-N8M" imageView="u3y-nR-IL2" style="IBUITableViewCellStyleSubtitle" id="TCG-0J-it4">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TableViewCell" textLabel="XEv-Wr-8zH" detailTextLabel="zg0-ae-N8M" imageView="u3y-nR-IL2" rowHeight="30" style="IBUITableViewCellStyleSubtitle" id="TCG-0J-it4">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="30"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="TCG-0J-it4" id="nhs-ob-CNJ">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="29.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="XEv-Wr-8zH">
-                                                    <rect key="frame" x="54" y="5" width="33.5" height="20.5"/>
+                                                    <rect key="frame" x="54" y="-2" width="33.5" height="20.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zg0-ae-N8M">
-                                                    <rect key="frame" x="54" y="25.5" width="33" height="14.5"/>
+                                                    <rect key="frame" x="54" y="18.5" width="33" height="14.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="icon_pin" id="u3y-nR-IL2">
-                                                    <rect key="frame" x="15" y="9" width="24" height="24"/>
+                                                    <rect key="frame" x="15" y="2" width="24" height="24"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </imageView>
                                             </subviews>
@@ -180,11 +181,18 @@
                     </tabBarItem>
                     <navigationItem key="navigationItem" title="On the Map" id="AJg-W4-all">
                         <barButtonItem key="leftBarButtonItem" title="LOGOUT" id="K1P-ka-mbn"/>
-                        <barButtonItem key="rightBarButtonItem" image="icon_refresh" id="8dZ-TR-TOs">
-                            <connections>
-                                <action selector="refreshButtonPressed:" destination="kQs-nQ-DPR" id="SAe-bB-U6S"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem image="icon_addpin" id="ics-uJ-F8J">
+                                <connections>
+                                    <action selector="postInformationButtonPressed:" destination="kQs-nQ-DPR" id="5d6-KE-UCW"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem image="icon_refresh" id="8dZ-TR-TOs">
+                                <connections>
+                                    <action selector="refreshButtonPressed:" destination="kQs-nQ-DPR" id="SAe-bB-U6S"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="activityView" destination="aq8-fw-zce" id="Caj-Vk-t3r"/>
@@ -263,11 +271,18 @@
                                 <action selector="logoutButtonPressed:" destination="nbh-Kv-hM1" id="CWK-Qn-NLq"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" image="icon_refresh" id="h8j-rN-HIY">
-                            <connections>
-                                <action selector="refreshButtonPressed:" destination="nbh-Kv-hM1" id="Yhw-Qs-tcm"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem image="icon_addpin" id="Jw1-dj-BlW">
+                                <connections>
+                                    <action selector="postInformationButtonPressed:" destination="nbh-Kv-hM1" id="WZA-JK-oW3"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem image="icon_refresh" id="h8j-rN-HIY">
+                                <connections>
+                                    <action selector="refreshButtonPressed:" destination="nbh-Kv-hM1" id="Yhw-Qs-tcm"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="activityView" destination="lcV-Bl-HLY" id="v0v-6u-5kN"/>
@@ -316,6 +331,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="icon_addpin" width="24" height="24"/>
         <image name="icon_listview-deselected" width="75" height="50"/>
         <image name="icon_mapview-deselected" width="75" height="50"/>
         <image name="icon_mapview-selected" width="75" height="50"/>
