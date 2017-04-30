@@ -128,18 +128,18 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="TCG-0J-it4" id="nhs-ob-CNJ">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="XEv-Wr-8zH">
-                                                    <rect key="frame" x="54" y="4" width="34" height="21"/>
+                                                    <rect key="frame" x="54" y="5" width="33.5" height="20.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zg0-ae-N8M">
-                                                    <rect key="frame" x="54" y="25" width="33" height="15"/>
+                                                    <rect key="frame" x="54" y="25.5" width="33" height="14.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <nil key="textColor"/>
@@ -158,13 +158,21 @@
                                     <outlet property="delegate" destination="kQs-nQ-DPR" id="K7C-VH-WRu"/>
                                 </connections>
                             </tableView>
+                            <activityIndicatorView hidden="YES" opaque="NO" alpha="0.29999999999999999" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="aq8-fw-zce">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="aq8-fw-zce" firstAttribute="top" secondItem="Nhb-hW-5dR" secondAttribute="top" id="19c-9b-IgK"/>
+                            <constraint firstAttribute="trailing" secondItem="aq8-fw-zce" secondAttribute="trailing" id="8sN-xT-ewo"/>
+                            <constraint firstItem="aq8-fw-zce" firstAttribute="leading" secondItem="Nhb-hW-5dR" secondAttribute="leading" id="FVL-Ow-oaE"/>
                             <constraint firstItem="Dcy-BE-bta" firstAttribute="leading" secondItem="Nhb-hW-5dR" secondAttribute="leading" id="MYF-TV-qGJ"/>
                             <constraint firstAttribute="trailing" secondItem="Dcy-BE-bta" secondAttribute="trailing" id="Tuh-tQ-UIy"/>
                             <constraint firstItem="Dcy-BE-bta" firstAttribute="top" secondItem="9wi-pl-3qi" secondAttribute="bottom" id="cFp-3i-j7a"/>
                             <constraint firstItem="cMK-LG-ENi" firstAttribute="top" secondItem="Dcy-BE-bta" secondAttribute="bottom" id="djI-Xa-LAy"/>
+                            <constraint firstAttribute="bottom" secondItem="aq8-fw-zce" secondAttribute="bottom" id="ejG-LQ-Apk"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="" image="icon_listview-deselected" selectedImage="icon_listview-deselected" id="FO3-Rw-izS">
@@ -174,6 +182,9 @@
                         <barButtonItem key="leftBarButtonItem" title="LOGOUT" id="K1P-ka-mbn"/>
                         <barButtonItem key="rightBarButtonItem" image="icon_refresh" id="8dZ-TR-TOs"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="activityView" destination="aq8-fw-zce" id="Caj-Vk-t3r"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SrP-tZ-VpO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

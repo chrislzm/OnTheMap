@@ -12,8 +12,13 @@ import UIKit
 
 class TableViewController: UIViewController {
     
-    var students = [StudentInformation]()
+    // MARK: Outlets
+    @IBOutlet weak var activityView: UIActivityIndicatorView!
     
+    // MARK: Properties
+    var students = [StudentInformation]()
+
+    // MARK: Lifecycle
     override func viewWillAppear(_ animated: Bool) {
         // Get the update list of students
         students = getStudents()

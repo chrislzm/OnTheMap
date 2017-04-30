@@ -70,10 +70,10 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     // MARK: Load student locations and refresh mapView
     
-    private func updateStudentLocations() {
+    func updateStudentLocations() {
         
-        // Start animation while loading student locations
-        activityView.startAnimating()
+        // Start animations while loading student locations
+        startAllActivityViewAnimations()
         
         // Update recent student locations
         OTMClient.sharedInstance().updateRecentStudentLocations() { error in
@@ -98,8 +98,9 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             DispatchQueue.main.async {
                 self.mapView.removeAnnotations(self.mapViewAnnotations)
                 self.mapView.addAnnotations(updatedMapViewAnnotations)
-                self.activityView.stopAnimating()
+                self.stopAllActivityViewAnimations()
                 
+                // Save a copy so that we can remove them later if needed
                 self.mapViewAnnotations = updatedMapViewAnnotations
             }
             
@@ -118,4 +119,28 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
+    
+    private func startAllActivityViewAnimations() {
+        activityView.startAnimating()
+        animateTableViewControllerActivityView(true)
+    }
+    
+    private func stopAllActivityViewAnimations() {
+        activityView.stopAnimating()
+        animateTableViewControllerActivityView(false)
+    }
+    
+    private func animateTableViewControllerActivityView(_ animate:Bool) -> Void {
+        let tabBarViewController = self.parent?.parent as! UITabBarController
+        let tableViewController = tabBarViewController.childViewControllers[1].childViewControllers[0] as! TableViewController
+        if let tableViewActivityView = tableViewController.activityView {
+            if(animate) {
+                tableViewActivityView.startAnimating()
+            } else {
+                tableViewActivityView.stopAnimating()
+            }
+        }
+
+    }
+    
 }
