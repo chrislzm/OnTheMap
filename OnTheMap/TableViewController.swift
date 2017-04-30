@@ -18,6 +18,11 @@ class TableViewController: UIViewController {
     // MARK: Properties
     var students = [StudentInformation]()
 
+    // MARK: Actions
+    @IBAction func refreshButtonPressed(_ sender: Any) {
+        
+    }
+    
     // MARK: Lifecycle
     override func viewWillAppear(_ animated: Bool) {
         // Get the update list of students

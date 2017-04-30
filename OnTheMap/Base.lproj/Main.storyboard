@@ -180,7 +180,11 @@
                     </tabBarItem>
                     <navigationItem key="navigationItem" title="On the Map" id="AJg-W4-all">
                         <barButtonItem key="leftBarButtonItem" title="LOGOUT" id="K1P-ka-mbn"/>
-                        <barButtonItem key="rightBarButtonItem" image="icon_refresh" id="8dZ-TR-TOs"/>
+                        <barButtonItem key="rightBarButtonItem" image="icon_refresh" id="8dZ-TR-TOs">
+                            <connections>
+                                <action selector="refreshButtonPressed:" destination="kQs-nQ-DPR" id="SAe-bB-U6S"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="activityView" destination="aq8-fw-zce" id="Caj-Vk-t3r"/>

@@ -131,8 +131,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
     
     private func animateTableViewControllerActivityView(_ animate:Bool) -> Void {
-        let tabBarViewController = self.parent?.parent as! UITabBarController
-        let tableViewController = tabBarViewController.childViewControllers[1].childViewControllers[0] as! TableViewController
+        let tableViewController = self.parent!.parent!.childViewControllers[1].childViewControllers[0] as! TableViewController
         if let tableViewActivityView = tableViewController.activityView {
             if(animate) {
                 tableViewActivityView.startAnimating()
