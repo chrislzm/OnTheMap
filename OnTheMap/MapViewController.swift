@@ -113,7 +113,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                 } else if exists {
                     self.displayConfirmOverwriteAlert()
                 } else {
-                    self.displayErrorAlert("User doesn't exist!")
+                    self.showAddLocationViewController()
                 }
                 
                 self.stopAllActivityViewAnimations()
@@ -153,9 +153,16 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     private func displayConfirmOverwriteAlert() {
         let alert = UIAlertController(title: "Overwrite location?", message: "You already saved a location. Would you like to overwrite it?", preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default) { (uiActionAlert) in
+                self.showAddLocationViewController()
+            })
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    private func showAddLocationViewController() {
+        let controller = storyboard!.instantiateViewController(withIdentifier: "AddLocationViewController") as! AddLocationViewController
+        present(controller, animated: true, completion: nil)
     }
     
     private func startAllActivityViewAnimations() {

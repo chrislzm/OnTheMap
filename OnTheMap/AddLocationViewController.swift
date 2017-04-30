@@ -10,4 +10,7 @@ import UIKit
 
 class AddLocationViewController:UIViewController {
     
+    @IBAction func cancelButtonPressed(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
 }
