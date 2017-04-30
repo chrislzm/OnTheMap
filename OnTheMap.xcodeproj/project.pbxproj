@@ -11,6 +11,7 @@
 		A58674E11EB2EB900024FC7B /* OTMClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58674E01EB2EB900024FC7B /* OTMClient.swift */; };
 		A58674E31EB2EBD10024FC7B /* OTMConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58674E21EB2EBD10024FC7B /* OTMConstants.swift */; };
 		A58674E51EB2F4F10024FC7B /* OTMConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58674E41EB2F4F10024FC7B /* OTMConvenience.swift */; };
+		A5A4249E1EB5AF32009A82E6 /* AddLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A4249D1EB5AF32009A82E6 /* AddLocationViewController.swift */; };
 		A5DA964D1EB405730050E8B3 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DA964C1EB405730050E8B3 /* MapViewController.swift */; };
 		A5DA964F1EB41EC40050E8B3 /* StudentInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DA964E1EB41EC40050E8B3 /* StudentInformation.swift */; };
 		A5DA96511EB455640050E8B3 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DA96501EB455640050E8B3 /* Extensions.swift */; };
@@ -27,6 +28,7 @@
 		A58674E01EB2EB900024FC7B /* OTMClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTMClient.swift; sourceTree = "<group>"; };
 		A58674E21EB2EBD10024FC7B /* OTMConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTMConstants.swift; sourceTree = "<group>"; };
 		A58674E41EB2F4F10024FC7B /* OTMConvenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTMConvenience.swift; sourceTree = "<group>"; };
+		A5A4249D1EB5AF32009A82E6 /* AddLocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddLocationViewController.swift; sourceTree = "<group>"; };
 		A5DA964C1EB405730050E8B3 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		A5DA964E1EB41EC40050E8B3 /* StudentInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentInformation.swift; sourceTree = "<group>"; };
 		A5DA96501EB455640050E8B3 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -104,6 +106,7 @@
 		A5DC8DBC1EB2DD4A000DD0DA /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				A5A4249D1EB5AF32009A82E6 /* AddLocationViewController.swift */,
 				A5DC8DAC1EB2ADBF000DD0DA /* LoginViewController.swift */,
 				A5DA964C1EB405730050E8B3 /* MapViewController.swift */,
 				A5F74E151EB4630F002AF032 /* TableViewController.swift */,
@@ -190,6 +193,7 @@
 				A5DC8DAD1EB2ADBF000DD0DA /* LoginViewController.swift in Sources */,
 				A5F74E161EB4630F002AF032 /* TableViewController.swift in Sources */,
 				A58674E11EB2EB900024FC7B /* OTMClient.swift in Sources */,
+				A5A4249E1EB5AF32009A82E6 /* AddLocationViewController.swift in Sources */,
 				A5DC8DAB1EB2ADBF000DD0DA /* AppDelegate.swift in Sources */,
 				A58674E31EB2EBD10024FC7B /* OTMConstants.swift in Sources */,
 				A58674E51EB2F4F10024FC7B /* OTMConvenience.swift in Sources */,
