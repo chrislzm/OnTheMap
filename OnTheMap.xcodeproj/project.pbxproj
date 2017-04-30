@@ -56,6 +56,8 @@
 		A58674DC1EB2E0BB0024FC7B /* View */ = {
 			isa = PBXGroup;
 			children = (
+				A5DC8DAE1EB2ADBF000DD0DA /* Main.storyboard */,
+				A5DC8DB31EB2ADBF000DD0DA /* LaunchScreen.storyboard */,
 				A58674DD1EB2E1230024FC7B /* BorderedButton.swift */,
 			);
 			name = View;
@@ -95,9 +97,7 @@
 				A58674DF1EB2EB440024FC7B /* Model */,
 				A58674DC1EB2E0BB0024FC7B /* View */,
 				A5DC8DBC1EB2DD4A000DD0DA /* Controller */,
-				A5DC8DAE1EB2ADBF000DD0DA /* Main.storyboard */,
 				A5DC8DB11EB2ADBF000DD0DA /* Assets.xcassets */,
-				A5DC8DB31EB2ADBF000DD0DA /* LaunchScreen.storyboard */,
 				A5DC8DB61EB2ADBF000DD0DA /* Info.plist */,
 			);
 			path = OnTheMap;

@@ -13,37 +13,51 @@ import UIKit
 class TableViewController: UIViewController {
     
     // MARK: Outlets
-    @IBOutlet weak var activityView: UIActivityIndicatorView!
     @IBOutlet weak var tableView: UITableView!
     
     // MARK: Properties
+    override var activityIndicatorTag: Int { return 3 }
     var students = [StudentInformation]()
-    var mapViewController:MapViewController?
     
     // MARK: Actions
     @IBAction func refreshButtonPressed(_ sender: Any) {
-        mapViewController!.refreshStudentLocations()
+        NotificationCenter.default.post(name: Notification.Name("refreshButtonPressed"), object: nil)
     }
     
     @IBAction func postInformationButtonPressed(_ sender: Any) {
-        mapViewController!.postStudentLocation()
+        NotificationCenter.default.post(name: Notification.Name("postInformationButtonPressed"), object: nil)
     }
     
     // MARK: Lifecycle
     
     override func viewDidLoad() {
-        mapViewController = self.parent!.parent!.childViewControllers[0].childViewControllers[0] as? MapViewController
+        NotificationCenter.default.addObserver(self, selector: #selector(TableViewController.willNetworkRequest(_:)), name: Notification.Name("studentDataWillLoad"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(TableViewController.didNetworkRequest(_:)), name: Notification.Name("studentDataDidLoad"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(TableViewController.willNetworkRequest(_:)), name: Notification.Name("willConfirmLocationOverwrite"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(TableViewController.didNetworkRequest(_:)), name: Notification.Name("didConfirmLocationOverwrite"), object: nil)
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         // Get the update list of students
         students = getStudents()
     }
+    
+    func willNetworkRequest(_ notification:Notification) {
+        startActivityIndicator()
+    }
+    
+    func didNetworkRequest(_ notification:Notification) {
+        stopActivityIndicator()
+        refreshTableView()
+    }
+    
+    //func startActivityViewAnimations
 
     func refreshTableView() {
         // Copy the updated array of memes
         students = getStudents()
         
-        // Force reload data
+        // Reload data
         tableView.reloadData()
     }
 }

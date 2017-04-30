@@ -12,8 +12,6 @@ import MapKit
 class MapViewController: UIViewController, MKMapViewDelegate {
     
     // MARK: Outlets
-    
-    @IBOutlet weak var activityView: UIActivityIndicatorView!
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var refreshButton: UIBarButtonItem!
     
@@ -25,7 +23,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
     
     @IBAction func refreshButtonPressed(_ sender: Any) {
-        refreshStudentLocations()
+        loadStudentLocations()
     }
     
     @IBAction func postInformationButtonPressed(_ sender: Any) {
@@ -33,21 +31,19 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
     
     // MARK: Properties
+    override var activityIndicatorTag: Int { return 2 }
     var mapViewAnnotations = [MKPointAnnotation]()
-    var tableViewController:TableViewController?
     
     // MARK: Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Now that the view hierarchy is loaded, initialize reference to tableViewController
-        tableViewController = self.parent!.parent!.childViewControllers[1].childViewControllers[0] as? TableViewController
-        
-        // Make it load so that we can animate the activity view indicator there while loading initial data
-        tableViewController!.loadViewIfNeeded()
+        NotificationCenter.default.addObserver(self, selector: #selector(MapViewController.refreshButtonPressed(_:)), name: Notification.Name("refreshButtonPressed"), object: nil)
 
-        refreshStudentLocations()
+        NotificationCenter.default.addObserver(self, selector: #selector(MapViewController.postInformationButtonPressed(_:)), name: Notification.Name("postInformationButtonPressed"), object: nil)
+        
+        loadStudentLocations()
     }
     
     
@@ -81,10 +77,13 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     // MARK: Load student locations and refresh mapView
     
-    func refreshStudentLocations() {
+    func loadStudentLocations() {
+        
+        // Send notification student data will load
+        NotificationCenter.default.post(name: Notification.Name("studentDataWillLoad"), object: nil)
         
         // Start animations while loading student locations
-        startAllActivityViewAnimations()
+        startActivityIndicator()
         
         // Update recent student locations
         OTMClient.sharedInstance().updateRecentStudentLocations() { (success, errorString) in
@@ -95,16 +94,21 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             }
 
             DispatchQueue.main.async {
-                self.stopAllActivityViewAnimations()
+                // Send notification student data did load
+                NotificationCenter.default.post(name: Notification.Name("studentDataDidLoad"), object: nil)
+                self.stopActivityIndicator()
                 self.refreshMapView()
-                self.tableViewController!.refreshTableView()
             }
             
         }
     }
     
     func postStudentLocation() {
-        startAllActivityViewAnimations()
+        
+        // Send notification will confirm overwrite
+        NotificationCenter.default.post(name: Notification.Name("willConfirmLocationOverwrite"), object: nil)
+        
+        startActivityIndicator()
         
         OTMClient.sharedInstance().doesStudentLocationAlreadyExist() { (exists,error) in
             DispatchQueue.main.async {
@@ -116,7 +120,10 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                     self.showAddLocationViewController()
                 }
                 
-                self.stopAllActivityViewAnimations()
+                // Send notification did confirm overwrite
+                NotificationCenter.default.post(name: Notification.Name("didConfirmLocationOverwrite"), object: nil)
+                
+                self.stopActivityIndicator()
             }
         }
     }
@@ -164,25 +171,4 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         let controller = storyboard!.instantiateViewController(withIdentifier: "AddLocationViewController") as! AddLocationViewController
         present(controller, animated: true, completion: nil)
     }
-    
-    private func startAllActivityViewAnimations() {
-        activityView.startAnimating()
-        animateTableViewControllerActivityView(true)
-    }
-    
-    private func stopAllActivityViewAnimations() {
-        activityView.stopAnimating()
-        animateTableViewControllerActivityView(false)
-    }
-    
-    private func animateTableViewControllerActivityView(_ animate:Bool) -> Void {
-        if let tableViewActivityView = tableViewController!.activityView {
-            if(animate) {
-                tableViewActivityView.startAnimating()
-            } else {
-                tableViewActivityView.stopAnimating()
-            }
-        }
-    }
-    
 }

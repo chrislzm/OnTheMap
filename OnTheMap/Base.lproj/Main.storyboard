@@ -71,26 +71,17 @@
                                     </label>
                                 </subviews>
                             </stackView>
-                            <activityIndicatorView hidden="YES" opaque="NO" alpha="0.29999999999999999" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="4d0-3a-Bff">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="0.35070900710000003" green="0.79530321839999996" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="4d0-3a-Bff" firstAttribute="top" secondItem="5MU-pb-1Mc" secondAttribute="top" id="3fU-9d-gPR"/>
-                            <constraint firstAttribute="trailing" secondItem="4d0-3a-Bff" secondAttribute="trailing" id="FSk-CU-MiC"/>
                             <constraint firstAttribute="bottomMargin" secondItem="KIe-BZ-3Jg" secondAttribute="bottom" constant="18" id="OIT-CQ-cK9"/>
-                            <constraint firstItem="4d0-3a-Bff" firstAttribute="leading" secondItem="5MU-pb-1Mc" secondAttribute="leading" id="Uwm-ip-Qbf"/>
                             <constraint firstItem="KIe-BZ-3Jg" firstAttribute="top" secondItem="5MU-pb-1Mc" secondAttribute="topMargin" constant="65" id="XPL-B8-R1c"/>
-                            <constraint firstAttribute="bottom" secondItem="4d0-3a-Bff" secondAttribute="bottom" id="Y8Q-AL-wA3"/>
                             <constraint firstAttribute="trailingMargin" secondItem="KIe-BZ-3Jg" secondAttribute="trailing" constant="30" id="amD-vp-VR3"/>
                             <constraint firstItem="KIe-BZ-3Jg" firstAttribute="leading" secondItem="5MU-pb-1Mc" secondAttribute="leadingMargin" constant="30" id="kzA-pn-dlM"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="activityView" destination="4d0-3a-Bff" id="fkL-qI-bwD"/>
                         <outlet property="debugTextLabel" destination="6vn-ev-9zc" id="Zvy-AK-ToQ"/>
                         <outlet property="emailTextField" destination="iDW-VD-e18" id="UVX-zO-6jL"/>
                         <outlet property="passwordTextField" destination="Eba-w7-TDn" id="35g-iN-Sil"/>
@@ -159,21 +150,13 @@
                                     <outlet property="delegate" destination="kQs-nQ-DPR" id="K7C-VH-WRu"/>
                                 </connections>
                             </tableView>
-                            <activityIndicatorView hidden="YES" opaque="NO" alpha="0.29999999999999999" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="aq8-fw-zce">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="aq8-fw-zce" firstAttribute="top" secondItem="Nhb-hW-5dR" secondAttribute="top" id="19c-9b-IgK"/>
-                            <constraint firstAttribute="trailing" secondItem="aq8-fw-zce" secondAttribute="trailing" id="8sN-xT-ewo"/>
-                            <constraint firstItem="aq8-fw-zce" firstAttribute="leading" secondItem="Nhb-hW-5dR" secondAttribute="leading" id="FVL-Ow-oaE"/>
                             <constraint firstItem="Dcy-BE-bta" firstAttribute="leading" secondItem="Nhb-hW-5dR" secondAttribute="leading" id="MYF-TV-qGJ"/>
                             <constraint firstAttribute="trailing" secondItem="Dcy-BE-bta" secondAttribute="trailing" id="Tuh-tQ-UIy"/>
                             <constraint firstItem="Dcy-BE-bta" firstAttribute="top" secondItem="9wi-pl-3qi" secondAttribute="bottom" id="cFp-3i-j7a"/>
                             <constraint firstItem="cMK-LG-ENi" firstAttribute="top" secondItem="Dcy-BE-bta" secondAttribute="bottom" id="djI-Xa-LAy"/>
-                            <constraint firstAttribute="bottom" secondItem="aq8-fw-zce" secondAttribute="bottom" id="ejG-LQ-Apk"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="" image="icon_listview-deselected" selectedImage="icon_listview-deselected" id="FO3-Rw-izS">
@@ -195,7 +178,6 @@
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
-                        <outlet property="activityView" destination="aq8-fw-zce" id="Caj-Vk-t3r"/>
                         <outlet property="tableView" destination="Dcy-BE-bta" id="pmk-xp-SO1"/>
                     </connections>
                 </viewController>
@@ -247,19 +229,11 @@
                                     <outlet property="delegate" destination="nbh-Kv-hM1" id="YQV-C2-m0l"/>
                                 </connections>
                             </mapView>
-                            <activityIndicatorView hidden="YES" opaque="NO" alpha="0.29999999999999999" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="lcV-Bl-HLY">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="lcV-Bl-HLY" secondAttribute="trailing" id="ALn-Gm-weT"/>
-                            <constraint firstAttribute="bottom" secondItem="lcV-Bl-HLY" secondAttribute="bottom" id="WJo-ui-lxk"/>
                             <constraint firstItem="4ZZ-nk-EBA" firstAttribute="leading" secondItem="gZ7-dq-eK6" secondAttribute="leading" id="jG9-kg-tfz"/>
-                            <constraint firstItem="lcV-Bl-HLY" firstAttribute="leading" secondItem="gZ7-dq-eK6" secondAttribute="leading" id="kq9-NV-2dF"/>
                             <constraint firstItem="4ZZ-nk-EBA" firstAttribute="top" secondItem="t8n-MT-k7r" secondAttribute="bottom" id="pRA-BZ-zU3"/>
-                            <constraint firstItem="lcV-Bl-HLY" firstAttribute="top" secondItem="gZ7-dq-eK6" secondAttribute="top" id="vYs-sq-6A4"/>
                             <constraint firstAttribute="trailing" secondItem="4ZZ-nk-EBA" secondAttribute="trailing" id="wIj-8m-PCh"/>
                             <constraint firstItem="bBF-bw-e4h" firstAttribute="top" secondItem="4ZZ-nk-EBA" secondAttribute="bottom" id="xVO-ds-AUY"/>
                         </constraints>
@@ -285,7 +259,6 @@
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
-                        <outlet property="activityView" destination="lcV-Bl-HLY" id="v0v-6u-5kN"/>
                         <outlet property="mapView" destination="4ZZ-nk-EBA" id="FgQ-qT-TDN"/>
                     </connections>
                 </viewController>
