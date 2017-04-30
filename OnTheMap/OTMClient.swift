@@ -16,6 +16,7 @@ class OTMClient : NSObject {
     var session = URLSession.shared
     
     // Session data: Session ID, First Name, Last Name of logged in user
+    var username:String? = nil
     var userSessionId:String? = nil
     var userFirstName:String? = nil
     var userLastName:String? = nil
@@ -100,6 +101,15 @@ class OTMClient : NSObject {
         return task
     }
 
+    // Substitute the key for the value that is contained within the string
+    func substituteKey(_ string: String, key: String, value: String) -> String? {
+        if string.range(of: key) != nil {
+            return string.replacingOccurrences(of: key, with: value)
+        } else {
+            return nil
+        }
+    }
+    
     // Creates a URL from parameters
     
     private func urlFromParameters(_ host:String, _ method:String, _ parameters: [String:String]?) -> URL {
@@ -112,7 +122,7 @@ class OTMClient : NSObject {
         if let parameters = parameters {
             components.queryItems = [URLQueryItem]()
             for (key, value) in parameters {
-                let queryItem = URLQueryItem(name: key, value: "\(value)")
+                let queryItem = URLQueryItem(name: key, value: value)
                 components.queryItems!.append(queryItem)
             }
         }
