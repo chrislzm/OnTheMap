@@ -311,6 +311,9 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lgW-KB-WXD" customClass="BorderedButton" customModule="OnTheMap" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="123" width="343" height="30"/>
                                         <state key="normal" title="Find Location"/>
+                                        <connections>
+                                            <action selector="findLocationButtonPressed:" destination="cQZ-EY-Yoz" eventType="touchUpInside" id="QFZ-7s-Lzh"/>
+                                        </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H8h-cY-yQe">
                                         <rect key="frame" x="0.0" y="164" width="343" height="374"/>
@@ -332,6 +335,10 @@
                             <constraint firstItem="19O-eZ-VES" firstAttribute="top" secondItem="Z9G-xq-49z" secondAttribute="bottom" constant="65" id="xaH-Ln-rQA"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="locationTextView" destination="DD9-Qn-ifV" id="MSP-Qx-NTt"/>
+                        <outlet property="websiteTextView" destination="Dix-kP-h9C" id="khD-ac-Nuz"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="scK-vQ-bzo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

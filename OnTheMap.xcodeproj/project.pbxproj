@@ -106,10 +106,10 @@
 		A5DC8DBC1EB2DD4A000DD0DA /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				A5A4249D1EB5AF32009A82E6 /* AddLocationViewController.swift */,
 				A5DC8DAC1EB2ADBF000DD0DA /* LoginViewController.swift */,
 				A5DA964C1EB405730050E8B3 /* MapViewController.swift */,
 				A5F74E151EB4630F002AF032 /* TableViewController.swift */,
+				A5A4249D1EB5AF32009A82E6 /* AddLocationViewController.swift */,
 				A5DA96501EB455640050E8B3 /* Extensions.swift */,
 			);
 			name = Controller;
