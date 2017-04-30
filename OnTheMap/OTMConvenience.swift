@@ -39,7 +39,8 @@ extension OTMClient {
             // TODO: Delete session ID Debug statenent
             print("Login Success! Session ID = \(sessionID)")
             
-            /* 4. Save the session ID */
+            /* 4. Save the username and session ID */
+            self.username = username
             self.userSessionId = sessionID
             
             /* 5. Create and run HTTP request to retrieve user's first name and last name */
@@ -140,6 +141,64 @@ extension OTMClient {
             completionHandler(true, nil)
         }
     }
+    
+    // Checks if a student location already exists. Error is nil if the request was successful. doesExist will contain the result.
+    func doesStudentLocationAlreadyExist(_ completionHandler: @escaping (_ doesExist: Bool, _ errorString: String?) -> Void) {
+        /* 1. Create and run HTTP request to retrieve recent student locations from Parse */
+        let uniqueKeyParameter = substituteKey(OTMClient.ParameterValues.ParseUniqueKey, key: OTMClient.URLKeys.ParseUniqueKey, value: username!)!
+        let parameters:[String:String] = [OTMClient.ParameterKeys.ParseWhere:uniqueKeyParameter]
+        let _ = taskForHTTPMethod(OTMClient.Constants.HttpGet, OTMClient.Constants.ParseApiHost, OTMClient.Methods.ParseStudentLocation, apiParameters: parameters, valuesForHTTPHeader: nil, httpBody: nil) { (results, error) in
+            
+            /* 2. Check for error response from Parse */
+            if let error = error {
+                // TODO: Delete debug statement
+                print(error)
+                self.handleHttpNSError(error,completionHandler)
+                return
+            }
+            
+            /* 3. Extract results */
+            guard let results = results?[OTMClient.JSONResponseKeys.ParseResults] as? [[String:AnyObject]] else {
+                let error = NSError(domain: "getRecentStudentLocations parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse student locations"])
+                self.handleHttpNSError(error,completionHandler)
+                return
+            }
+            
+            /* 4. Return based on whether we have a result or not */
+            if results.count > 0 {
+                completionHandler(true, nil)
+            } else {
+                completionHandler(false, nil)
+            }
+        }
+    }
+    
+    func addStudentLocation(_ completionHandler: @escaping (_ success: Bool, _ errorString: String?) -> Void) {
+        /* 1. Create and run HTTP request to retrieve recent student locations from Parse */
+        let httpBody = "{\"uniqueKey\": \"\(username!)\", \"firstName\": \"\(userFirstName!)\", \"lastName\": \"\(userLastName!)\",\"mapString\": \"Reno, CA\", \"mediaURL\": \"https://udacity.com\",\"latitude\": 39.5296, \"longitude\": -119.8138}"
+        let httpHeaderValues = [("application/json","Content-Type")]
+        let _ = taskForHTTPMethod(OTMClient.Constants.HttpPost, OTMClient.Constants.ParseApiHost, OTMClient.Methods.ParseStudentLocation, apiParameters: nil, valuesForHTTPHeader: httpHeaderValues, httpBody: httpBody) { (results, error) in
+            
+            /* 2. Check for error response from Parse */
+            if let error = error {
+                // TODO: Delete debug statement
+                print(error)
+                self.handleHttpNSError(error,completionHandler)
+                return
+            }
+            
+            /* 3. Verify the student location was created */
+            guard let _ = results?[OTMClient.JSONResponseKeys.ParseLocationCreated] else {
+                let error = NSError(domain: "addStudentLocation parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not add student location"])
+                self.handleHttpNSError(error,completionHandler)
+                return
+            }
+            
+            /* 4. Return without an error */
+            completionHandler(true, nil)
+        }
+    }
+    
     
     private func handleHttpNSError(_ error:NSError,_ completionHandler: @escaping (_ success: Bool, _ errorString: String?) -> Void) {
 

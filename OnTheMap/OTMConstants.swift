@@ -42,16 +42,23 @@ extension OTMClient {
         static let ParseStudentLocation = "/parse/classes/StudentLocation"
     }
     
+    struct URLKeys {
+        // MARK: Parse Parameter Keys
+        static let ParseUniqueKey = "[uniqueKey]"
+    }
+    
     struct ParameterKeys {
         // MARK: Parse Parameter Keys
         static let ParseLimit = "limit"
         static let ParseOrder = "order"
+        static let ParseWhere = "where"
     }
 
     struct ParameterValues {
         // MARK: Parse Parameter Values
         static let ParseNumStudents = OTMClient.Constants.ParseStudentLocationLimit
         static let ParseUpdatedAt = "-updatedAt"
+        static let ParseUniqueKey = "{\"uniqueKey\":\"[uniqueKey]\"}"
     }
 
     struct JSONResponseKeys {
@@ -69,5 +76,6 @@ extension OTMClient {
         static let ParseLongitude = "longitude"
         static let ParseMediaURL = "mediaURL"
         static let ParseResults = "results"
+        static let ParseLocationCreated = "createdAt"
     }
 }
