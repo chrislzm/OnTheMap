@@ -188,6 +188,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="activityView" destination="aq8-fw-zce" id="Caj-Vk-t3r"/>
+                        <outlet property="tableView" destination="Dcy-BE-bta" id="pmk-xp-SO1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SrP-tZ-VpO" userLabel="First Responder" sceneMemberID="firstResponder"/>

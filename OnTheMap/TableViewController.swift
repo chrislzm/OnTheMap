@@ -14,6 +14,7 @@ class TableViewController: UIViewController {
     
     // MARK: Outlets
     @IBOutlet weak var activityView: UIActivityIndicatorView!
+    @IBOutlet weak var tableView: UITableView!
     
     // MARK: Properties
     var students = [StudentInformation]()
@@ -30,6 +31,13 @@ class TableViewController: UIViewController {
         students = getStudents()
     }
 
+    func refreshTableView() {
+        // Copy the updated array of memes
+        students = getStudents()
+        
+        // Force reload data
+        tableView.reloadData()
+    }
 }
 
 extension TableViewController: UITableViewDelegate, UITableViewDataSource {

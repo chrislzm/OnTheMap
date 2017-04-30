@@ -90,29 +90,32 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                     self.displayErrorAlert(errorString!)
                 }
             }
-            
-            var updatedMapViewAnnotations = [MKPointAnnotation]()
-            
-            for studentInformation in self.getStudents() {
-                let annotation = MKPointAnnotation()
-                let coordinate = CLLocationCoordinate2D(latitude: studentInformation.latitude, longitude: studentInformation.longitude)
-                annotation.coordinate = coordinate
-                annotation.title = "\(studentInformation.firstName) \(studentInformation.lastName)"
-                annotation.subtitle = studentInformation.mediaURL
-                
-                updatedMapViewAnnotations.append(annotation)
-            }
-            
+
             DispatchQueue.main.async {
-                self.mapView.removeAnnotations(self.mapViewAnnotations)
-                self.mapView.addAnnotations(updatedMapViewAnnotations)
                 self.stopAllActivityViewAnimations()
-                
-                // Save a copy so that we can remove them later if needed
-                self.mapViewAnnotations = updatedMapViewAnnotations
+                self.refreshMapView()
+                self.tableViewController!.refreshTableView()
             }
             
         }
+    }
+    
+    func refreshMapView() {
+        var updatedMapViewAnnotations = [MKPointAnnotation]()
+        
+        for studentInformation in self.getStudents() {
+            let annotation = MKPointAnnotation()
+            let coordinate = CLLocationCoordinate2D(latitude: studentInformation.latitude, longitude: studentInformation.longitude)
+            annotation.coordinate = coordinate
+            annotation.title = "\(studentInformation.firstName) \(studentInformation.lastName)"
+            annotation.subtitle = studentInformation.mediaURL
+            
+            updatedMapViewAnnotations.append(annotation)
+        }
+        
+        mapView.removeAnnotations(self.mapViewAnnotations)
+        mapView.addAnnotations(updatedMapViewAnnotations)
+        mapViewAnnotations = updatedMapViewAnnotations
     }
     
     // MARK: Logout
