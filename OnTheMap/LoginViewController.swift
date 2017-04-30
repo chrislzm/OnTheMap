@@ -17,6 +17,7 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var debugTextLabel: UILabel!
     
     // MARK: Properties
+    override var activityIndicatorTag: Int { return 1 }
     
     // MARK: Lifecycle
     
@@ -26,7 +27,7 @@ class LoginViewController: UIViewController {
             displayErrorAlert("Email or password empty")
         } else {
             // Start animation
-            activityView.startAnimating()
+            startActivityIndicator()
             
             OTMClient.sharedInstance().loginWith(username: emailTextField.text!, password: passwordTextField.text!) { (success, errorString) in
                 DispatchQueue.main.async {
@@ -37,7 +38,7 @@ class LoginViewController: UIViewController {
                     }
                     
                     // Stop Animation
-                    self.activityView.stopAnimating()
+                    self.stopActivityIndicator()
                 }
             }
         }
