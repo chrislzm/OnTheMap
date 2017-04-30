@@ -40,10 +40,9 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         // Now that the view hierarchy is loaded, initialize reference to tableViewController
         tableViewController = self.parent!.parent!.childViewControllers[1].childViewControllers[0] as? TableViewController
         
-        // Make it load
+        // Make it load so that we can animate the activity view indicator there while loading initial data
         tableViewController!.loadViewIfNeeded()
 
-        // So that we can animate the activity view indicator there
         refreshStudentLocations()
     }
     
@@ -149,4 +148,5 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             }
         }
     }
+    
 }
