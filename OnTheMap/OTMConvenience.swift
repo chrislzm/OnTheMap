@@ -133,7 +133,7 @@ extension OTMClient {
     // Logs out of Udacity. This gets run in the background, and whether it's succesful or not, we don't need to let the user know, so there's no completion handler. It "fails gracefully".
     func logout() {
         
-        /* 1. Create and run HTTP request to logout */
+        /* 1. Create and run HTTP request to logout from Udacity */
         
         var xsrfCookie: HTTPCookie? = nil
         let sharedCookieStorage = HTTPCookieStorage.shared
@@ -163,7 +163,6 @@ extension OTMClient {
             
             /* 4. Delete the session ID */
             print("Logged out successfully. Old Session ID: \(self.userSessionId!), Session ID received: \(sessionId)")
-            self.userSessionId = nil
         }
         
         /* 5. If we are logged into Facebook, log out  */
@@ -171,6 +170,16 @@ extension OTMClient {
             LoginManager().logOut()
             userFBAccessToken = nil
         }
+        
+        /* 6. Delete all remaining session data */
+        userId = nil
+        userSessionId = nil
+        userFirstName = nil
+        userLastName = nil
+        userObjectId = nil
+        
+        /* 7. Clear the student information from our model */
+        (UIApplication.shared.delegate as! AppDelegate).students = [StudentInformation]()
     }
     
     
