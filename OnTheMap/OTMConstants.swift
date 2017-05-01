@@ -15,6 +15,7 @@ extension OTMClient {
         static let ApiScheme = "https"
         static let HttpGet = "GET"
         static let HttpPost = "POST"
+        static let HttpPut = "PUT"
         static let HttpDelete = "DELETE"
         
         // MARK: Parse API Information
@@ -40,11 +41,13 @@ extension OTMClient {
         
         // MARK: Parse API Methods
         static let ParseStudentLocation = "/parse/classes/StudentLocation"
+        static let ParseUpdateStudentLocation = "/parse/classes/StudentLocation/[objectId]"
     }
     
     struct URLKeys {
         // MARK: Parse Parameter Keys
         static let ParseUniqueKey = "[uniqueKey]"
+        static let ParseObjectId = "[objectId]"
     }
     
     struct ParameterKeys {
@@ -77,5 +80,7 @@ extension OTMClient {
         static let ParseMediaURL = "mediaURL"
         static let ParseResults = "results"
         static let ParseLocationCreated = "createdAt"
+        static let ParseObjectId = "objectId"
+        static let ParseUpdatedAt = "updatedAt"
     }
 }
