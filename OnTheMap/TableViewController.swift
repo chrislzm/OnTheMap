@@ -27,6 +27,10 @@ class TableViewController: UIViewController {
     @IBAction func postInformationButtonPressed(_ sender: Any) {
         NotificationCenter.default.post(name: Notification.Name("postStudentInformation"), object: nil)
     }
+
+    @IBAction func logoutButtonPressed(_ sender: Any) {
+        NotificationCenter.default.post(name: Notification.Name("logout"), object: nil)
+    }
     
     // MARK: Lifecycle
     

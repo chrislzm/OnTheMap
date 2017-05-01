@@ -42,6 +42,8 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 
         NotificationCenter.default.addObserver(self, selector: #selector(MapViewController.postInformationButtonPressed(_:)), name: Notification.Name("postStudentInformation"), object: nil)
         
+        NotificationCenter.default.addObserver(self, selector: #selector(MapViewController.logoutButtonPressed(_:)), name: Notification.Name("logout"), object: nil)
+        
         loadStudentLocations()
     }
     
