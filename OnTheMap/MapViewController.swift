@@ -39,9 +39,9 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(MapViewController.refreshButtonPressed(_:)), name: Notification.Name("refreshButtonPressed"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(MapViewController.refreshButtonPressed(_:)), name: Notification.Name("refreshStudentInformation"), object: nil)
 
-        NotificationCenter.default.addObserver(self, selector: #selector(MapViewController.postInformationButtonPressed(_:)), name: Notification.Name("postInformationButtonPressed"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(MapViewController.postInformationButtonPressed(_:)), name: Notification.Name("postStudentInformation"), object: nil)
         
         loadStudentLocations()
     }

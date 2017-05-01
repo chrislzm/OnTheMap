@@ -21,11 +21,11 @@ class TableViewController: UIViewController {
     
     // MARK: Actions
     @IBAction func refreshButtonPressed(_ sender: Any) {
-        NotificationCenter.default.post(name: Notification.Name("refreshButtonPressed"), object: nil)
+        NotificationCenter.default.post(name: Notification.Name("refreshStudentInformation"), object: nil)
     }
     
     @IBAction func postInformationButtonPressed(_ sender: Any) {
-        NotificationCenter.default.post(name: Notification.Name("postInformationButtonPressed"), object: nil)
+        NotificationCenter.default.post(name: Notification.Name("postStudentInformation"), object: nil)
     }
     
     // MARK: Lifecycle
