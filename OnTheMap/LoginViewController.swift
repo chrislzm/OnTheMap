@@ -14,7 +14,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     // MARK: Outlets
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
-    @IBOutlet weak var debugTextLabel: UILabel!
     
     // MARK: Properties
     override var activityIndicatorTag: Int { return 1 }
