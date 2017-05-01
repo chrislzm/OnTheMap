@@ -9,7 +9,7 @@
 import CoreLocation
 import UIKit
 
-class AddLocationViewController:UIViewController {
+class AddLocationViewController:UIViewController, UITextFieldDelegate {
     
     // MARK: Properties
     override var activityIndicatorTag: Int { return 4 }
@@ -62,6 +62,20 @@ class AddLocationViewController:UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
+    // MARK: Lifecycle
+    
+    override func viewDidLoad() {
+        mapStringTextView.returnKeyType = UIReturnKeyType.done
+        mediaURLTextView.returnKeyType = UIReturnKeyType.done
+    }
+    
+    // Dismisses keyboard when we hit enter/return
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    // MARK: Helper functions
     func validUrl (urlString: String?) -> Bool {
         //Check for nil
         if let urlString = urlString {
