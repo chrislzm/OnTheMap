@@ -128,7 +128,7 @@ extension OTMClient {
             
             /* 3. Extract results */
             guard let results = results?[OTMClient.JSONResponseKeys.ParseResults] as? [[String:AnyObject]] else {
-                let error = NSError(domain: "getRecentStudentLocations parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse student locations"])
+                let error = NSError(domain: "updateRecentStudentLocations parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse student location information. Missing key: \(OTMClient.JSONResponseKeys.ParseResults)"])
                 self.handleHttpNSError(error,completionHandler)
                 return
             }
@@ -159,22 +159,35 @@ extension OTMClient {
             
             /* 3. Extract results */
             guard let results = results?[OTMClient.JSONResponseKeys.ParseResults] as? [[String:AnyObject]] else {
-                let error = NSError(domain: "getRecentStudentLocations parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse student locations"])
+                let error = NSError(domain: "doesStudentLocationAlreadyExist parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse student location information. Missing key: \(OTMClient.JSONResponseKeys.ParseResults)"])
                 self.handleHttpNSError(error,completionHandler)
                 return
             }
             
-            /* 4. Return based on whether we have a result or not */
-            if results.count > 0 {
-                completionHandler(true, nil)
-            } else {
+            /* 4. Return false to the completion handler if no matches */
+            if results.count == 0 {
                 completionHandler(false, nil)
+            } else {
+                
+                /* 5. Otherwise, save the objectId in case we need to update it later */
+                let studentInformation = results[0] as! [String:AnyObject]
+                
+                guard let objectId = studentInformation[OTMClient.JSONResponseKeys.ParseObjectId] as? String else {
+                    let error = NSError(domain: "doesStudentLocationAlreadyExist parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse student location information. Missing key: \(OTMClient.JSONResponseKeys.ParseObjectId)"])
+                    self.handleHttpNSError(error,completionHandler)
+                    return
+                }
+                
+                self.userObjectId = objectId
+
+                /* 6. Return true to the completion handler */
+                completionHandler(true, nil)
             }
         }
     }
     
     func addStudentLocation(_ completionHandler: @escaping (_ success: Bool, _ errorString: String?) -> Void) {
-        /* 1. Create and run HTTP request to retrieve recent student locations from Parse */
+        /* 1. Create and run HTTP request to post student location to Parse */
         let httpBody = "{\"uniqueKey\": \"\(username!)\", \"firstName\": \"\(userFirstName!)\", \"lastName\": \"\(userLastName!)\",\"mapString\": \"Reno, CA\", \"mediaURL\": \"https://udacity.com\",\"latitude\": 39.5296, \"longitude\": -119.8138}"
         let httpHeaderValues = [("application/json","Content-Type")]
         let _ = taskForHTTPMethod(OTMClient.Constants.HttpPost, OTMClient.Constants.ParseApiHost, OTMClient.Methods.ParseStudentLocation, apiParameters: nil, valuesForHTTPHeader: httpHeaderValues, httpBody: httpBody) { (results, error) in
@@ -189,7 +202,41 @@ extension OTMClient {
             
             /* 3. Verify the student location was created */
             guard let _ = results?[OTMClient.JSONResponseKeys.ParseLocationCreated] else {
-                let error = NSError(domain: "addStudentLocation parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not add student location"])
+                let error = NSError(domain: "addStudentLocation parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not add student location. Missing key: \(OTMClient.JSONResponseKeys.ParseLocationCreated)."])
+                self.handleHttpNSError(error,completionHandler)
+                return
+            }
+            
+            /* 4. Return without an error */
+            completionHandler(true, nil)
+        }
+    }
+    
+    func updateStudentLocation(_ completionHandler: @escaping (_ success: Bool, _ errorString: String?) -> Void) {
+        
+        /* 1. Verify we have a Parse objectId that we can update (retrieved in doesStudentLocationAlreadyExist, which was run before we get here)  */
+        guard let objectId = self.userObjectId else {
+            completionHandler(false,"Unable to retrieve your student information")
+            return
+        }
+        
+        /* 2. Create and run HTTP request to update student location in Parse */
+        let updateStudentInformationMethod = substituteKey(OTMClient.Methods.ParseUpdateStudentLocation, key: OTMClient.URLKeys.ParseObjectId, value: objectId)!
+        let httpHeaderValues = [("application/json","Content-Type")]
+        let httpBody = "{\"uniqueKey\": \"\(username!)\", \"firstName\": \"\(userFirstName!)\", \"lastName\": \"\(userLastName!)\",\"mapString\": \"Reno, CA\", \"mediaURL\": \"https://udacity.com\",\"latitude\": 39.5296, \"longitude\": -119.8138}"
+        let _ = taskForHTTPMethod(OTMClient.Constants.HttpPut, OTMClient.Constants.ParseApiHost, updateStudentInformationMethod, apiParameters: nil, valuesForHTTPHeader: httpHeaderValues, httpBody: httpBody) { (results, error) in
+            
+            /* 2. Check for error response from Parse */
+            if let error = error {
+                // TODO: Delete debug statement
+                print(error)
+                self.handleHttpNSError(error,completionHandler)
+                return
+            }
+            
+            /* 3. Verify the student location was created */
+            guard let _ = results?[OTMClient.JSONResponseKeys.ParseUpdatedAt] else {
+                let error = NSError(domain: "updateStudentLocation parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not update student location. Missing key: \(OTMClient.JSONResponseKeys.ParseUpdatedAt)"])
                 self.handleHttpNSError(error,completionHandler)
                 return
             }
@@ -211,8 +258,10 @@ extension OTMClient {
             completionHandler(false, "Couldn't reach server (timed out)")
         } else if errorString.contains("Status code returned: 403"){
             completionHandler(false, "Email or password incorrect")
-        } else if errorString.contains("Could not parse student locations") {
+        } else if errorString.contains("Could not parse student location information") {
             completionHandler(false, "Error processing student data")
+        } else if errorString.contains("Could not update student location") {
+            completionHandler(false, "Error updating your student location")
         } else {
             completionHandler(false, "Please try again")
         }
