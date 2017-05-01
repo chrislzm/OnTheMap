@@ -67,6 +67,9 @@ class AddLocationViewController:UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         mapStringTextView.returnKeyType = UIReturnKeyType.done
         mediaURLTextView.returnKeyType = UIReturnKeyType.done
+        
+        mapStringTextView.delegate = self
+        mediaURLTextView.delegate = self
     }
     
     // Dismisses keyboard when we hit enter/return
