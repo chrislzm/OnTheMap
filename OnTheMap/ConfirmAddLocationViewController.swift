@@ -36,7 +36,7 @@ class ConfirmAddLocationViewController:UIViewController {
     @IBAction func pressedFinishButton(_ sender: Any) {
         startActivityIndicator()
         
-        OTMClient.sharedInstance().updateStudentLocation(mapString!, mediaURL!, latitude!, longitude!) { (success, errorString) in
+        OTMClient.sharedInstance().saveStudentLocation(mapString!, mediaURL!, latitude!, longitude!) { (success, errorString) in
             DispatchQueue.main.async {
                 self.stopActivityIndicator()
                 if success {
