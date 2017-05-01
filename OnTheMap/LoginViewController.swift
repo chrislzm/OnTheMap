@@ -28,14 +28,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             // Start animation
             startActivityIndicator()
             
-            OTMClient.sharedInstance().loginWith(username: emailTextField.text!, password: passwordTextField.text!) { (success, errorString) in
+            OTMClient.sharedInstance().loginWithUdacity(userId: emailTextField.text!, password: passwordTextField.text!) { (success, errorString) in
                 DispatchQueue.main.async {
                     if success {
                         self.completeLogin()
                     } else {
                         self.displayAlertWithOKButton("Login Failed",errorString!)
                     }
-                    
                     // Stop Animation
                     self.stopActivityIndicator()
                 }
@@ -44,14 +43,30 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     @IBAction func loginWithFacebookPressed(_ sender: Any) {
         let loginManager = LoginManager()
-        loginManager.logIn([ .publicProfile ], viewController: self) { loginResult in
+        loginManager.logIn([ .publicProfile, .email ], viewController: self) { loginResult in
             switch loginResult {
             case .failed(let error):
+                self.displayAlertWithOKButton("Facebook Login Failed", error.localizedDescription)
                 print(error)
             case .cancelled:
                 print("User cancelled login.")
             case .success(let grantedPermissions, let declinedPermissions, let accessToken):
                 print("Logged in!")
+                // Start animation
+                self.startActivityIndicator()
+    
+                OTMClient.sharedInstance().completeLoginWithFacebook(accessToken.authenticationToken) { (success, errorString) in
+                    DispatchQueue.main.async {
+                        // Stop Animation
+                        self.stopActivityIndicator()
+                        
+                        if success {
+                            self.completeLogin()
+                        } else {
+                            self.displayAlertWithOKButton("Login Failed",errorString!)
+                        }
+                    }
+                }
             }
         }
     }

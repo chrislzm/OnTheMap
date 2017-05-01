@@ -10,14 +10,16 @@
 
 import Foundation
 import UIKit
+import FBSDKCoreKit
+import FacebookLogin
 
 extension OTMClient {
     
     // Handles Udacity auth flow, verifies we are logged in with a session ID, and retrieves the user's first name and last name
-    func loginWith(username:String, password:String, completionHandler: @escaping (_ success: Bool, _ errorString: String?) -> Void) {
+    func loginWithUdacity(userId:String, password:String, completionHandler: @escaping (_ success: Bool, _ errorString: String?) -> Void) {
         
         /* 1. Create and run HTTP request to authenticate the user's email and password with Udacity */
-        let httpBody = "{\"udacity\": {\"username\": \"\(username)\", \"password\": \"\(password)\"}}"
+        let httpBody = "{\"udacity\": {\"username\": \"\(userId)\", \"password\": \"\(password)\"}}"
         let httpHeaderValues = [("application/json","Accept"),
                                 ("application/json","Content-Type")]
         let _ = taskForHTTPMethod(OTMClient.Constants.HttpPost, OTMClient.Constants.UdacityApiHost, OTMClient.Methods.UdacitySession, apiParameters: nil, valuesForHTTPHeader: httpHeaderValues, httpBody: httpBody) { (results, error) in
@@ -37,44 +39,100 @@ extension OTMClient {
             }
             
             // TODO: Delete session ID Debug statenent
-            print("Login Success! Session ID = \(sessionID)")
+            print("Udacity Login Success! Session ID = \(sessionID)")
             
             /* 4. Save the username and session ID */
-            self.username = username
+            self.userId = userId
             self.userSessionId = sessionID
-            
-            /* 5. Create and run HTTP request to retrieve user's first name and last name */
-            let _ = self.taskForHTTPMethod(OTMClient.Constants.HttpGet, OTMClient.Constants.UdacityApiHost, OTMClient.Methods.UdacityUserData + username, apiParameters: nil, valuesForHTTPHeader: nil, httpBody: nil) { (results, error) in
-                
-                /* 6. Check for error response from Udacity */
-                if let error = error {
-                    self.handleHttpNSError(error,completionHandler)
-                    return
-                }
-                
-                /* 7. Verify we have obtained a the first name and last name */
-                guard let response = results as? [String:AnyObject], let user = response[OTMClient.JSONResponseKeys.UdacityUser] as? [String:AnyObject], let firstName = user[OTMClient.JSONResponseKeys.UdacityFirstName] as? String, let lastName = user[OTMClient.JSONResponseKeys.UdacityLastName] as? String else {
-                    // TODO: Delete debug statement
-                    print("Could not find one or more of keys \(OTMClient.JSONResponseKeys.UdacityUser), \(OTMClient.JSONResponseKeys.UdacityFirstName), \(OTMClient.JSONResponseKeys.UdacityLastName) in \(String(describing: results))")
-                    completionHandler(false, "Error retrieving user data")
-                    return
-                }
-                
-                /* 8. Save the user's first and last name */
-                // TODO: Delete debug print statement
-                print("Retrieved user data. First name: \(firstName), Last name: \(lastName)")
-                self.userFirstName = firstName
-                self.userLastName = lastName
 
-                /* 9. Run the completion handler and return*/
-                completionHandler(true, nil)
+            /* 5. Retrieve the user's first and last name from Udacity and complete the login */
+            self.retrieveNameAndCompleteLogin(completionHandler)
+        }
+    }
+    
+    func retrieveNameAndCompleteLogin(_ completionHandler: @escaping (_ success: Bool, _ errorString: String?) -> Void) {
+        /* 1. Create and run HTTP request to retrieve user's first name and last name */
+        
+        let getUserDataMethod = substituteKey(OTMClient.Methods.UdacityUserData, key: OTMClient.URLKeys.UdacityUserId, value: userId!)!
+        
+        let _ = self.taskForHTTPMethod(OTMClient.Constants.HttpGet, OTMClient.Constants.UdacityApiHost, getUserDataMethod, apiParameters: nil, valuesForHTTPHeader: nil, httpBody: nil) { (results, error) in
+            
+            /* 2. Check for error response from Udacity */
+            if let error = error {
+                self.handleHttpNSError(error,completionHandler)
+                return
             }
+            
+            /* 3. Verify we have obtained a the first name and last name */
+            guard let response = results as? [String:AnyObject], let user = response[OTMClient.JSONResponseKeys.UdacityUser] as? [String:AnyObject], let firstName = user[OTMClient.JSONResponseKeys.UdacityFirstName] as? String, let lastName = user[OTMClient.JSONResponseKeys.UdacityLastName] as? String else {
+                // TODO: Delete debug statement
+                print("Could not find one or more of keys \(OTMClient.JSONResponseKeys.UdacityUser), \(OTMClient.JSONResponseKeys.UdacityFirstName), \(OTMClient.JSONResponseKeys.UdacityLastName) in \(String(describing: results))")
+                completionHandler(false, "Error retrieving user data. If you are using Facebook to login, your Udacity email address must be the same as your Facebook primary email address.")
+                return
+            }
+            
+            /* 4. Save the user's first and last name */
+            // TODO: Delete debug print statement
+            print("Retrieved user data. First name: \(firstName), Last name: \(lastName)")
+            self.userFirstName = firstName
+            self.userLastName = lastName
+            
+            /* 5. Run the completion handler and return*/
+            completionHandler(true, nil)
+        }
+
+    }
+    func completeLoginWithFacebook (_ accessToken:String, completionHandler: @escaping (_ success: Bool, _ errorString: String?) -> Void) {
+        /* 1. Create and run HTTP request to get the session ID from Udacity */
+        let httpBody = "{\"facebook_mobile\": {\"access_token\": \"\(accessToken)\"}}"
+        let httpHeaderValues = [("application/json","Accept"),
+                                ("application/json","Content-Type")]
+        let _ = taskForHTTPMethod(OTMClient.Constants.HttpPost, OTMClient.Constants.UdacityApiHost, OTMClient.Methods.UdacitySession, apiParameters: nil, valuesForHTTPHeader: httpHeaderValues, httpBody: httpBody) { (results, error) in
+            
+            /* 2. Check for error response from Udacity */
+            if let error = error {
+                self.handleHttpNSError(error,completionHandler)
+                return
+            }
+            
+            /* 3. Verify we have obtained a Session ID from Udacity and are logged in */
+            guard let response = results as? [String:AnyObject], let session = response[OTMClient.JSONResponseKeys.UdacitySession] as? [String:AnyObject], let sessionID = session[OTMClient.JSONResponseKeys.UdacitySessionID] as? String else {
+                // TODO: Delete debug statement
+                print("Could not find \(OTMClient.JSONResponseKeys.UdacitySession) or \(OTMClient.JSONResponseKeys.UdacitySessionID) in \(String(describing: results))")
+                completionHandler(false, "Error creating session")
+                return
+            }
+            
+            /* 4. Save the session ID and Facebook access token */
+            self.userSessionId = sessionID
+            self.userFBAccessToken = accessToken
+
+            // TODO: Delete session ID Debug statenent
+            print("Udacity Login Success! Session ID = \(sessionID)")
+
+            /* 5. Now get the user ID from Facebook */
+            let graphRequest:FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields":"email"])
+            graphRequest.start(completionHandler: { (connection, result, error) -> Void in
+                
+                if ((error) != nil) {
+                    print("Error: \(String(describing: error))")
+                } else {
+                    let data = result as! [String : String]
+                    
+                    /* 6. Save the user ID */
+                    self.userId = data["email"]
+                    print(data)
+                    
+                    /* 7. Retrieve the user's first and last name from Udacity (based on email address) and complete the login */
+                    self.retrieveNameAndCompleteLogin(completionHandler)
+                }
+            })
         }
     }
     
     // Logs out of Udacity. This gets run in the background, and whether it's succesful or not, we don't need to let the user know, so there's no completion handler. It "fails gracefully".
     func logout() {
-
+        
         /* 1. Create and run HTTP request to logout */
         
         var xsrfCookie: HTTPCookie? = nil
@@ -105,7 +163,13 @@ extension OTMClient {
             
             /* 4. Delete the session ID */
             print("Logged out successfully. Old Session ID: \(self.userSessionId!), Session ID received: \(sessionId)")
-            self.userSessionId = ""
+            self.userSessionId = nil
+        }
+        
+        /* 5. If we are logged into Facebook, log out  */
+        if let _ = userFBAccessToken {
+            LoginManager().logOut()
+            userFBAccessToken = nil
         }
     }
     
@@ -145,7 +209,7 @@ extension OTMClient {
     // Checks if a student location already exists. Error is nil if the request was successful. doesExist will contain the result.
     func doesStudentLocationAlreadyExist(_ completionHandler: @escaping (_ doesExist: Bool, _ errorString: String?) -> Void) {
         /* 1. Create and run HTTP request to retrieve recent student locations from Parse */
-        let uniqueKeyParameter = substituteKey(OTMClient.ParameterValues.ParseUniqueKey, key: OTMClient.URLKeys.ParseUniqueKey, value: username!)!
+        let uniqueKeyParameter = substituteKey(OTMClient.ParameterValues.ParseUniqueKey, key: OTMClient.URLKeys.ParseUniqueKey, value: userId!)!
         let parameters:[String:String] = [OTMClient.ParameterKeys.ParseWhere:uniqueKeyParameter]
         let _ = taskForHTTPMethod(OTMClient.Constants.HttpGet, OTMClient.Constants.ParseApiHost, OTMClient.Methods.ParseStudentLocation, apiParameters: parameters, valuesForHTTPHeader: nil, httpBody: nil) { (results, error) in
             
@@ -188,7 +252,7 @@ extension OTMClient {
     
     func addStudentLocation(_ completionHandler: @escaping (_ success: Bool, _ errorString: String?) -> Void) {
         /* 1. Create and run HTTP request to post student location to Parse */
-        let httpBody = "{\"uniqueKey\": \"\(username!)\", \"firstName\": \"\(userFirstName!)\", \"lastName\": \"\(userLastName!)\",\"mapString\": \"Reno, CA\", \"mediaURL\": \"https://udacity.com\",\"latitude\": 39.5296, \"longitude\": -119.8138}"
+        let httpBody = "{\"uniqueKey\": \"\(userId!)\", \"firstName\": \"\(userFirstName!)\", \"lastName\": \"\(userLastName!)\",\"mapString\": \"Reno, CA\", \"mediaURL\": \"https://udacity.com\",\"latitude\": 39.5296, \"longitude\": -119.8138}"
         let httpHeaderValues = [("application/json","Content-Type")]
         let _ = taskForHTTPMethod(OTMClient.Constants.HttpPost, OTMClient.Constants.ParseApiHost, OTMClient.Methods.ParseStudentLocation, apiParameters: nil, valuesForHTTPHeader: httpHeaderValues, httpBody: httpBody) { (results, error) in
             
@@ -223,7 +287,7 @@ extension OTMClient {
         /* 2. Create and run HTTP request to update student location in Parse */
         let updateStudentInformationMethod = substituteKey(OTMClient.Methods.ParseUpdateStudentLocation, key: OTMClient.URLKeys.ParseObjectId, value: objectId)!
         let httpHeaderValues = [("application/json","Content-Type")]
-        let httpBody = "{\"uniqueKey\": \"\(username!)\", \"firstName\": \"\(userFirstName!)\", \"lastName\": \"\(userLastName!)\",\"mapString\": \"\(mapString)\", \"mediaURL\": \"\(mediaURL)\",\"latitude\": \(latitude), \"longitude\": \(longitude)}"
+        let httpBody = "{\"uniqueKey\": \"\(userId!)\", \"firstName\": \"\(userFirstName!)\", \"lastName\": \"\(userLastName!)\",\"mapString\": \"\(mapString)\", \"mediaURL\": \"\(mediaURL)\",\"latitude\": \(latitude), \"longitude\": \(longitude)}"
         let _ = taskForHTTPMethod(OTMClient.Constants.HttpPut, OTMClient.Constants.ParseApiHost, updateStudentInformationMethod, apiParameters: nil, valuesForHTTPHeader: httpHeaderValues, httpBody: httpBody) { (results, error) in
             
             /* 2. Check for error response from Parse */
@@ -263,7 +327,7 @@ extension OTMClient {
         } else if errorString.contains("Could not update student location") {
             completionHandler(false, "Error updating your student location")
         } else {
-            completionHandler(false, "Please try again")
+            completionHandler(false, "Try again. Please note that if you are logging in with Facebook, your Udacity email address must be the same as your Facebook email address.")
         }
     }
 }

@@ -37,7 +37,7 @@ extension OTMClient {
     struct Methods {
         // MARK: Udacity API Methods
         static let UdacitySession = "/api/session"
-        static let UdacityUserData = "/api/users/"
+        static let UdacityUserData = "/api/users/[userId]"
         
         // MARK: Parse API Methods
         static let ParseStudentLocation = "/parse/classes/StudentLocation"
@@ -45,6 +45,9 @@ extension OTMClient {
     }
     
     struct URLKeys {
+        // MARK: Udacity Parameter Keys
+        static let UdacityUserId = "[userId]"
+        
         // MARK: Parse Parameter Keys
         static let ParseUniqueKey = "[uniqueKey]"
         static let ParseObjectId = "[objectId]"

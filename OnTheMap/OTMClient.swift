@@ -16,9 +16,10 @@ class OTMClient : NSObject {
     // Shared session
     var session = URLSession.shared
     
-    // Session data: Session ID, First Name, Last Name of logged in user
-    var username:String? = nil
+    // user
+    var userId:String? = nil
     var userSessionId:String? = nil
+    var userFBAccessToken:String? = nil
     var userFirstName:String? = nil
     var userLastName:String? = nil
     var userObjectId:String? = nil
