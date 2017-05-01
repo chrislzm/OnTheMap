@@ -56,6 +56,10 @@ class OTMClient : NSObject {
         }
         
         /* 3. Make the request */
+                
+        // TODO: Remove debug print statement
+        print ("Making a HTTP \(httpMethod) request with URL \(request.url!.absoluteString)")
+
         let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
             
             func sendError(_ error: String) {
@@ -155,8 +159,6 @@ class OTMClient : NSObject {
             }
         }
         
-        // TODO: Remove debug print statement
-        print ("Making HTTP Request with URL \(components.url!.absoluteString)")
         return components.url!
     }
     
