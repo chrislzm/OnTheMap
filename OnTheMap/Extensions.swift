@@ -15,9 +15,13 @@ extension UIViewController {
     var activityIndicatorTag: Int { return Int.max }
     
     // Returns the current saved memes array
-    func getStudents() -> [StudentInformation] {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        return appDelegate.students
+    func getStudentInformation() -> [StudentInformation] {
+        return (UIApplication.shared.delegate as! AppDelegate).students
+    }
+    
+    // Clears
+    func clearStudentInformation() -> Void {
+        (UIApplication.shared.delegate as! AppDelegate).students = [StudentInformation]()
     }
     
     func startActivityIndicator() {
