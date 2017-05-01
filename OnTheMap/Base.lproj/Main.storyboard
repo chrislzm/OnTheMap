@@ -85,7 +85,7 @@
                                         </constraints>
                                         <inset key="titleEdgeInsets" minX="-9" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="30" maxY="0.0"/>
-                                        <state key="normal" title="Login with Facebook" image="facebook"/>
+                                        <state key="normal" title="Login with Facebook" image="FB-f-Logo__white_20"/>
                                         <connections>
                                             <action selector="loginWithFacebookPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="44E-UP-8TF"/>
                                         </connections>
@@ -365,6 +365,7 @@
                                 </subviews>
                             </stackView>
                         </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="4vh-YA-U9A" firstAttribute="top" secondItem="19O-eZ-VES" secondAttribute="bottom" id="1mU-iM-GJY"/>
                             <constraint firstItem="19O-eZ-VES" firstAttribute="top" secondItem="8gJ-SP-peg" secondAttribute="bottom" constant="65" id="4vP-fJ-cj2"/>
@@ -470,7 +471,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="facebook" width="30" height="30"/>
+        <image name="FB-f-Logo__white_20" width="20" height="20"/>
         <image name="icon_addpin" width="24" height="24"/>
         <image name="icon_listview-deselected" width="75" height="50"/>
         <image name="icon_mapview-deselected" width="75" height="50"/>

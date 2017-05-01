@@ -13,7 +13,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     // MARK: Outlets
     @IBOutlet weak var mapView: MKMapView!
-    @IBOutlet weak var refreshButton: UIBarButtonItem!
     
     // MARK: Actions
     
