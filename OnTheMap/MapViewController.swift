@@ -46,10 +46,10 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         loadStudentLocations()
     }
     
-    
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+
         let reuseId = "pin"
-        
+
         var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId) as? MKPinAnnotationView
         
         if pinView == nil {
@@ -168,7 +168,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
     
     private func showAddLocationViewController() {
-        let controller = storyboard!.instantiateViewController(withIdentifier: "AddLocationViewController") as! AddLocationViewController
+        let controller = storyboard!.instantiateViewController(withIdentifier: "AddLocationNavigationController") as! UINavigationController
         present(controller, animated: true, completion: nil)
     }
 }

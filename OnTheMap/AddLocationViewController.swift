@@ -37,7 +37,15 @@ class AddLocationViewController:UIViewController {
                     if let errorString = errorString {
                         self.displayAlertWithOKButton("Unable to Find Location", errorString)
                     } else {
-                        self.displayAlertWithOKButton("Found location!", "Latitude: \(latitude!), Longitude: \(longitude!)")
+                        // Grab the Confirm Add ViewController from Storyboard
+                        let confirmAddLocationViewController = self.storyboard!.instantiateViewController(withIdentifier: "ConfirmAddLocationViewController") as! ConfirmAddLocationViewController
+                        
+                        // Populate view controller with data
+                        confirmAddLocationViewController.latitude = latitude!
+                        confirmAddLocationViewController.longitude = longitude!
+                        
+                        // Present the view controller using navigation
+                        self.navigationController!.pushViewController(confirmAddLocationViewController, animated: true)
                     }
                 }
             }
