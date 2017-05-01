@@ -8,10 +8,9 @@
 
 import UIKit
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, UITextFieldDelegate {
 
     // MARK: Outlets
-    @IBOutlet weak var activityView: UIActivityIndicatorView!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var debugTextLabel: UILabel!
@@ -19,8 +18,7 @@ class LoginViewController: UIViewController {
     // MARK: Properties
     override var activityIndicatorTag: Int { return 1 }
     
-    // MARK: Lifecycle
-    
+    // MARK: Actions
     @IBAction func loginButtonPressed(_ sender: Any) {
 
         if emailTextField.text!.isEmpty || passwordTextField.text!.isEmpty {
@@ -42,6 +40,22 @@ class LoginViewController: UIViewController {
                 }
             }
         }
+    }
+    
+    // MARK: Lifecycle
+    
+    override func viewDidLoad() {
+        emailTextField.returnKeyType = UIReturnKeyType.done
+        passwordTextField.returnKeyType = UIReturnKeyType.done
+        
+        emailTextField.delegate = self
+        passwordTextField.delegate = self
+    }
+    
+    // Dismisses keyboard when we hit enter/return
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
     
     // MARK: Login
