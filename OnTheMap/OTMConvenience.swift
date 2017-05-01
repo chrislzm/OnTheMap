@@ -160,25 +160,22 @@ extension OTMClient {
                 print("Could not find \(OTMClient.JSONResponseKeys.UdacitySession) or \(OTMClient.JSONResponseKeys.UdacitySessionID) in \(String(describing: results))")
                 return
             }
-            
-            /* 4. Delete the session ID */
-            print("Logged out successfully. Old Session ID: \(self.userSessionId!), Session ID received: \(sessionId)")
         }
         
-        /* 5. If we are logged into Facebook, log out  */
+        /* 4. If we are logged into Facebook, log out  */
         if let _ = userFBAccessToken {
             LoginManager().logOut()
             userFBAccessToken = nil
         }
         
-        /* 6. Delete all remaining session data */
+        /* 5. Delete all remaining session data */
         userId = nil
         userSessionId = nil
         userFirstName = nil
         userLastName = nil
         userObjectId = nil
         
-        /* 7. Clear the student information from our model */
+        /* 6. Clear the student information from our model */
         (UIApplication.shared.delegate as! AppDelegate).students = [StudentInformation]()
     }
     
