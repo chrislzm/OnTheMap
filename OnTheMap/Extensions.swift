@@ -14,13 +14,19 @@ extension UIViewController {
     
     var activityIndicatorTag: Int { return Int.max }
     
+    // Returns the current saved memes array
+    func getStudents() -> [StudentInformation] {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        return appDelegate.students
+    }
+    
     func startActivityIndicator() {
         
         //Create the activity indicator
         
         let activityIndicator = UIActivityIndicatorView(frame: self.view.frame)
         self.view.addSubview(activityIndicator)
-
+        
         activityIndicator.backgroundColor = UIColor.black
         activityIndicator.alpha = 0.3
         activityIndicator.activityIndicatorViewStyle = .whiteLarge
