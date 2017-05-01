@@ -170,7 +170,7 @@ extension OTMClient {
             } else {
                 
                 /* 5. Otherwise, save the objectId in case we need to update it later */
-                let studentInformation = results[0] as! [String:AnyObject]
+                let studentInformation = results[0] 
                 
                 guard let objectId = studentInformation[OTMClient.JSONResponseKeys.ParseObjectId] as? String else {
                     let error = NSError(domain: "doesStudentLocationAlreadyExist parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse student location information. Missing key: \(OTMClient.JSONResponseKeys.ParseObjectId)"])
