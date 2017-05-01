@@ -21,6 +21,7 @@ class OTMClient : NSObject {
     var userSessionId:String? = nil
     var userFirstName:String? = nil
     var userLastName:String? = nil
+    var userObjectId:String? = nil
     
     // MARK: Methods
     
