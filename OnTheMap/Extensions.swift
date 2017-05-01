@@ -18,12 +18,7 @@ extension UIViewController {
     func getStudentInformation() -> [StudentInformation] {
         return (UIApplication.shared.delegate as! AppDelegate).students
     }
-    
-    // Clears
-    func clearStudentInformation() -> Void {
-        (UIApplication.shared.delegate as! AppDelegate).students = [StudentInformation]()
-    }
-    
+
     func startActivityIndicator() {
         
         //Create the activity indicator
