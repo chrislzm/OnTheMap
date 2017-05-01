@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreLocation
 
 class OTMClient : NSObject {
     
@@ -99,6 +100,31 @@ class OTMClient : NSObject {
         task.resume()
         
         return task
+    }
+    
+    // TODO: Make threaded
+    func geocode(_ location: String, completionHandler: @escaping (_ latitude: Double?, _ longitude: Double?, _ errorString: String?) -> Void) {
+        CLGeocoder().geocodeAddressString(location, completionHandler: { (placemarks, error) in
+            if error != nil {
+                if error.debugDescription.contains("Code=2") {
+                    completionHandler(nil,nil,"Network error: Couldn't connect to the server")
+                } else if error.debugDescription.contains("Code=8") {
+                    completionHandler(nil,nil,"A location of this name could not be found")
+                } else {
+                    completionHandler(nil,nil,"An error occurred when looking up the location")
+                }
+                return
+            }
+            if (placemarks?.count)! > 0 {
+                let placemark = placemarks?[0]
+                let location = placemark?.location
+                let coordinate = location?.coordinate
+                print("\nlat: \(coordinate!.latitude), long: \(coordinate!.longitude)")
+                completionHandler(coordinate!.latitude,coordinate!.longitude,nil)
+            } else {
+                completionHandler(nil,nil,"Location not found")
+            }
+        })
     }
 
     // Substitute the key for the value that is contained within the string

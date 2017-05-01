@@ -11,9 +11,14 @@ import UIKit
 
 class AddLocationViewController:UIViewController {
     
+    // MARK: Properties
+    override var activityIndicatorTag: Int { return 4 }
+    
+    // MARK: Outlets
     @IBOutlet weak var locationTextView: UITextField!
     @IBOutlet weak var websiteTextView: UITextField!
     
+    // MARK: Actions
     @IBAction func findLocationButtonPressed(_ sender: Any) {
         if locationTextView.text!.isEmpty {
             displayAlertWithOKButton("Location Is Empty","Please enter a location")
@@ -21,6 +26,23 @@ class AddLocationViewController:UIViewController {
             displayAlertWithOKButton("Website Is Empty","Please enter a website")
         } else if !validUrl(urlString: websiteTextView.text!) {
             displayAlertWithOKButton("Invalid Website","Please enter a valid website address beginning with http(s)://")
+        } else {
+            startActivityIndicator()
+            
+            OTMClient.sharedInstance().geocode(locationTextView.text!) { (latitude,longitude,errorString) in
+                
+                DispatchQueue.main.async {
+                    self.stopActivityIndicator()
+                
+                    if let errorString = errorString {
+                        self.displayAlertWithOKButton("Unable to Find Location", errorString)
+                    } else {
+                        self.displayAlertWithOKButton("Found location!", "Latitude: \(latitude!), Longitude: \(longitude!)")
+                    }
+                }
+            }
+            
+            
         }
     }
     

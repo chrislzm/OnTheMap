@@ -63,8 +63,8 @@ extension UIViewController {
         }
     }
     
-    func displayAlertWithOKButton(_ errorTitle: String, _ errorMessage: String) {
-        let alert = UIAlertController(title: errorTitle, message: errorMessage, preferredStyle: UIAlertControllerStyle.alert)
+    func displayAlertWithOKButton(_ title: String, _ message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
