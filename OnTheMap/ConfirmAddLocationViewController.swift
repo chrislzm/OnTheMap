@@ -11,10 +11,15 @@ import MapKit
 
 class ConfirmAddLocationViewController:UIViewController {
 
-    @IBOutlet weak var mapView: MKMapView!
-    
+    // MARK: Properties
+    override var activityIndicatorTag: Int { return 4 }
     var latitude:Double?
     var longitude:Double?
+    
+    // MARK: Outlets
+    @IBOutlet weak var mapView: MKMapView!
+
+    // MARK: Lifecycle
     
     override func viewWillAppear(_ animated: Bool) {
         let annotation = MKPointAnnotation()
@@ -27,7 +32,19 @@ class ConfirmAddLocationViewController:UIViewController {
     }
     
     @IBAction func pressedFinishButton(_ sender: Any) {
+        startActivityIndicator()
         
+        OTMClient.sharedInstance().updateStudentLocation() { (success, errorString) in
+            DispatchQueue.main.async {
+                self.stopActivityIndicator()
+                if success {
+                    NotificationCenter.default.post(name: Notification.Name("refreshStudentInformation"), object: nil)
+                    self.navigationController!.dismiss(animated: true, completion: nil)
+                } else {
+                    self.displayAlertWithOKButton("Update Failed", errorString!)
+                }
+            }
+        }
     }
 
 }
