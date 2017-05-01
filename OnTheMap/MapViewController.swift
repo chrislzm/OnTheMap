@@ -32,7 +32,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     // MARK: Properties
     override var activityIndicatorTag: Int { return 2 }
-    var mapViewAnnotations = [MKPointAnnotation]()
     
     // MARK: Lifecycle
     
@@ -141,9 +140,9 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             updatedMapViewAnnotations.append(annotation)
         }
         
-        mapView.removeAnnotations(self.mapViewAnnotations)
+        let allAnnotations = self.mapView.annotations
+        mapView.removeAnnotations(allAnnotations)
         mapView.addAnnotations(updatedMapViewAnnotations)
-        mapViewAnnotations = updatedMapViewAnnotations
     }
     
     // MARK: Logout
