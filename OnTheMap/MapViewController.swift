@@ -130,7 +130,8 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     func refreshMapView() {
         var updatedMapViewAnnotations = [MKPointAnnotation]()
         
-        for studentInformation in self.getStudents() {
+        let students = getStudentInformation()
+        for studentInformation in students {
             let annotation = MKPointAnnotation()
             let coordinate = CLLocationCoordinate2D(latitude: studentInformation.latitude, longitude: studentInformation.longitude)
             annotation.coordinate = coordinate

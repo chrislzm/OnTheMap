@@ -38,8 +38,8 @@ class TableViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        // Get the update list of students
-        students = getStudents()
+        // Get the updated list of students
+        students = getStudentInformation()
     }
     
     func willMakeNetworkRequest(_ notification:Notification) {
@@ -55,7 +55,7 @@ class TableViewController: UIViewController {
 
     func refreshTableView() {
         // Copy the updated array of memes
-        students = getStudents()
+        students = getStudentInformation()
         
         // Reload data
         tableView.reloadData()
