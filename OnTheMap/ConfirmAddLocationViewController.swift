@@ -15,6 +15,8 @@ class ConfirmAddLocationViewController:UIViewController {
     override var activityIndicatorTag: Int { return 4 }
     var latitude:Double?
     var longitude:Double?
+    var mapString:String?
+    var mediaURL:String?
     
     // MARK: Outlets
     @IBOutlet weak var mapView: MKMapView!
@@ -34,7 +36,7 @@ class ConfirmAddLocationViewController:UIViewController {
     @IBAction func pressedFinishButton(_ sender: Any) {
         startActivityIndicator()
         
-        OTMClient.sharedInstance().updateStudentLocation() { (success, errorString) in
+        OTMClient.sharedInstance().updateStudentLocation(mapString!, mediaURL!, latitude!, longitude!) { (success, errorString) in
             DispatchQueue.main.async {
                 self.stopActivityIndicator()
                 if success {

@@ -212,7 +212,7 @@ extension OTMClient {
         }
     }
     
-    func updateStudentLocation(_ completionHandler: @escaping (_ success: Bool, _ errorString: String?) -> Void) {
+    func updateStudentLocation(_ mapString:String, _ mediaURL:String, _ latitude:Double, _ longitude:Double, _ completionHandler: @escaping (_ success: Bool, _ errorString: String?) -> Void) {
         
         /* 1. Verify we have a Parse objectId that we can update (retrieved in doesStudentLocationAlreadyExist, which was run before we get here)  */
         guard let objectId = self.userObjectId else {
@@ -223,7 +223,7 @@ extension OTMClient {
         /* 2. Create and run HTTP request to update student location in Parse */
         let updateStudentInformationMethod = substituteKey(OTMClient.Methods.ParseUpdateStudentLocation, key: OTMClient.URLKeys.ParseObjectId, value: objectId)!
         let httpHeaderValues = [("application/json","Content-Type")]
-        let httpBody = "{\"uniqueKey\": \"\(username!)\", \"firstName\": \"\(userFirstName!)\", \"lastName\": \"\(userLastName!)\",\"mapString\": \"Reno, CA\", \"mediaURL\": \"https://udacity.com\",\"latitude\": 39.5296, \"longitude\": -119.8138}"
+        let httpBody = "{\"uniqueKey\": \"\(username!)\", \"firstName\": \"\(userFirstName!)\", \"lastName\": \"\(userLastName!)\",\"mapString\": \"\(mapString)\", \"mediaURL\": \"\(mediaURL)\",\"latitude\": \(latitude), \"longitude\": \(longitude)}"
         let _ = taskForHTTPMethod(OTMClient.Constants.HttpPut, OTMClient.Constants.ParseApiHost, updateStudentInformationMethod, apiParameters: nil, valuesForHTTPHeader: httpHeaderValues, httpBody: httpBody) { (results, error) in
             
             /* 2. Check for error response from Parse */
