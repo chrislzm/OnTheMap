@@ -159,7 +159,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
     
     private func displayConfirmOverwriteAlert() {
-        let alert = UIAlertController(title: "Overwrite location?", message: "You already saved a location. Would you like to overwrite it?", preferredStyle: UIAlertControllerStyle.alert)
+        let alert = UIAlertController(title: "Overwrite location?", message: "You already have a saved location. Would you like to overwrite it?", preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default) { (uiActionAlert) in
                 self.showAddLocationViewController()
             })
