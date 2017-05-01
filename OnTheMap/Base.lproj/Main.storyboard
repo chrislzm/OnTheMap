@@ -345,8 +345,8 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="locationTextView" destination="DD9-Qn-ifV" id="MSP-Qx-NTt"/>
-                        <outlet property="websiteTextView" destination="Dix-kP-h9C" id="khD-ac-Nuz"/>
+                        <outlet property="mapStringTextView" destination="DD9-Qn-ifV" id="OUg-M5-rIz"/>
+                        <outlet property="mediaURLTextView" destination="Dix-kP-h9C" id="jlG-Q8-iaM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="scK-vQ-bzo" userLabel="First Responder" sceneMemberID="firstResponder"/>

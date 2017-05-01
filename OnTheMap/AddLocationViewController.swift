@@ -15,21 +15,25 @@ class AddLocationViewController:UIViewController {
     override var activityIndicatorTag: Int { return 4 }
     
     // MARK: Outlets
-    @IBOutlet weak var locationTextView: UITextField!
-    @IBOutlet weak var websiteTextView: UITextField!
+    @IBOutlet weak var mapStringTextView: UITextField!
+    @IBOutlet weak var mediaURLTextView: UITextField!
     
     // MARK: Actions
     @IBAction func findLocationButtonPressed(_ sender: Any) {
-        if locationTextView.text!.isEmpty {
+        
+        let mapString = mapStringTextView.text!
+        let mediaURL = mediaURLTextView.text!
+        
+        if mapString.isEmpty {
             displayAlertWithOKButton("Location Is Empty","Please enter a location")
-        } else if websiteTextView.text!.isEmpty {
+        } else if mediaURL.isEmpty {
             displayAlertWithOKButton("Website Is Empty","Please enter a website")
-        } else if !validUrl(urlString: websiteTextView.text!) {
+        } else if !validUrl(urlString: mediaURL) {
             displayAlertWithOKButton("Invalid Website","Please enter a valid website address beginning with http(s)://")
         } else {
             startActivityIndicator()
             
-            OTMClient.sharedInstance().geocode(locationTextView.text!) { (latitude,longitude,errorString) in
+            OTMClient.sharedInstance().geocode(mapString) { (latitude,longitude,errorString) in
                 
                 DispatchQueue.main.async {
                     self.stopActivityIndicator()
@@ -43,14 +47,14 @@ class AddLocationViewController:UIViewController {
                         // Populate view controller with data
                         confirmAddLocationViewController.latitude = latitude!
                         confirmAddLocationViewController.longitude = longitude!
+                        confirmAddLocationViewController.mapString = mapString
+                        confirmAddLocationViewController.mediaURL = mediaURL
                         
                         // Present the view controller using navigation
                         self.navigationController!.pushViewController(confirmAddLocationViewController, animated: true)
                     }
                 }
             }
-            
-            
         }
     }
     
