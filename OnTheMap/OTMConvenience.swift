@@ -334,8 +334,12 @@ extension OTMClient {
             completionHandler(false, "Error processing student data")
         } else if errorString.contains("Could not update student location") {
             completionHandler(false, "Error updating your student location")
+        } else if errorString.contains("network connection was lost"){
+            completionHandler(false, "The network connection was lost")
+        } else if errorString.contains("Internet connection appears to be offline") {
+            completionHandler(false, "The Internet connection appears to be offline")
         } else {
-            completionHandler(false, "Try again. Please note that if you are logging in with Facebook, your Udacity email address must be the same as your Facebook email address.")
+            completionHandler(false, "Please try again.")
         }
     }
     
