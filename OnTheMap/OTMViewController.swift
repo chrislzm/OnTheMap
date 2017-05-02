@@ -16,10 +16,9 @@ import UIKit
 class OTMViewController: UIViewController {
     
     // MARK: Properties
+    static let AVI_ALPHA:CGFloat = 0.3  // Alpha (transparancy) value for Activity View Indicators
+    var activityIndicatorTag: Int { return Int.max }  // Each ViewController must override this with a unique tag value beginning with 1, so that it can instantiate its own unique Activity View Indicator
     
-    // Each ViewController must override this with a unique tag value beginning with 1, so that it can instantiate its own unique Activity View Indicator
-    var activityIndicatorTag: Int { return Int.max }
-
     // MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -142,7 +141,7 @@ class OTMViewController: UIViewController {
         let activityIndicator = UIActivityIndicatorView(frame: self.view.frame)
         self.view.addSubview(activityIndicator)
         activityIndicator.backgroundColor = UIColor.black
-        activityIndicator.alpha = 0.3
+        activityIndicator.alpha = OTMViewController.AVI_ALPHA
         activityIndicator.activityIndicatorViewStyle = .whiteLarge
         activityIndicator.hidesWhenStopped = true
         
