@@ -2,6 +2,8 @@
 //  OTMConstants.swift
 //  OnTheMap
 //
+//  Constants used in the OTMClient class
+//
 //  Created by Chris Leung on 4/27/17.
 //  Copyright © 2017 Chris Leung. All rights reserved.
 //
@@ -33,7 +35,7 @@ extension OTMClient {
         static let ParseAppID = "X-Parse-Application-Id"
         static let ParseApiKey = "X-Parse-REST-API-Key"
     }
-    
+
     struct Methods {
         // MARK: Udacity API Methods
         static let UdacitySession = "/api/session"
@@ -67,6 +69,26 @@ extension OTMClient {
         static let ParseUniqueKey = "{\"uniqueKey\":\"[uniqueKey]\"}"
     }
 
+    struct JSONRequestKeys {
+        // MARK: Udacity JSON Requst Keys
+        static let UdacityLogin = "udacity"
+        static let UdacityUsername = "username"
+        static let UdacityPassword = "password"
+
+        // MARK: Udacity+Facebook JSON Request Keys
+        static let FacebookLogin = "facebook_mobile"
+        static let FacebookAccessToken = "access_token"
+
+        // MARK: Parse JSON Request Keys
+        static let ParseUniqueKey = "uniqueKey"
+        static let ParseFirstName = "firstName"
+        static let ParseLastName = "lastName"
+        static let ParseMapString = "mapString"
+        static let ParseMediaURL = "mediaURL"
+        static let ParseLatitude = "latitude"
+        static let ParseLongitude = "longitude"
+    }
+    
     struct JSONResponseKeys {
         // MARK: Udacity API JSON Response Keys
         static let UdacitySession = "session"
