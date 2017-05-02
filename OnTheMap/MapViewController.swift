@@ -2,6 +2,8 @@
 //  MapViewController.swift
 //  OnTheMap
 //
+//  Controller for the MapView
+//
 //  Created by Chris Leung on 4/28/17.
 //  Copyright © 2017 Chris Leung. All rights reserved.
 //
@@ -15,7 +17,6 @@ class MapViewController: OTMViewController, MKMapViewDelegate {
     @IBOutlet weak var mapView: MKMapView!
     
     // MARK: Actions
-    
     @IBAction func logoutButtonPressed(_ sender: Any) {
         logout()
     }
@@ -36,9 +37,11 @@ class MapViewController: OTMViewController, MKMapViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Refresh our MapView if new student information was loaded
         NotificationCenter.default.addObserver(self, selector: #selector(MapViewController.didLoadStudentInformation(_:)), name: Notification.Name("didLoadStudentInformation"), object: nil)
     }
     
+    // Setup annotation (pin) appearance and behavior on the MapView
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
 
         let reuseId = "pin"
@@ -58,7 +61,7 @@ class MapViewController: OTMViewController, MKMapViewDelegate {
         return pinView
     }
     
-    // This delegate method that respond to taps. Opens the system browser to the URL specified in the annotationViews subtitle property.
+    // Delegate method that respond to taps. Opens the system browser to the URL specified in the annotationViews subtitle property.
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         if control == view.rightCalloutAccessoryView {
             let app = UIApplication.shared
@@ -67,9 +70,12 @@ class MapViewController: OTMViewController, MKMapViewDelegate {
             }
         }
     }
+    
+    // Refresh our MapView if new student information was loaded
     func didLoadStudentInformation(_ notification:Notification) {
         var updatedMapViewAnnotations = [MKPointAnnotation]()
         
+        // Copy the updated information from the model
         let students = getStudentInformation()
         for studentInformation in students {
             let annotation = MKPointAnnotation()
@@ -81,10 +87,9 @@ class MapViewController: OTMViewController, MKMapViewDelegate {
             updatedMapViewAnnotations.append(annotation)
         }
         
-        let allAnnotations = self.mapView.annotations
-        mapView.removeAnnotations(allAnnotations)
+        let oldAnnotations = self.mapView.annotations
+        mapView.removeAnnotations(oldAnnotations)
         mapView.addAnnotations(updatedMapViewAnnotations)
     }
-    
 
 }
