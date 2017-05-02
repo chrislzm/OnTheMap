@@ -183,7 +183,7 @@
                         <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="0.0"/>
                     </tabBarItem>
                     <navigationItem key="navigationItem" title="On the Map" id="AJg-W4-all">
-                        <barButtonItem key="leftBarButtonItem" title="LOGOUT" id="K1P-ka-mbn">
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="K1P-ka-mbn">
                             <connections>
                                 <action selector="logoutButtonPressed:" destination="kQs-nQ-DPR" id="9DV-XB-9va"/>
                             </connections>
@@ -264,7 +264,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="" image="icon_mapview-deselected" selectedImage="icon_mapview-selected" id="R2N-47-69N"/>
                     <navigationItem key="navigationItem" title="On the Map" id="9QN-5h-5qa">
-                        <barButtonItem key="leftBarButtonItem" title="LOGOUT" id="TCZ-85-Sa3">
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="TCZ-85-Sa3">
                             <connections>
                                 <action selector="logoutButtonPressed:" destination="nbh-Kv-hM1" id="CWK-Qn-NLq"/>
                             </connections>

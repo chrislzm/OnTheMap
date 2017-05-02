@@ -71,6 +71,7 @@
 		A58674DC1EB2E0BB0024FC7B /* View */ = {
 			isa = PBXGroup;
 			children = (
+				A5DC8DB11EB2ADBF000DD0DA /* Assets.xcassets */,
 				A5DC8DAE1EB2ADBF000DD0DA /* Main.storyboard */,
 				A5DC8DB31EB2ADBF000DD0DA /* LaunchScreen.storyboard */,
 				A58674DD1EB2E1230024FC7B /* BorderedButton.swift */,
@@ -81,11 +82,12 @@
 		A58674DF1EB2EB440024FC7B /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				A5DC8DAA1EB2ADBF000DD0DA /* AppDelegate.swift */,
 				A58674E01EB2EB900024FC7B /* OTMClient.swift */,
 				A58674E21EB2EBD10024FC7B /* OTMConstants.swift */,
 				A58674E41EB2F4F10024FC7B /* OTMConvenience.swift */,
 				A5DA964E1EB41EC40050E8B3 /* StudentInformation.swift */,
+				A5DC8DAA1EB2ADBF000DD0DA /* AppDelegate.swift */,
+				A5DC8DB61EB2ADBF000DD0DA /* Info.plist */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -114,8 +116,6 @@
 				A58674DF1EB2EB440024FC7B /* Model */,
 				A58674DC1EB2E0BB0024FC7B /* View */,
 				A5DC8DBC1EB2DD4A000DD0DA /* Controller */,
-				A5DC8DB11EB2ADBF000DD0DA /* Assets.xcassets */,
-				A5DC8DB61EB2ADBF000DD0DA /* Info.plist */,
 			);
 			path = OnTheMap;
 			sourceTree = "<group>";
