@@ -22,11 +22,31 @@ struct StudentInformation {
     
     // Construct StudentInformation from a dictionary
     init(dictionary: [String:AnyObject]) {
-        firstName = dictionary[OTMClient.JSONResponseKeys.ParseFirstName] as! String
-        lastName = dictionary[OTMClient.JSONResponseKeys.ParseLastName] as! String
-        latitude = dictionary[OTMClient.JSONResponseKeys.ParseLatitude] as! Double
-        longitude = dictionary[OTMClient.JSONResponseKeys.ParseLongitude] as! Double
-        mediaURL = dictionary[OTMClient.JSONResponseKeys.ParseMediaURL] as! String
+        if let fn = dictionary[OTMClient.JSONResponseKeys.ParseFirstName] as? String {
+            firstName = fn
+        } else {
+            firstName = String()
+        }
+        if let ln = dictionary[OTMClient.JSONResponseKeys.ParseLastName] as? String {
+            lastName = ln
+        } else {
+            lastName = String()
+        }
+        if let lat = dictionary[OTMClient.JSONResponseKeys.ParseLatitude] as? Double {
+            latitude = lat
+        } else {
+            latitude = Double()
+        }
+        if let long = dictionary[OTMClient.JSONResponseKeys.ParseLongitude] as? Double {
+            longitude = long
+        } else {
+            longitude = Double()
+        }
+        if let url = dictionary[OTMClient.JSONResponseKeys.ParseMediaURL] as? String {
+            mediaURL = url
+        } else {
+            mediaURL = String()
+        }
     }
     
     // Construct an array of Student Information from an array of dictionaries obtained from JSON
