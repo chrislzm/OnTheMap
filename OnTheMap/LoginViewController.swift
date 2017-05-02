@@ -8,6 +8,7 @@
 
 import UIKit
 import FacebookLogin
+import FacebookCore
 
 class LoginViewController: OTMViewController, UITextFieldDelegate {
 
@@ -49,8 +50,14 @@ class LoginViewController: OTMViewController, UITextFieldDelegate {
                 print(error)
             case .cancelled:
                 print("User cancelled login.")
-            case .success(let grantedPermissions, let declinedPermissions, let accessToken):
+            case .success( _, let declinedPermissions, let accessToken):
                 print("Logged in!")
+                if declinedPermissions.contains(FacebookCore.Permission.init(name: "email")) {
+                    self.displayAlertWithOKButton("Facebook Login Failed", "You must allow Udacity to access your Facebook email address in order to use this app.")
+                    print("Email access declined")
+                    return
+                }
+                
                 // Start animation
                 self.startLoadingAnimation()
     
