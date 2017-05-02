@@ -2,6 +2,8 @@
 //  AddLocationViewController.swift
 //  OnTheMap
 //
+//  Controller for the Add Location scene
+//
 //  Created by Chris Leung on 4/29/17.
 //  Copyright © 2017 Chris Leung. All rights reserved.
 //
@@ -24,6 +26,7 @@ class AddLocationViewController:OTMViewController, UITextFieldDelegate {
         let mapString = mapStringTextView.text!
         let mediaURL = mediaURLTextView.text!
         
+        // Validate inputs
         if mapString.isEmpty {
             displayAlertWithOKButton("Location Is Empty","Please enter a location")
         } else if mediaURL.isEmpty {
@@ -33,6 +36,7 @@ class AddLocationViewController:OTMViewController, UITextFieldDelegate {
         } else {
             startLoadingAnimation()
             
+            // Ask the OTM Client to geocode the location
             OTMClient.sharedInstance().geocode(mapString) { (latitude,longitude,errorString) in
                 
                 DispatchQueue.main.async {
@@ -64,6 +68,7 @@ class AddLocationViewController:OTMViewController, UITextFieldDelegate {
     
     // MARK: Lifecycle
     
+    // For making sure keyboard disappears when we hit the done button
     override func viewDidLoad() {
         mapStringTextView.returnKeyType = UIReturnKeyType.done
         mediaURLTextView.returnKeyType = UIReturnKeyType.done
@@ -79,12 +84,11 @@ class AddLocationViewController:OTMViewController, UITextFieldDelegate {
     }
     
     // MARK: Helper functions
+    
+    // Verifies whether the string is a valid URL that can be opened by another iOS app
     func validUrl (urlString: String?) -> Bool {
-        //Check for nil
         if let urlString = urlString {
-            // create NSURL instance
             if let url = URL(string: urlString) {
-                // check if your application can open the NSURL instance
                 return UIApplication.shared.canOpenURL(url)
             }
         }
