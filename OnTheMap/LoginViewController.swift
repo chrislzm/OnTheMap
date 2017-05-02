@@ -9,7 +9,7 @@
 import UIKit
 import FacebookLogin
 
-class LoginViewController: UIViewController, UITextFieldDelegate {
+class LoginViewController: OTMViewController, UITextFieldDelegate {
 
     // MARK: Outlets
     @IBOutlet weak var emailTextField: UITextField!
@@ -25,7 +25,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             displayAlertWithOKButton("Login Failed","Email or password empty")
         } else {
             // Start animation
-            startActivityIndicator()
+            startLoadingAnimation()
             
             OTMClient.sharedInstance().loginWithUdacity(userId: emailTextField.text!, password: passwordTextField.text!) { (success, errorString) in
                 DispatchQueue.main.async {
@@ -35,7 +35,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                         self.displayAlertWithOKButton("Login Failed",errorString!)
                     }
                     // Stop Animation
-                    self.stopActivityIndicator()
+                    self.stopLoadingAnimation()
                 }
             }
         }
@@ -52,12 +52,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             case .success(let grantedPermissions, let declinedPermissions, let accessToken):
                 print("Logged in!")
                 // Start animation
-                self.startActivityIndicator()
+                self.startLoadingAnimation()
     
                 OTMClient.sharedInstance().completeLoginWithFacebook(accessToken.authenticationToken) { (success, errorString) in
                     DispatchQueue.main.async {
                         // Stop Animation
-                        self.stopActivityIndicator()
+                        self.stopLoadingAnimation()
                         
                         if success {
                             self.completeLogin()

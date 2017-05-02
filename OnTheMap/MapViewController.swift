@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class MapViewController: UIViewController, MKMapViewDelegate {
+class MapViewController: OTMViewController, MKMapViewDelegate {
     
     // MARK: Outlets
     @IBOutlet weak var mapView: MKMapView!
@@ -17,8 +17,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     // MARK: Actions
     
     @IBAction func logoutButtonPressed(_ sender: Any) {
-        OTMClient.sharedInstance().logout()
-        completeLogout()
+        logout()
     }
     
     @IBAction func refreshButtonPressed(_ sender: Any) {
@@ -37,13 +36,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(MapViewController.refreshButtonPressed(_:)), name: Notification.Name("refreshStudentInformation"), object: nil)
-
-        NotificationCenter.default.addObserver(self, selector: #selector(MapViewController.postInformationButtonPressed(_:)), name: Notification.Name("postStudentInformation"), object: nil)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(MapViewController.logoutButtonPressed(_:)), name: Notification.Name("logout"), object: nil)
-        
-        loadStudentLocations()
+        NotificationCenter.default.addObserver(self, selector: #selector(MapViewController.didLoadStudentInformation(_:)), name: Notification.Name("didLoadStudentInformation"), object: nil)
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -74,61 +67,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             }
         }
     }
-    
-    // MARK: Load student locations and refresh mapView
-    
-    func loadStudentLocations() {
-        
-        // Send notification student data will load
-        NotificationCenter.default.post(name: Notification.Name("studentDataWillLoad"), object: nil)
-        
-        // Start animations while loading student locations
-        startActivityIndicator()
-        
-        // Update recent student locations
-        OTMClient.sharedInstance().updateRecentStudentLocations() { (success, errorString) in
-            if (!success) {
-                DispatchQueue.main.async {
-                    self.displayErrorAlert(errorString!)
-                }
-            }
-
-            DispatchQueue.main.async {
-                // Send notification student data did load
-                NotificationCenter.default.post(name: Notification.Name("studentDataDidLoad"), object: nil)
-                self.stopActivityIndicator()
-                self.refreshMapView()
-            }
-            
-        }
-    }
-    
-    func postStudentLocation() {
-        
-        // Send notification will confirm overwrite
-        NotificationCenter.default.post(name: Notification.Name("willConfirmLocationOverwrite"), object: nil)
-        
-        startActivityIndicator()
-        
-        OTMClient.sharedInstance().doesStudentLocationAlreadyExist() { (exists,error) in
-            DispatchQueue.main.async {
-                if let error = error {
-                    self.displayErrorAlert(error)
-                } else if exists {
-                    self.displayConfirmOverwriteAlert()
-                } else {
-                    self.showAddLocationViewController()
-                }
-                
-                // Send notification did confirm overwrite
-                NotificationCenter.default.post(name: Notification.Name("didConfirmLocationOverwrite"), object: nil)
-                
-                self.stopActivityIndicator()
-            }
-        }
-    }
-    
-    func refreshMapView() {
+    func didLoadStudentInformation(_ notification:Notification) {
         var updatedMapViewAnnotations = [MKPointAnnotation]()
         
         let students = getStudentInformation()
@@ -147,29 +86,5 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         mapView.addAnnotations(updatedMapViewAnnotations)
     }
     
-    // MARK: Logout
-    
-    private func completeLogout() {
-        self.dismiss(animated: true, completion: nil)
-    }
-    
-    private func displayErrorAlert(_ errorString: String) {
-        let alert = UIAlertController(title: "Error Loading Data", message: errorString, preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
-    }
-    
-    private func displayConfirmOverwriteAlert() {
-        let alert = UIAlertController(title: "Overwrite location?", message: "You already have a saved location. Would you like to overwrite it?", preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default) { (uiActionAlert) in
-                self.showAddLocationViewController()
-            })
-        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
-    }
-    
-    private func showAddLocationViewController() {
-        let controller = storyboard!.instantiateViewController(withIdentifier: "AddLocationNavigationController") as! UINavigationController
-        present(controller, animated: true, completion: nil)
-    }
+
 }

@@ -9,7 +9,7 @@
 import CoreLocation
 import UIKit
 
-class AddLocationViewController:UIViewController, UITextFieldDelegate {
+class AddLocationViewController:OTMViewController, UITextFieldDelegate {
     
     // MARK: Properties
     override var activityIndicatorTag: Int { return 4 }
@@ -31,12 +31,12 @@ class AddLocationViewController:UIViewController, UITextFieldDelegate {
         } else if !validUrl(urlString: mediaURL) {
             displayAlertWithOKButton("Invalid Website","Please enter a valid website address beginning with http(s)://")
         } else {
-            startActivityIndicator()
+            startLoadingAnimation()
             
             OTMClient.sharedInstance().geocode(mapString) { (latitude,longitude,errorString) in
                 
                 DispatchQueue.main.async {
-                    self.stopActivityIndicator()
+                    self.stopLoadingAnimation()
                 
                     if let errorString = errorString {
                         self.displayAlertWithOKButton("Unable to Find Location", errorString)

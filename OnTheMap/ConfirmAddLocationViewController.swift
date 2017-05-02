@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class ConfirmAddLocationViewController:UIViewController {
+class ConfirmAddLocationViewController:OTMViewController {
 
     // MARK: Properties
     override var activityIndicatorTag: Int { return 4 }
@@ -34,13 +34,13 @@ class ConfirmAddLocationViewController:UIViewController {
     }
     
     @IBAction func pressedFinishButton(_ sender: Any) {
-        startActivityIndicator()
+        startLoadingAnimation()
         
         OTMClient.sharedInstance().saveStudentLocation(mapString!, mediaURL!, latitude!, longitude!) { (success, errorString) in
             DispatchQueue.main.async {
-                self.stopActivityIndicator()
+                self.stopLoadingAnimation()
                 if success {
-                    NotificationCenter.default.post(name: Notification.Name("refreshStudentInformation"), object: nil)
+                    NotificationCenter.default.post(name: Notification.Name("didUpdateStudentInformation"), object: nil)
                     self.navigationController!.dismiss(animated: true, completion: nil)
                 } else {
                     self.displayAlertWithOKButton("Update Failed", errorString!)

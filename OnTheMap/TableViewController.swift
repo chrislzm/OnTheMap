@@ -10,68 +10,56 @@ import UIKit
 
 // MARK: - WatchlistViewController: UIViewController
 
-class TableViewController: UIViewController {
+class TableViewController: OTMViewController, UITableViewDelegate, UITableViewDataSource {
     
     // MARK: Outlets
     @IBOutlet weak var tableView: UITableView!
     
     // MARK: Properties
     override var activityIndicatorTag: Int { return 3 }
-    var students = [StudentInformation]()
+    var students:[StudentInformation]?                   // Stores student information for the TableView
     
     // MARK: Actions
     @IBAction func refreshButtonPressed(_ sender: Any) {
-        NotificationCenter.default.post(name: Notification.Name("refreshStudentInformation"), object: nil)
+        loadStudentLocations()
     }
     
     @IBAction func postInformationButtonPressed(_ sender: Any) {
-        NotificationCenter.default.post(name: Notification.Name("postStudentInformation"), object: nil)
+        postStudentLocation()
     }
 
     @IBAction func logoutButtonPressed(_ sender: Any) {
-        NotificationCenter.default.post(name: Notification.Name("logout"), object: nil)
+        logout()
     }
     
     // MARK: Lifecycle
     
     override func viewDidLoad() {
-        NotificationCenter.default.addObserver(self, selector: #selector(TableViewController.willMakeNetworkRequest(_:)), name: Notification.Name("studentDataWillLoad"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(TableViewController.didMakeNetworkRequest(_:)), name: Notification.Name("studentDataDidLoad"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(TableViewController.willMakeNetworkRequest(_:)), name: Notification.Name("willConfirmLocationOverwrite"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(TableViewController.didMakeNetworkRequest(_:)), name: Notification.Name("didConfirmLocationOverwrite"), object: nil)
+        super.viewDidLoad()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(TableViewController.didLoadStudentInformation(_:)), name: Notification.Name("didLoadStudentInformation"), object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
         // Get the updated list of students
         students = getStudentInformation()
     }
-    
-    func willMakeNetworkRequest(_ notification:Notification) {
-        startActivityIndicator()
-    }
-    
-    func didMakeNetworkRequest(_ notification:Notification) {
-        stopActivityIndicator()
-        refreshTableView()
-    }
-    
-    //func startActivityViewAnimations
 
-    func refreshTableView() {
+    func didLoadStudentInformation(_ notification:Notification) {
         // Copy the updated array of memes
         students = getStudentInformation()
         
         // Reload data
         tableView.reloadData()
     }
-}
-
-extension TableViewController: UITableViewDelegate, UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         /* Get cell type */
         let cellReuseIdentifier = "TableViewCell"
-        let student = students[(indexPath as NSIndexPath).row]
+        let student = students![(indexPath as NSIndexPath).row]
         let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as UITableViewCell!
         
         /* Set cell defaults */
@@ -82,11 +70,11 @@ extension TableViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return students.count
+        return students!.count
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let student = students[(indexPath as NSIndexPath).row]
+        let student = students![(indexPath as NSIndexPath).row]
         let app = UIApplication.shared
         if let url = URL(string: student.mediaURL) {
             app.open(url,options: [:],completionHandler: nil)
