@@ -41,7 +41,6 @@ class TableViewController: OTMViewController, UITableViewDelegate, UITableViewDa
         NotificationCenter.default.addObserver(self, selector: #selector(TableViewController.didLoadStudentInformation(_:)), name: Notification.Name("didLoadStudentInformation"), object: nil)
     }
 
-    // Refresh our TableView if new student information was loaded from the network
     func didLoadStudentInformation(_ notification:Notification) {
         // Copy the updated array of student information
         students = getStudentInformation()
