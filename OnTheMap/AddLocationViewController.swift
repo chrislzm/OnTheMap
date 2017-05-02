@@ -70,11 +70,10 @@ class AddLocationViewController:OTMViewController, UITextFieldDelegate {
     
     // For making sure keyboard disappears when we hit the done button
     override func viewDidLoad() {
+        super.viewDidLoad()
+        
         mapStringTextView.returnKeyType = UIReturnKeyType.done
         mediaURLTextView.returnKeyType = UIReturnKeyType.done
-        
-        mapStringTextView.delegate = self
-        mediaURLTextView.delegate = self
     }
     
     // Dismisses keyboard when we hit enter/return
