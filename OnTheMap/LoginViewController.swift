@@ -1,6 +1,8 @@
 //
-//  ViewController.swift
+//  LoginViewController.swift
 //  OnTheMap
+//
+//  Controller for user login into On The Map
 //
 //  Created by Chris Leung on 4/27/17.
 //  Copyright © 2017 Chris Leung. All rights reserved.
@@ -20,14 +22,16 @@ class LoginViewController: OTMViewController, UITextFieldDelegate {
     override var activityIndicatorTag: Int { return 1 }
     
     // MARK: Actions
+    
+    // Handles user login with Udacity account
     @IBAction func loginButtonPressed(_ sender: Any) {
 
         if emailTextField.text!.isEmpty || passwordTextField.text!.isEmpty {
             displayAlertWithOKButton("Login Failed","Email or password empty")
         } else {
-            // Start animation
             startLoadingAnimation()
-            
+
+            // Use the OTMClient to attempt login with the given userName and password
             OTMClient.sharedInstance().loginWithUdacity(userId: emailTextField.text!, password: passwordTextField.text!) { (success, errorString) in
                 DispatchQueue.main.async {
                     if success {
@@ -35,41 +39,42 @@ class LoginViewController: OTMViewController, UITextFieldDelegate {
                     } else {
                         self.displayAlertWithOKButton("Login Failed",errorString!)
                     }
-                    // Stop Animation
                     self.stopLoadingAnimation()
                 }
             }
         }
     }
-    @IBAction func loginWithFacebookPressed(_ sender: Any) {
+    
+    // Handles user login with Facebook account
+    @IBAction func loginWithFacebookButtonPressed(_ sender: Any) {
         let loginManager = LoginManager()
+        
+        // We ask for email address here because we need it to verify the user is actually a Udacity student
+        // We ask for public profile access since we'll probably need it in a future version of this app
         loginManager.logIn([ .publicProfile, .email ], viewController: self) { loginResult in
             switch loginResult {
             case .failed(let error):
                 self.displayAlertWithOKButton("Facebook Login Failed", error.localizedDescription)
                 print(error)
             case .cancelled:
-                print("User cancelled login.")
+                break
             case .success( _, let declinedPermissions, let accessToken):
-                print("Logged in!")
                 if declinedPermissions.contains(FacebookCore.Permission.init(name: "email")) {
                     self.displayAlertWithOKButton("Facebook Login Failed", "You must allow Udacity to access your Facebook email address in order to use this app.")
-                    print("Email access declined")
                     return
-                }
-                
-                // Start animation
-                self.startLoadingAnimation()
-    
-                OTMClient.sharedInstance().completeLoginWithFacebook(accessToken.authenticationToken) { (success, errorString) in
-                    DispatchQueue.main.async {
-                        // Stop Animation
-                        self.stopLoadingAnimation()
-                        
-                        if success {
-                            self.completeLogin()
-                        } else {
-                            self.displayAlertWithOKButton("Login Failed",errorString!)
+                } else {
+                    self.startLoadingAnimation()
+                    
+                    // Use the OTMClient to complete our Facebook login process
+                    OTMClient.sharedInstance().completeLoginWithFacebook(accessToken.authenticationToken) { (success, errorString) in
+                        DispatchQueue.main.async {
+                            self.stopLoadingAnimation()
+                            
+                            if success {
+                                self.completeLogin()
+                            } else {
+                                self.displayAlertWithOKButton("Login Failed",errorString!)
+                            }
                         }
                     }
                 }
@@ -78,8 +83,11 @@ class LoginViewController: OTMViewController, UITextFieldDelegate {
     }
     
     // MARK: Lifecycle
-    
+
+    // For making sure keyboard disappears when we hit the done button
     override func viewDidLoad() {
+        super.viewDidLoad()
+        
         emailTextField.returnKeyType = UIReturnKeyType.done
         passwordTextField.returnKeyType = UIReturnKeyType.done
         
@@ -87,14 +95,13 @@ class LoginViewController: OTMViewController, UITextFieldDelegate {
         passwordTextField.delegate = self
     }
     
-    // Dismisses keyboard when we hit enter/return
+    // Dismisses keyboard when we hit done
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
     
-    // MARK: Login
-    
+    // Final step of the login process -- present the main screen of the app
     private func completeLogin() {
         let controller = storyboard!.instantiateViewController(withIdentifier: "OnTheMapTabController") as! UITabBarController
         present(controller, animated: true, completion: nil)
