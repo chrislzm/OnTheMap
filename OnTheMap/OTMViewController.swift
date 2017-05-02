@@ -1,5 +1,5 @@
 //
-//  Extensions.swift
+//  OTMViewController
 //  OnTheMap
 //
 //  Created by Chris Leung on 4/28/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-// MARK: UIViewController extension
+// MARK: OTMViewController
 
 class OTMViewController: UIViewController {
     

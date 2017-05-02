@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		76A759D7CB12D8D1EC24DA1B /* Pods_OnTheMap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B5966894875F1C6A09C22B5 /* Pods_OnTheMap.framework */; };
+		A51370151EB82E5A00C712E1 /* OTMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51370141EB82E5A00C712E1 /* OTMViewController.swift */; };
 		A58674DE1EB2E1230024FC7B /* BorderedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58674DD1EB2E1230024FC7B /* BorderedButton.swift */; };
 		A58674E11EB2EB900024FC7B /* OTMClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58674E01EB2EB900024FC7B /* OTMClient.swift */; };
 		A58674E31EB2EBD10024FC7B /* OTMConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58674E21EB2EBD10024FC7B /* OTMConstants.swift */; };
@@ -15,7 +16,6 @@
 		A5A4249E1EB5AF32009A82E6 /* AddLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A4249D1EB5AF32009A82E6 /* AddLocationViewController.swift */; };
 		A5DA964D1EB405730050E8B3 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DA964C1EB405730050E8B3 /* MapViewController.swift */; };
 		A5DA964F1EB41EC40050E8B3 /* StudentInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DA964E1EB41EC40050E8B3 /* StudentInformation.swift */; };
-		A5DA96511EB455640050E8B3 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DA96501EB455640050E8B3 /* Extensions.swift */; };
 		A5DC8DAB1EB2ADBF000DD0DA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DC8DAA1EB2ADBF000DD0DA /* AppDelegate.swift */; };
 		A5DC8DAD1EB2ADBF000DD0DA /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DC8DAC1EB2ADBF000DD0DA /* LoginViewController.swift */; };
 		A5DC8DB01EB2ADBF000DD0DA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A5DC8DAE1EB2ADBF000DD0DA /* Main.storyboard */; };
@@ -28,6 +28,7 @@
 /* Begin PBXFileReference section */
 		3B375B46A227EF595388EAE1 /* Pods-OnTheMap.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OnTheMap.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OnTheMap/Pods-OnTheMap.debug.xcconfig"; sourceTree = "<group>"; };
 		4B5966894875F1C6A09C22B5 /* Pods_OnTheMap.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OnTheMap.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A51370141EB82E5A00C712E1 /* OTMViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTMViewController.swift; sourceTree = "<group>"; };
 		A58674DD1EB2E1230024FC7B /* BorderedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorderedButton.swift; sourceTree = "<group>"; };
 		A58674E01EB2EB900024FC7B /* OTMClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTMClient.swift; sourceTree = "<group>"; };
 		A58674E21EB2EBD10024FC7B /* OTMConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTMConstants.swift; sourceTree = "<group>"; };
@@ -35,7 +36,6 @@
 		A5A4249D1EB5AF32009A82E6 /* AddLocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddLocationViewController.swift; sourceTree = "<group>"; };
 		A5DA964C1EB405730050E8B3 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		A5DA964E1EB41EC40050E8B3 /* StudentInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentInformation.swift; sourceTree = "<group>"; };
-		A5DA96501EB455640050E8B3 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		A5DC8DA71EB2ADBF000DD0DA /* OnTheMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnTheMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5DC8DAA1EB2ADBF000DD0DA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A5DC8DAC1EB2ADBF000DD0DA /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -123,12 +123,12 @@
 		A5DC8DBC1EB2DD4A000DD0DA /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				A51370141EB82E5A00C712E1 /* OTMViewController.swift */,
 				A5DC8DAC1EB2ADBF000DD0DA /* LoginViewController.swift */,
 				A5DA964C1EB405730050E8B3 /* MapViewController.swift */,
 				A5F74E151EB4630F002AF032 /* TableViewController.swift */,
 				A5A4249D1EB5AF32009A82E6 /* AddLocationViewController.swift */,
 				A5DF60471EB6B78D0054ADB8 /* ConfirmAddLocationViewController.swift */,
-				A5DA96501EB455640050E8B3 /* Extensions.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -267,13 +267,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				A5DA964F1EB41EC40050E8B3 /* StudentInformation.swift in Sources */,
-				A5DA96511EB455640050E8B3 /* Extensions.swift in Sources */,
 				A5DC8DAD1EB2ADBF000DD0DA /* LoginViewController.swift in Sources */,
 				A5F74E161EB4630F002AF032 /* TableViewController.swift in Sources */,
 				A58674E11EB2EB900024FC7B /* OTMClient.swift in Sources */,
 				A5A4249E1EB5AF32009A82E6 /* AddLocationViewController.swift in Sources */,
 				A5DC8DAB1EB2ADBF000DD0DA /* AppDelegate.swift in Sources */,
 				A58674E31EB2EBD10024FC7B /* OTMConstants.swift in Sources */,
+				A51370151EB82E5A00C712E1 /* OTMViewController.swift in Sources */,
 				A5DF60481EB6B78D0054ADB8 /* ConfirmAddLocationViewController.swift in Sources */,
 				A58674E51EB2F4F10024FC7B /* OTMConvenience.swift in Sources */,
 				A58674DE1EB2E1230024FC7B /* BorderedButton.swift in Sources */,
