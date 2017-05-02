@@ -11,7 +11,7 @@
 import Foundation
 import CoreLocation
 
-class OTMClient : NSObject {
+class OTMClient {
     
     // MARK: Properties
     
