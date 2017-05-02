@@ -2,6 +2,8 @@
 //  AppDelegate.swift
 //  OnTheMap
 //
+//  Our Student Information model is stored here so that it's accessible throughout the app.
+//
 //  Created by Chris Leung on 4/27/17.
 //  Copyright © 2017 Chris Leung. All rights reserved.
 //
