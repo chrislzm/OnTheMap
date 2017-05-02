@@ -2,13 +2,13 @@
 //  TableViewController.swift
 //  OnTheMap
 //
+//  Controller for the TableView
+//
 //  Created by Chris Leung on 4/28/17.
 //  Copyright © 2017 Chris Leung. All rights reserved.
 //
 
 import UIKit
-
-// MARK: - WatchlistViewController: UIViewController
 
 class TableViewController: OTMViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -17,7 +17,7 @@ class TableViewController: OTMViewController, UITableViewDelegate, UITableViewDa
     
     // MARK: Properties
     override var activityIndicatorTag: Int { return 3 }
-    var students:[StudentInformation]?                   // Stores student information for the TableView
+    var students = [StudentInformation]()  // Stores student information for the TableView
     
     // MARK: Actions
     @IBAction func refreshButtonPressed(_ sender: Any) {
@@ -36,30 +36,27 @@ class TableViewController: OTMViewController, UITableViewDelegate, UITableViewDa
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
+        // Refresh our TableView if new student information was loaded from the network
         NotificationCenter.default.addObserver(self, selector: #selector(TableViewController.didLoadStudentInformation(_:)), name: Notification.Name("didLoadStudentInformation"), object: nil)
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        // Get the updated list of students
-        students = getStudentInformation()
-    }
 
+    // Refresh our TableView if new student information was loaded from the network
     func didLoadStudentInformation(_ notification:Notification) {
-        // Copy the updated array of memes
+        // Copy the updated array of student information
         students = getStudentInformation()
         
         // Reload data
         tableView.reloadData()
     }
     
+    // MARK: UITableViewDelegate and UITableViewDataSource methods
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         /* Get cell type */
         let cellReuseIdentifier = "TableViewCell"
-        let student = students![(indexPath as NSIndexPath).row]
+        let student = students[(indexPath as NSIndexPath).row]
         let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as UITableViewCell!
         
         /* Set cell defaults */
@@ -70,11 +67,11 @@ class TableViewController: OTMViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return students!.count
+        return students.count
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let student = students![(indexPath as NSIndexPath).row]
+        let student = students[(indexPath as NSIndexPath).row]
         let app = UIApplication.shared
         if let url = URL(string: student.mediaURL) {
             app.open(url,options: [:],completionHandler: nil)
