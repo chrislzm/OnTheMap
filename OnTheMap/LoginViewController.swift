@@ -2,7 +2,7 @@
 //  LoginViewController.swift
 //  OnTheMap
 //
-//  Controller for user login into On The Map
+//  Controller for login scene
 //
 //  Created by Chris Leung on 4/27/17.
 //  Copyright © 2017 Chris Leung. All rights reserved.

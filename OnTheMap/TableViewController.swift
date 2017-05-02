@@ -2,7 +2,7 @@
 //  TableViewController.swift
 //  OnTheMap
 //
-//  Controller for the TableView
+//  Controller for the TableView scene
 //
 //  Created by Chris Leung on 4/28/17.
 //  Copyright © 2017 Chris Leung. All rights reserved.

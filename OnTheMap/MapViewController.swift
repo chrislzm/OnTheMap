@@ -2,7 +2,7 @@
 //  MapViewController.swift
 //  OnTheMap
 //
-//  Controller for the MapView
+//  Controller for the MapView scene
 //
 //  Created by Chris Leung on 4/28/17.
 //  Copyright © 2017 Chris Leung. All rights reserved.
@@ -37,7 +37,7 @@ class MapViewController: OTMViewController, MKMapViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Refresh our MapView if new student information was loaded
+        // Refresh our MapView if new student information was loaded from the network
         NotificationCenter.default.addObserver(self, selector: #selector(MapViewController.didLoadStudentInformation(_:)), name: Notification.Name("didLoadStudentInformation"), object: nil)
     }
     
