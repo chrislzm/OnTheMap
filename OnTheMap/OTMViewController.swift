@@ -92,7 +92,7 @@ class OTMViewController: UIViewController {
     // Handles user request to logout of app
     func logout() {
         OTMClient.sharedInstance().logout()
-        self.dismiss(animated: true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
 
     // MARK: Helper methods
@@ -101,7 +101,7 @@ class OTMViewController: UIViewController {
     func displayAlertWithOKButton(_ title: String, _ message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
+        present(alert, animated: true, completion: nil)
     }
 
     // Displays alert confirmation dialog, confirming user wants to overwrite their previously saved location
@@ -111,7 +111,7 @@ class OTMViewController: UIViewController {
             self.showAddLocationViewController()
         })
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
+        present(alert, animated: true, completion: nil)
     }
 
     private func showAddLocationViewController() {
@@ -138,15 +138,15 @@ class OTMViewController: UIViewController {
     func startLoadingAnimation() {
         
         // Programmatically create the activity indicator
-        let activityIndicator = UIActivityIndicatorView(frame: self.view.frame)
-        self.view.addSubview(activityIndicator)
+        let activityIndicator = UIActivityIndicatorView(frame: view.frame)
+        view.addSubview(activityIndicator)
         activityIndicator.backgroundColor = UIColor.black
         activityIndicator.alpha = OTMViewController.AVI_ALPHA
         activityIndicator.activityIndicatorViewStyle = .whiteLarge
         activityIndicator.hidesWhenStopped = true
         
         // Add the unique tag so we can find this view in order to remove it later
-        activityIndicator.tag = self.activityIndicatorTag
+        activityIndicator.tag = activityIndicatorTag
         
         // Start animating and add the view
         activityIndicator.startAnimating()
@@ -156,8 +156,8 @@ class OTMViewController: UIViewController {
     func stopLoadingAnimation() {
         
         // Find our unique activity indicator and remove it from the view
-        if let activityIndicator = self.view.subviews.filter(
-            { $0.tag == self.activityIndicatorTag}).first as? UIActivityIndicatorView {
+        if let activityIndicator = view.subviews.filter(
+            { $0.tag == activityIndicatorTag}).first as? UIActivityIndicatorView {
             activityIndicator.stopAnimating()
             activityIndicator.removeFromSuperview()
         }
