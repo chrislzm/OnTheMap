@@ -2,6 +2,8 @@
 //  OTMClient.swift
 //  OnTheMap
 //
+//  Core client methods for OTM (On The Map)
+//
 //  Created by Chris Leung on 4/27/17.
 //  Copyright © 2017 Chris Leung. All rights reserved.
 //
@@ -13,10 +15,8 @@ class OTMClient : NSObject {
     
     // MARK: Properties
     
-    // Shared session
+    // Session variables
     var session = URLSession.shared
-    
-    // user
     var userId:String? = nil
     var userSessionId:String? = nil
     var userFBAccessToken:String? = nil
@@ -56,9 +56,6 @@ class OTMClient : NSObject {
         }
         
         /* 3. Make the request */
-                
-        // TODO: Remove debug print statement
-        print ("Making a HTTP \(httpMethod) request with URL \(request.url!.absoluteString)")
 
         let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
             
@@ -108,7 +105,8 @@ class OTMClient : NSObject {
         return task
     }
     
-    // TODO: Make threaded
+    // Geocode a location string
+    
     func geocode(_ location: String, completionHandler: @escaping (_ latitude: Double?, _ longitude: Double?, _ errorString: String?) -> Void) {
         CLGeocoder().geocodeAddressString(location, completionHandler: { (placemarks, error) in
             if error != nil {
@@ -132,18 +130,10 @@ class OTMClient : NSObject {
             }
         })
     }
-
-    // Substitute the key for the value that is contained within the string
-    func substituteKey(_ string: String, key: String, value: String) -> String? {
-        if string.range(of: key) != nil {
-            return string.replacingOccurrences(of: key, with: value)
-        } else {
-            return nil
-        }
-    }
+    
+    // MARK: Private helper methods
     
     // Creates a URL from parameters
-    
     private func urlFromParameters(_ host:String, _ method:String, _ parameters: [String:String]?) -> URL {
         
         var components = URLComponents()
