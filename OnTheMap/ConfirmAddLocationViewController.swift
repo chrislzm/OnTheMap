@@ -44,6 +44,7 @@ class ConfirmAddLocationViewController:OTMViewController {
     // MARK: Lifecycle
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
         // Add the geocoded location as an annotation to the map
         let annotation = MKPointAnnotation()
