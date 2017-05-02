@@ -90,9 +90,6 @@ class LoginViewController: OTMViewController, UITextFieldDelegate {
         
         emailTextField.returnKeyType = UIReturnKeyType.done
         passwordTextField.returnKeyType = UIReturnKeyType.done
-        
-        emailTextField.delegate = self
-        passwordTextField.delegate = self
     }
     
     // Dismisses keyboard when we hit done
