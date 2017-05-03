@@ -76,9 +76,12 @@ class OTMViewController: UIViewController {
             DispatchQueue.main.async {
                 NotificationCenter.default.post(name: Notification.Name("didLoadOtherData"), object: nil)
 
-                if let error = error {
-                    self.displayAlertWithOKButton("Error Loading Data",error)
-                } else if exists {
+                guard error == nil else {
+                    self.displayAlertWithOKButton("Error Loading Data",error!)
+                    return
+                }
+                
+                if exists {
                     // If we already have a saved location, confirm with the user we want to overwrite it
                     self.displayConfirmOverwriteAlert()
                 } else {
