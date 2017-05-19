@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		76A759D7CB12D8D1EC24DA1B /* Pods_OnTheMap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B5966894875F1C6A09C22B5 /* Pods_OnTheMap.framework */; };
 		A51370151EB82E5A00C712E1 /* OTMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51370141EB82E5A00C712E1 /* OTMViewController.swift */; };
+		A5491E7A1ECFAE1C007B7313 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = A5491E791ECFAE1C007B7313 /* README.md */; };
 		A58674DE1EB2E1230024FC7B /* BorderedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58674DD1EB2E1230024FC7B /* BorderedButton.swift */; };
 		A58674E11EB2EB900024FC7B /* OTMClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58674E01EB2EB900024FC7B /* OTMClient.swift */; };
 		A58674E31EB2EBD10024FC7B /* OTMConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58674E21EB2EBD10024FC7B /* OTMConstants.swift */; };
@@ -29,6 +30,7 @@
 		3B375B46A227EF595388EAE1 /* Pods-OnTheMap.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OnTheMap.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OnTheMap/Pods-OnTheMap.debug.xcconfig"; sourceTree = "<group>"; };
 		4B5966894875F1C6A09C22B5 /* Pods_OnTheMap.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OnTheMap.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A51370141EB82E5A00C712E1 /* OTMViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTMViewController.swift; sourceTree = "<group>"; };
+		A5491E791ECFAE1C007B7313 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		A58674DD1EB2E1230024FC7B /* BorderedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorderedButton.swift; sourceTree = "<group>"; };
 		A58674E01EB2EB900024FC7B /* OTMClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTMClient.swift; sourceTree = "<group>"; };
 		A58674E21EB2EBD10024FC7B /* OTMConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTMConstants.swift; sourceTree = "<group>"; };
@@ -95,6 +97,7 @@
 		A5DC8D9E1EB2ADBF000DD0DA = {
 			isa = PBXGroup;
 			children = (
+				A5491E791ECFAE1C007B7313 /* README.md */,
 				A5DC8DA91EB2ADBF000DD0DA /* OnTheMap */,
 				A5DC8DA81EB2ADBF000DD0DA /* Products */,
 				DE2EC86724545A3E0B2DBE77 /* Pods */,
@@ -270,6 +273,7 @@
 				A5DC8DAD1EB2ADBF000DD0DA /* LoginViewController.swift in Sources */,
 				A5F74E161EB4630F002AF032 /* TableViewController.swift in Sources */,
 				A58674E11EB2EB900024FC7B /* OTMClient.swift in Sources */,
+				A5491E7A1ECFAE1C007B7313 /* README.md in Sources */,
 				A5A4249E1EB5AF32009A82E6 /* AddLocationViewController.swift in Sources */,
 				A5DC8DAB1EB2ADBF000DD0DA /* AppDelegate.swift in Sources */,
 				A58674E31EB2EBD10024FC7B /* OTMConstants.swift in Sources */,
